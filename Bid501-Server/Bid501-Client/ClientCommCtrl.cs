@@ -23,6 +23,10 @@ namespace Bid501_Client
             {
                 conn = true;
             }
+            else
+            {
+                MessageBox.Show("Fuck you");
+            }
             MessageBox.Show("Connection: " + conn);
         }
 
@@ -40,7 +44,5 @@ namespace Bid501_Client
                 Console.WriteLine("WebSocket is not connected.");
             }
         }
-    }
-        
     }
 }
