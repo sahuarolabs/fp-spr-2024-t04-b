@@ -7,7 +7,7 @@
     <ProjectGuid>{B7DCE4B8-E46E-4B20-B21A-EF1860409B7A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Bid501_Client</RootNamespace>
-    <AssemblyName>Bid501_Client</AssemblyName>
+    <AssemblyName>Bid501-Client</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
