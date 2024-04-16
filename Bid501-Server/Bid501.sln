@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bid501-Client", "Bid501-Cli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bid501-Shared", "Bid501-Shared\Bid501-Shared.csproj", "{0D5FC631-E6DE-4797-A44B-6F6295E97227}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bid501-Client", "Bid501-Client\Bid501-Client.csproj", "{B7DCE4B8-E46E-4B20-B21A-EF1860409B7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bid501-Shared", "Bid501-Shared\Bid501-Shared.csproj", "{0D5FC631-E6DE-4797-A44B-6F6295E97227}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
