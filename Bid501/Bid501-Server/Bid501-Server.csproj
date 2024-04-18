@@ -49,11 +49,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="AccontView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="AccontView.Designer.cs">
+      <DependentUpon>AccontView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AccountController.cs" />
+    <Compile Include="ServerCommCtrl.cs" />
+    <Compile Include="ServerController.cs" />
+    <Compile Include="ServerView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServerView.Designer.cs">
+      <DependentUpon>ServerView.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
