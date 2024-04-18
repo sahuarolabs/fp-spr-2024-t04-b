@@ -39,10 +39,12 @@ namespace Bid501_Server
 
         //private logInDel LogIn;
 
+        private WebsocketServer wss;
+
         public ServerCommCtrl()
         {
 
-            WebSocketServer wss = new WebSocketServer("ws://10.130.160.36:8001");
+            wss = new WebSocketServer("ws://10.130.160.36:8001");
             wss.AddWebSocketService<TestService>("/Test");
             wss.Start();
 
@@ -71,6 +73,11 @@ namespace Bid501_Server
         public void EndAuction()
         {
 
+        }
+
+        public void EndConnection()
+        {
+            wss.Stop();
         }
 
     }

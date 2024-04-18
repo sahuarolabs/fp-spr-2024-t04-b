@@ -49,11 +49,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccontView.cs">
+    <Compile Include="AccountView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AccontView.Designer.cs">
-      <DependentUpon>AccontView.cs</DependentUpon>
+    <Compile Include="AccountView.Designer.cs">
+      <DependentUpon>AccountView.cs</DependentUpon>
     </Compile>
     <Compile Include="AccountController.cs" />
     <Compile Include="ServerCommCtrl.cs" />
@@ -75,6 +75,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ServerView.resx">
+      <DependentUpon>ServerView.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -88,6 +91,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bid501-Shared\Bid501-Shared.csproj">
+      <Project>{9b319373-37c5-481c-9b34-0de1ebef3abc}</Project>
+      <Name>Bid501-Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

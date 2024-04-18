@@ -1,6 +1,6 @@
 ﻿namespace Bid501_Server
 {
-    partial class AccontView
+    partial class AccountView
     {
         /// <summary>
         /// Required designer variable.
