@@ -16,5 +16,11 @@ namespace Bid501_Client
         {
             InitializeComponent();
         }
+
+        private void UxLoginButton_Click(object sender, EventArgs e)
+        {
+            string username = UsernameTextbox.Text;
+            string password = PasswordTextbox.Text;
+        }
     }
 }
