@@ -56,6 +56,12 @@
       <DependentUpon>AccontView.cs</DependentUpon>
     </Compile>
     <Compile Include="AccountController.cs" />
+    <Compile Include="AddProductView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddProductView.Designer.cs">
+      <DependentUpon>AddProductView.cs</DependentUpon>
+    </Compile>
     <Compile Include="ServerCommCtrl.cs" />
     <Compile Include="ServerController.cs" />
     <Compile Include="ServerView.cs">
@@ -66,6 +72,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddProductView.resx">
+      <DependentUpon>AddProductView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -75,6 +84,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ServerView.resx">
+      <DependentUpon>ServerView.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
