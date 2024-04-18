@@ -12,6 +12,9 @@ namespace Bid501_Server
 {
     public partial class ServerView : Form
     {
+
+        
+
         public ServerView()
         {
             InitializeComponent();
@@ -21,5 +24,7 @@ namespace Bid501_Server
         {
 
         }
+
+        ///REMINDER: necessary to add a Form.Closed event handler to closs the websocket server in ServerCommCtrl
     }
 }

@@ -49,12 +49,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AccountView.Designer.cs">
-      <DependentUpon>AccountView.cs</DependentUpon>
-    </Compile>
     <Compile Include="AccountController.cs" />
     <Compile Include="AddProductView.cs">
       <SubType>Form</SubType>
