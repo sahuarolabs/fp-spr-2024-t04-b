@@ -10,12 +10,11 @@ namespace Bid501_Client
 {
     public class ClientCommCtrl
     {
-        public WebSocketSharp.WebSocket ws;
+        public WebSocket ws;
 
         public ClientCommCtrl()
         {
-            ws = new WebSocketSharp.WebSocket("ws://10.130.160.35:8001/Test");
-            ws = new WebSocketSharp.WebSocket("ws://10.130.160.36:8001/Test");
+            ws = new WebSocket("ws://10.130.160.35:8001/Test");
             ws.Connect();
 
             //Check Alive
