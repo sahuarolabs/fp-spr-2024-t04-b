@@ -44,9 +44,17 @@ namespace Bid501_Server
         {
 
 
+           
 
         }
 
+        public void UpdateAccountData()
+        {
+            foreach(Account a in acctList)
+            {
+
+            }
+        }
 
     }
 }
