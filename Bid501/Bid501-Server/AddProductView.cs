@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace Bid501_Server
 {
-    public partial class ServerView : Form
+    public partial class AddProductView : Form
     {
-        public ServerView()
+        public AddProductView()
         {
             InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
