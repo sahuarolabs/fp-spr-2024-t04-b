@@ -51,6 +51,9 @@
   <ItemGroup>
     <Compile Include="Account.cs" />
     <Compile Include="Admin.cs" />
+    <Compile Include="Bid.cs" />
+    <Compile Include="IProduct.cs" />
+    <Compile Include="Model.cs" />
     <Compile Include="Permission.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

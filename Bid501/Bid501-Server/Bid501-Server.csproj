@@ -59,6 +59,7 @@
     <Compile Include="AddProductView.Designer.cs">
       <DependentUpon>AddProductView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Product.cs" />
     <Compile Include="ServerCommCtrl.cs" />
     <Compile Include="ServerController.cs" />
     <Compile Include="ServerView.cs">
