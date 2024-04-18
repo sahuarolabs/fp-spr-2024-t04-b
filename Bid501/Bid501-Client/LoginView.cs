@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Bid501_Client
 {
-    public partial class Form1 : Form
+    public partial class LoginView : Form
     {
-        public Form1()
+        public LoginView()
         {
             InitializeComponent();
         }

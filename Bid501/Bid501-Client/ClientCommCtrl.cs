@@ -14,20 +14,19 @@ namespace Bid501_Client
 
         public ClientCommCtrl()
         {
+            #region WebSocket Initialization
             ws = new WebSocket("ws://10.130.160.35:8001/Test");
             ws.Connect();
 
-            //Check Alive
+            #region Check WebSocket Connection
             bool conn = false;
             if (ws.IsAlive)
             {
                 conn = true;
             }
-            else
-            {
-                MessageBox.Show("Fuck you");
-            }
             MessageBox.Show("Connection: " + conn);
+            #endregion
+            #endregion
         }
 
         public void SendMessage(string message)
