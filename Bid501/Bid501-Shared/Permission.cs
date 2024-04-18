@@ -12,6 +12,7 @@ namespace Bid501_Shared
         LoginServer,
         AddProduct,
         EditProduct,
-        MakeBid
+        MakeBid,
+        EndAuction
     }
 }

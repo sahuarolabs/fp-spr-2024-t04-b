@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Bid501_Shared
 {
-    public class User : Account
+    public class Admin : Account
     {
         public static readonly List<Permission> PERMISSIONS = new List<Permission>
-            { Permission.LoginClient, Permission.MakeBid };
+            { Permission.LoginServer, Permission.AddProduct, Permission.EndAuction };
 
-        public User(string username, string password) : base(username, password, PERMISSIONS)
+        public Admin(string username, string password) : base(username, password, PERMISSIONS)
         {
         }
-    };
+    }
 }
