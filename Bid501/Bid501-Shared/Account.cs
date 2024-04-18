@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -13,14 +14,17 @@ namespace Bid501_Shared
         public string Password { get; set; } = "";
         public List<Permission> Permissions { get; set; }
 
-        public Account()
+        public Account(string username, string password, List<Permission> permissions)
         {
+            Username = username;
+            Password = password;
+            Permissions = permissions;
         }
 
+        // serialize the object to JSON (allows special characters in password)
         public string Serialize()
         {
-            //FIXME
-            return "";
+            return JsonConvert.SerializeObject(this);
         }
     }
 }
