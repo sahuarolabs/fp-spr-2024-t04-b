@@ -42,20 +42,20 @@ namespace Bid501_Server
         public ServerCommCtrl()
         {
 
-            WebSocketServer wss = new WebSocketServer("ws://10.130.160.36:8001");
+            WebSocketServer wss = new WebSocketServer("ws://127.0.0.1:8001");
             wss.AddWebSocketService<TestService>("/Test");
             wss.Start();
 
         }
 
-        protected void OnOpen()
+        protected override void OnOpen()
         {
 
         }
 
-        protected void OnMessage(MessageEventArgs e)
+        protected override void OnMessage(MessageEventArgs e)
         {
-
+            Send("True");
         }
 
         public void NotifyNewProduct()
@@ -63,7 +63,7 @@ namespace Bid501_Server
 
         }
 
-        public void NotfyNewBid()
+        public void NotifyNewBid()
         {
 
         }

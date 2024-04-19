@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocketSharp;
+using Bid501_Shared;
+using System.Runtime.Remoting.Messaging;
 
 namespace Bid501_Client
 {
@@ -12,36 +14,24 @@ namespace Bid501_Client
     {
         public WebSocket ws;
 
-        public ClientCommCtrl()
+        public ClientCommCtrl(WebSocket ws)
         {
-            #region WebSocket Initialization
-            ws = new WebSocket("ws://10.130.160.35:8001/Test");
-            ws.Connect();
-
-            #region Check WebSocket Connection
-            bool conn = false;
-            if (ws.IsAlive)
-            {
-                conn = true;
-            }
-            MessageBox.Show("Connection: " + conn);
-            #endregion
-            #endregion
+            this.ws = ws;
         }
 
-        public void SendMessage(string message)
+        /// <summary>
+        /// FIX:
+        /// Working on 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public bool handleLogin(string username, string password)
         {
-            if (ws.IsAlive)
-            {
-                MessageBox.Show("1");
-                ws.Send(message);
-                Console.WriteLine("Sent Message");
-            }
-            else
-            {
-                MessageBox.Show("0");
-                Console.WriteLine("WebSocket is not connected.");
-            }
+            bool i = false;
+            ws.OnMessage += (sender, e) =>
+                i = Convert.ToBoolean(e.Data);
+            return i;
         }
     }
 }

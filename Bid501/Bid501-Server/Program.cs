@@ -25,7 +25,6 @@ namespace Bid501_Server
             //Console.OpenStandardInput();
             //Console.ReadKey(true);
             Application.Run(new ServerView());
-            wss.Stop();
         }
 
     }
