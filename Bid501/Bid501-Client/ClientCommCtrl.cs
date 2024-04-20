@@ -7,16 +7,23 @@ using System.Windows.Forms;
 using WebSocketSharp;
 using Bid501_Shared;
 using System.Runtime.Remoting.Messaging;
+using WebSocketSharp.Server;
 
 namespace Bid501_Client
 {
-    public class ClientCommCtrl
+    public class ClientCommCtrl : WebSocketBehavior
     {
         public WebSocket ws;
 
         public ClientCommCtrl(WebSocket ws)
         {
             this.ws = ws;
+            this.ws.OnMessage += OnMessageHandler;
+        }
+
+        public void OnMessageHandler(object sender, MessageEventArgs e)
+        {
+            Console.WriteLine("IN: " + e.Data);
         }
 
         /// <summary>
@@ -31,6 +38,8 @@ namespace Bid501_Client
             bool i = false;
             ws.OnMessage += (sender, e) =>
                 i = Convert.ToBoolean(e.Data);
+
+            Console.WriteLine(i);
             return i;
         }
     }

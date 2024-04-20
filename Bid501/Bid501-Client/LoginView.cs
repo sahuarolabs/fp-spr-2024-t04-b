@@ -13,7 +13,6 @@ namespace Bid501_Client
 {
     public partial class LoginView : Form
     {
-
         WebSocket ws;
         ClientCommCtrl cCtrl;
 
@@ -32,6 +31,7 @@ namespace Bid501_Client
             MessageBox.Show("Connection: " + conn);
             #endregion
             #endregion
+
             InitializeComponent();
             cCtrl = new ClientCommCtrl(ws);
         }
@@ -41,8 +41,8 @@ namespace Bid501_Client
             string username = UsernameTextbox.Text;
             string password = PasswordTextbox.Text;
 
-            MessageBox.Show("" + cCtrl.handleLogin(username, password));
-            ws.Close();
+            bool loginResult = cCtrl.handleLogin(username, password);
+            MessageBox.Show("Login: " + loginResult);
         }
     }
 }

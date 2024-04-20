@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Management.Instrumentation;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using WebSocketSharp;
@@ -45,6 +46,7 @@ namespace Bid501_Server
             WebSocketServer wss = new WebSocketServer("ws://127.0.0.1:8001");
             wss.AddWebSocketService<TestService>("/Test");
             wss.Start();
+            wss.OnMessage += OnMessageHandler();
 
         }
 
@@ -53,8 +55,9 @@ namespace Bid501_Server
 
         }
 
-        protected override void OnMessage(MessageEventArgs e)
+        protected void OnMessageHandler(MessageEventArgs e)
         {
+            Console.WriteLine("" + e);
             Send("True");
         }
 

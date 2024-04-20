@@ -12,6 +12,7 @@ namespace Bid501_Server
 {
     public partial class ServerView : Form
     {
+        public ServerCommCtrl sCtrl = new ServerCommCtrl();
         public ServerView()
         {
             InitializeComponent();
