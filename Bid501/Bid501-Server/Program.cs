@@ -20,12 +20,12 @@ namespace Bid501_Server
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            WebSocketServer wss = new WebSocketServer("ws://10.130.160.134:8001");
+            WebSocketServer wss = new WebSocketServer(ServerCommCtrl.GetLocalIPAddress());
             wss.AddWebSocketService("/server", () => new ServerCommCtrl());
             wss.Start();
             Application.Run(new ServerView());
             wss.Stop();
-        }
+        } 
 
     }
 }
