@@ -23,7 +23,16 @@ namespace Bid501_Client
 
         public void OnMessageHandler(object sender, MessageEventArgs e)
         {
-            //e.Data = 
+            string msg = e.Data;
+            string[] strings = msg.Split(':');
+            string id = strings[0];
+
+            switch(id)
+            {
+                case "notifylogin":
+                    receiveLogin(strings[1]);
+                    break;
+            }
         }
          
         /// <summary>
@@ -33,14 +42,16 @@ namespace Bid501_Client
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool handleLogin(string username, string password)
+        public void sendLogin(string username, string password)
         {
             bool i = false;
-            ws.OnMessage += (sender, e) =>
-                i = Convert.ToBoolean(e.Data);
+            
+        }
 
-            Console.WriteLine(i);
-            return i;
+        public bool receiveLogin(string valid)
+        {
+            bool ret = Convert.ToBoolean(valid);
+            return ret;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Bid501_Client
         public LoginView()
         {
             #region WebSocket Initialization
-            ws = new WebSocket("ws://127.0.0.1:8001/Test");
+            ws = new WebSocket("ws://10.130.160.134:8001/server");
             ws.Connect();
 
             #region Check WebSocket Connection
