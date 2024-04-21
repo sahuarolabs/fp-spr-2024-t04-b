@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Bid501_Server
 {
-    public partial class AccontView : Form
+    public partial class AddProductView : Form
     {
-        public AccontView()
+        public AddProductView()
         {
             InitializeComponent();
         }

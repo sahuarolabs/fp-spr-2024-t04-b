@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace Bid501_Server
 {
-    internal class ServerController
+    public class ServerController
     {
+
+        //private Model model;
+
+        private ServerCommCtrl serverComm;
+
+        //private RefreshViewDel refreshView;
+
+
+
     }
 }
