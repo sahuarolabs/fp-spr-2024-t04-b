@@ -23,7 +23,7 @@ namespace Bid501_Client
 
         public void OnMessageHandler(object sender, MessageEventArgs e)
         {
-            Console.WriteLine("IN: " + e.Data);
+            //e.Data = 
         }
 
         /// <summary>

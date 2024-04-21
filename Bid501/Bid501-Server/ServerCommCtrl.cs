@@ -22,43 +22,19 @@ namespace Bid501_Server
 
             Send("Data from server");
         }
-
-        protected override void OnError(WebSocketSharp.ErrorEventArgs e)
-        {
-            // do nothing
-        }
     }
 
     public class ServerCommCtrl : WebSocketBehavior
     {
 
-        //private model Model;
-
-        //private addBidDel AddBid;
-
-        //private Dictionary<user,websocket>
-
-        //private logInDel LogIn;
-
-        public ServerCommCtrl()
+        protected override void OnMessage(MessageEventArgs e)
         {
-
-            WebSocketServer wss = new WebSocketServer("ws://127.0.0.1:8001");
-            wss.AddWebSocketService<TestService>("/Test");
-            wss.Start();
-            wss.OnMessage += OnMessageHandler();
-
-        }
-
-        protected override void OnOpen()
-        {
-
-        }
-
-        protected void OnMessageHandler(MessageEventArgs e)
-        {
-            Console.WriteLine("" + e);
-            Send("True");
+            string inJSON = e.Data;
+            string[] inputs = e.Data.Split(':');
+            switch(inputs[0]) 
+            {
+                    
+            }
         }
 
         public void NotifyNewProduct()
