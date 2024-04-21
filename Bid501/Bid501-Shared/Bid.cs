@@ -18,7 +18,7 @@ namespace Bid501_Shared
         /// The ammount the user wants to bid.
         /// </summary>
         public double Ammount { get; private set; }
-         
+
         /// <summary>
         /// Constructor for the Bid.
         /// </summary>

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Bid501_Shared
 {
+    [Serializable]
     public class Account
     {
         public string Username { get; set; } = "";

@@ -1,14 +1,22 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocketSharp;
 using WebSocketSharp.Server;
+using Bid501_Shared;
 
 namespace Bid501_Server
 {
-    internal static class Program
+
+    //public delegate void AddBidDel(Bid, Product);
+    public delegate void RefreshViewDel();
+    //public delegate void AddProductDel(Product);
+    //public delegate void EndAuctionDel(Product);
+
+    public class Program
     {
         
 

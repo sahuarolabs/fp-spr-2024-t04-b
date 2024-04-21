@@ -52,13 +52,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccontView.cs">
+    <Compile Include="AccountController.cs" />
+    <Compile Include="AddProductView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AccontView.Designer.cs">
-      <DependentUpon>AccontView.cs</DependentUpon>
+    <Compile Include="AddProductView.Designer.cs">
+      <DependentUpon>AddProductView.cs</DependentUpon>
     </Compile>
-    <Compile Include="AccountController.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="ServerCommCtrl.cs" />
     <Compile Include="ServerController.cs" />
     <Compile Include="ServerView.cs">
@@ -69,6 +70,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddProductView.resx">
+      <DependentUpon>AddProductView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -94,6 +98,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bid501-Shared\Bid501-Shared.csproj">
+      <Project>{9b319373-37c5-481c-9b34-0de1ebef3abc}</Project>
+      <Name>Bid501-Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
