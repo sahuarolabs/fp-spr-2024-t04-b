@@ -26,14 +26,25 @@ namespace Bid501_Server
 
     public class ServerCommCtrl : WebSocketBehavior
     {
-
         protected override void OnMessage(MessageEventArgs e)
         {
             string inJSON = e.Data;
             string[] inputs = e.Data.Split(':');
-            switch(inputs[0]) 
+            string id = inputs[0];
+            switch(id)
             {
-                    
+                case "login":
+
+                    break;
+                case "logout":
+
+                    break;
+                case "newbid":
+
+                    break;
+                default:
+                    Console.WriteLine("Fuck yourself");
+                    break;
             }
         }
 
