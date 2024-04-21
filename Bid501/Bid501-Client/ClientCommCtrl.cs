@@ -25,7 +25,7 @@ namespace Bid501_Client
         {
             //e.Data = 
         }
-
+         
         /// <summary>
         /// FIX:
         /// Working on 
