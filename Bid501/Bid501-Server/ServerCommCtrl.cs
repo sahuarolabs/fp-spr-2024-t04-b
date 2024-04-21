@@ -15,18 +15,6 @@ using static Bid501_Server.Program;
 
 namespace Bid501_Server
 {
-
-    //make region for 'services'
-    public class TestService : WebSocketBehavior
-    {
-        protected override void OnMessage(MessageEventArgs e)
-        {
-            Console.WriteLine("Received from client: " + e.Data);
-
-            Send("Data from server");
-        }
-    }
-
     public class ServerCommCtrl : WebSocketBehavior
     {
 
@@ -38,18 +26,8 @@ namespace Bid501_Server
 
         //private logInDel LogIn;
 
-        private string hostIP;
-
-        private WebSocketServer wss;
-
         public ServerCommCtrl()
         {
-            // this will need to change.
-            hostIP = GetLocalIPAddress();
-            wss = new WebSocketServer(hostIP);
-            MessageBox.Show(hostIP);
-            wss.AddWebSocketService<TestService>("/Test");
-            wss.Start();
 
         }
 
@@ -88,11 +66,6 @@ namespace Bid501_Server
                     Console.WriteLine("Fuck yourself");
                     break;
             }
-        }
-
-        public void CloseServer()
-        {
-            wss.Stop();
         }
 
         protected void OnOpen()

@@ -20,7 +20,7 @@ namespace Bid501_Server
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            WebSocketServer wss = new WebSocketServer(ServerCommCtrl.GetLocalIPAddress());
+            WebSocketServer wss = new WebSocketServer("ws://" + ServerCommCtrl.GetLocalIPAddress() + ":8001");
             wss.AddWebSocketService("/server", () => new ServerCommCtrl());
             wss.Start();
             Application.Run(new ServerView());
