@@ -32,7 +32,6 @@ namespace Bid501_Server
 
         }
 
-<<<<<<< HEAD
         public static string GetLocalIPAddress()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
@@ -46,29 +45,6 @@ namespace Bid501_Server
             }
             MessageBox.Show("No network adapters with an IPv4 address in the system!");
             return "";
-=======
-        public string GetLocalIPAddress()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    hostIP = ip.ToString();
-                }
-            }
-            throw new Exception("No network adapters with an IPv4 address in the system!");
-        }
-
-        public void CloseServer()
-        {
-            wss.Stop();
-        }
-
-        protected void OnOpen()
-        {
-            
->>>>>>> ServerDevBranch
         }
 
         protected override void OnMessage(MessageEventArgs e)
@@ -112,15 +88,6 @@ namespace Bid501_Server
         {
 
         }
-
-<<<<<<< HEAD
-=======
-        public void EndConnection()
-        {
-            wss.Stop();
-        }
->>>>>>> ServerDevBranch
-
     }
 
 }
