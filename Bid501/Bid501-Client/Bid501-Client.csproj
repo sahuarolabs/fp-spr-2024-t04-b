@@ -84,5 +84,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bid501-Shared\Bid501-Shared.csproj">
+      <Project>{9b319373-37c5-481c-9b34-0de1ebef3abc}</Project>
+      <Name>Bid501-Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

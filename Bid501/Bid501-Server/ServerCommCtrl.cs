@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Management.Instrumentation;
+using System.Net.Sockets;
+using System.Net;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 using static Bid501_Server.Program;
@@ -21,11 +25,6 @@ namespace Bid501_Server
 
             Send("Data from server");
         }
-
-        protected override void OnError(WebSocketSharp.ErrorEventArgs e)
-        {
-            // do nothing
-        }
     }
 
     public class ServerCommCtrl : WebSocketBehavior
@@ -39,21 +38,64 @@ namespace Bid501_Server
 
         //private logInDel LogIn;
 
+        private string hostIP;
+
+        private WebSocketServer wss;
+
         public ServerCommCtrl()
         {
-
-            WebSocketServer wss = new WebSocketServer("ws://10.130.160.36:8001");
+            // this will need to change.
+            hostIP = GetLocalIPAddress();
+            wss = new WebSocketServer(hostIP);
+            MessageBox.Show(hostIP);
             wss.AddWebSocketService<TestService>("/Test");
             wss.Start();
 
         }
 
-        protected void OnOpen()
+        public static string GetLocalIPAddress()
         {
-
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    MessageBox.Show(ip.ToString());
+                    return ip.ToString();
+                }
+            }
+            MessageBox.Show("No network adapters with an IPv4 address in the system!");
+            return "";
         }
 
-        protected void OnMessage(MessageEventArgs e)
+        protected override void OnMessage(MessageEventArgs e)
+        {
+            string inJSON = e.Data;
+            string[] inputs = e.Data.Split(':');
+            string id = inputs[0];
+            switch(id)
+            {
+                case "login":
+
+                    break;
+                case "logout":
+
+                    break;
+                case "newbid":
+
+                    break;
+                default:
+                    Console.WriteLine("Fuck yourself");
+                    break;
+            }
+        }
+
+        public void CloseServer()
+        {
+            wss.Stop();
+        }
+
+        protected void OnOpen()
         {
 
         }
@@ -73,5 +115,7 @@ namespace Bid501_Server
 
         }
 
+
     }
+
 }

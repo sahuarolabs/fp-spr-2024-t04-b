@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bid501-Server", "Bid501-Server\Bid501-Server.csproj", "{17079517-1F21-4929-AE51-D5298D5F7CF2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9B319373-37C5-481C-9B34-0DE1EBEF3ABC} = {9B319373-37C5-481C-9B34-0DE1EBEF3ABC}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bid501-Client", "Bid501-Client\Bid501-Client.csproj", "{E8EE456D-91E3-4C10-8E90-637234BC82DF}"
 	ProjectSection(ProjectDependencies) = postProject

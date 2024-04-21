@@ -20,13 +20,12 @@ namespace Bid501_Server
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Still looking to get this working on multiple computers :)
-            
-            //Console.OpenStandardInput();
-            //Console.ReadKey(true);
+            WebSocketServer wss = new WebSocketServer(ServerCommCtrl.GetLocalIPAddress());
+            wss.AddWebSocketService("/server", () => new ServerCommCtrl());
+            wss.Start();
             Application.Run(new ServerView());
             wss.Stop();
-        }
+        } 
 
     }
 }
