@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Management.Instrumentation;
+using System.Net.Sockets;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 using static Bid501_Server.Program;
+using System.Windows.Forms;
 
 namespace Bid501_Server
 {
+
+    
 
     //make region for 'services'
     public class TestService : WebSocketBehavior
@@ -39,20 +44,42 @@ namespace Bid501_Server
 
         //private logInDel LogIn;
 
-        private WebsocketServer wss;
+        private string hostIP;
+
+        private WebSocketServer wss;
 
         public ServerCommCtrl()
         {
-
-            wss = new WebSocketServer("ws://10.130.160.36:8001");
+            // this will need to change.
+            hostIP = GetLocalIPAddress();
+            wss = new WebSocketServer(hostIP);
+            MessageBox.Show(hostIP);
             wss.AddWebSocketService<TestService>("/Test");
             wss.Start();
 
         }
 
+        public string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    hostIP = ip.ToString();
+                }
+            }
+            throw new Exception("No network adapters with an IPv4 address in the system!");
+        }
+
+        public void CloseServer()
+        {
+            wss.Stop();
+        }
+
         protected void OnOpen()
         {
-
+            
         }
 
         protected void OnMessage(MessageEventArgs e)

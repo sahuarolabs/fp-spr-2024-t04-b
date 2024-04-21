@@ -79,6 +79,9 @@
             this.Text = "Admin view";
             this.ResumeLayout(false);
 
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ServerView_FormClosed);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
