@@ -11,10 +11,11 @@ using Bid501_Shared;
 namespace Bid501_Server
 {
 
-    //public delegate void AddBidDel(Bid, Product);
+    public delegate void AddBidDel(Bid b, Product p);
     public delegate void RefreshViewDel();
-    //public delegate void AddProductDel(Product);
-    //public delegate void EndAuctionDel(Product);
+    public delegate void AddProductDel(Product p);
+    public delegate void EndAuctionDel(Product p);
+    public delegate bool logInDel(string name, string pass);
 
     public class Program
     {
@@ -29,7 +30,7 @@ namespace Bid501_Server
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             WebSocketServer wss = new WebSocketServer("ws://" + ServerCommCtrl.GetLocalIPAddress() + ":8001");
-            wss.AddWebSocketService("/server", () => new ServerCommCtrl());
+            wss.AddWebSocketService("/server", () => new ServerCommCtrl(ServerController.AddBid , ServerController.LogIn));
             wss.Start();
             Application.Run(new ServerView());
             wss.Stop();

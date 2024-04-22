@@ -13,23 +13,25 @@ using WebSocketSharp;
 using WebSocketSharp.Server;
 using static Bid501_Server.Program;
 using System.Windows.Forms;
+using Bid501_Shared;
 
 namespace Bid501_Server
 {
     public class ServerCommCtrl : WebSocketBehavior
     {
 
-        //private model Model;
+        private Model model;
 
-        //private addBidDel AddBid;
+        private AddBidDel AddBid;
 
-        //private Dictionary<user,websocket>
+        private Dictionary<User, WebSocket> clients;
 
-        //private logInDel LogIn;
+        private logInDel LogIn;
 
-        public ServerCommCtrl()
+        public ServerCommCtrl(AddBidDel addBidDel, logInDel logInDel)
         {
-
+            AddBid = addBidDel;
+            LogIn = logInDel;
         }
 
         public static string GetLocalIPAddress()
@@ -69,7 +71,7 @@ namespace Bid501_Server
             }
         }
 
-        protected void OnOpen()
+        protected override void OnOpen()
         {
 
         }
@@ -88,6 +90,13 @@ namespace Bid501_Server
         {
 
         }
+
+        public Dictionary<User, WebSocket> GetClients()
+        {
+            return clients;
+        }
+
+        
     }
 
 }
