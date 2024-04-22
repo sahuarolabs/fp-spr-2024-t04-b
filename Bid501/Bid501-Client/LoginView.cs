@@ -18,8 +18,11 @@ namespace Bid501_Client
 
         public LoginView()
         {
+            InitializeComponent();
+
             #region WebSocket Initialization
-            ws = new WebSocket("ws://10.130.160.134:8001/server");
+            string ip = "10.130.160.134";
+            ws = new WebSocket("ws://"+ ip + ":8001/server");
             ws.Connect();
 
             #region Check WebSocket Connection
@@ -28,12 +31,11 @@ namespace Bid501_Client
             {
                 conn = true;
             }
-            MessageBox.Show("Connection: " + conn);
             #endregion
             #endregion
 
-            InitializeComponent();
             cCtrl = new ClientCommCtrl(ws);
+            uxSocketStat.Text = "  Connection: " + conn + "\n IP: " + ip;
         }
 
         private void UxLoginButton_Click(object sender, EventArgs e)
@@ -41,8 +43,8 @@ namespace Bid501_Client
             string username = UsernameTextbox.Text;
             string password = PasswordTextbox.Text;
 
-            bool loginResult = cCtrl.handleLogin(username, password);
-            MessageBox.Show("Login: " + loginResult);
+            //bool loginResult = cCtrl.sendLogin(username, password);
+            //MessageBox.Show("Login: " + loginResult);
         }
     }
 }
