@@ -69,5 +69,10 @@ namespace Bid501_Client
             StartingPrice = startingPrice;
             Consigner = consigner;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
