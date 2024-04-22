@@ -16,6 +16,7 @@ namespace Bid501_Server
     public delegate void AddProductDel(Product p);
     public delegate void EndAuctionDel(Product p);
     public delegate bool logInDel(string name, string pass);
+    public delegate Dictionary<User, WebSocket> GetClientsDel();
 
     public class Program
     {
@@ -30,9 +31,11 @@ namespace Bid501_Server
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             WebSocketServer wss = new WebSocketServer("ws://" + ServerCommCtrl.GetLocalIPAddress() + ":8001");
-            wss.AddWebSocketService("/server", () => new ServerCommCtrl(ServerController.AddBid , ServerController.LogIn));
+            ServerController serverCtrl = new ServerController(ServerView.RefreshView);
+            ServerCommCtrl scc = new ServerCommCtrl(serverCtrl.AddBid, serverCtrl.LogIn);
+            wss.AddWebSocketService("/server", () => scc);
             wss.Start();
-            Application.Run(new ServerView());
+            Application.Run(new ServerView(scc.GetClients));
             wss.Stop();
         } 
 

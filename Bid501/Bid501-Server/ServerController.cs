@@ -23,12 +23,12 @@ namespace Bid501_Server
         }
 
 
-        public static void AddBid(Bid b, Product p)
+        public void AddBid(Bid b, Product p)
         {
 
         }
 
-        public static bool LogIn(string user, string pass)
+        public bool LogIn(string user, string pass)
         {
             return true;
         }
