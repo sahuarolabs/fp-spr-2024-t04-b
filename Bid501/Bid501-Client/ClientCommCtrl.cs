@@ -34,7 +34,7 @@ namespace Bid501_Client
                     break;
             }
         }
-         
+        
         /// <summary>
         /// FIX:
         /// Working on 
