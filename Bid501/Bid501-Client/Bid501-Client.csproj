@@ -49,6 +49,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BidCtrl.cs" />
     <Compile Include="BidView.cs">
       <SubType>Form</SubType>
     </Compile>

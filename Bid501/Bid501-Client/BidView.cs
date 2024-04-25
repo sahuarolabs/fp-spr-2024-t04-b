@@ -8,15 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bid501_Shared;
+using static Bid501_Client.BidCtrl;
 
 namespace Bid501_Client
 {
     public partial class BidView : Form
     {
+        private MakeBid makeBid;
+
         public List<ProductProxy> List = new List<ProductProxy>() { new ProductProxy(1,"Hotdog",999.00,new Account("a","b",new List<Permission>())), new ProductProxy(1, "Hamdog", 0.10, new Account("a", "b", new List<Permission>()))};
 
-        public BidView()
+        public BidView(MakeBid make)
         {
+            makeBid = make;
             InitializeComponent();
             UxProductListBox.DataSource = List;
         }
@@ -28,15 +32,8 @@ namespace Bid501_Client
             {
                 try
                 {
-                    double suggested = Math.Round(Convert.ToDouble(UxNewBidTextBox.Text),2);
-                    if (suggested > List[UxProductListBox.SelectedIndex].Price)
-                    {
-                        MessageBox.Show($"Sent to Server {suggested}");
-                    }
-                    else
-                    {
-                        MessageBox.Show($"Did not send {suggested}");
-                    }
+                    double suggested = Math.Round(Convert.ToDouble(UxNewBidTextBox.Text), 2);
+                    makeBid(new Bid(new Account("a", "b", new List<Permission>()), suggested), List[UxProductListBox.SelectedIndex]);
                 }
                 catch { MessageBox.Show("Please enter a valid number (0.00)"); }
             }

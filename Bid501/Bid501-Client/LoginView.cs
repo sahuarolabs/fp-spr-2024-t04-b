@@ -43,12 +43,6 @@ namespace Bid501_Client
 
             bool loginResult = cCtrl.handleLogin(username, password);
             MessageBox.Show("Login: " + loginResult);
-
-            //if(loginResult)
-            {
-                BidView bidView = new BidView();
-                bidView.Show();
-            }
         }
     }
 }

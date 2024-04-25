@@ -14,6 +14,8 @@ namespace Bid501_Client
     public class ClientCommCtrl : WebSocketBehavior
     {
         public WebSocket ws;
+        BidCtrl bidCtrl;
+        public delegate void SendToServer(Bid bid, ProductProxy product);
 
         public ClientCommCtrl(WebSocket ws)
         {
@@ -26,6 +28,15 @@ namespace Bid501_Client
             //e.Data = 
         }
          
+        /// <summary>
+        /// Sends a bid from bidctrl to websocket for the server to check
+        /// </summary>
+        /// <param name="bid">The bid added from bidctrl</param>
+        public void SendBid(Bid bid, IProduct product)
+        {
+            MessageBox.Show($"Sent to Server {bid.Ammount}");
+        }
+
         /// <summary>
         /// FIX:
         /// Working on 
@@ -40,6 +51,11 @@ namespace Bid501_Client
                 i = Convert.ToBoolean(e.Data);
 
             Console.WriteLine(i);
+            MessageBox.Show("Login: " + i);
+            if(true) //replace true with i whenever we get to actually do logins
+            {
+                bidCtrl = new BidCtrl(new Account("Dummy", "Password", new List<Permission>()), SendBid);
+            }
             return i;
         }
     }
