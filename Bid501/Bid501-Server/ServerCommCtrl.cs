@@ -22,16 +22,16 @@ namespace Bid501_Server
 
         private Model model;
 
-        private AddBidDel AddBid;
+        private AddBidDel addBid;
 
         private Dictionary<User, WebSocket> clients;
 
-        private logInDel LogIn;
+        private LoginDel login;
 
-        public ServerCommCtrl(AddBidDel addBidDel, logInDel logInDel)
+        public ServerCommCtrl(AddBidDel addBidDel, LoginDel loginDel)
         {
-            AddBid = addBidDel;
-            LogIn = logInDel;
+            addBid = addBidDel;
+            login = loginDel;
         }
 
         public static string GetLocalIPAddress()

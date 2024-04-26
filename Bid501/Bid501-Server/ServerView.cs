@@ -17,13 +17,13 @@ namespace Bid501_Server
 
         GetClientsDel GetClients;
 
-        public ServerView(GetClientsDel getClientsDel)
+        public ServerView(/* GetClientsDel getClientsDel */)
         {
             InitializeComponent();
             // May need to axe this, since the web socket server opens a new ServerCommCtrl() on program init.
             //serverCommCtrl = new ServerCommCtrl();
             //uxListBoxClients.DataSource = serverCommCtrl.GetClients();
-            GetClients = getClientsDel;
+            // GetClients = getClientsDel;
         }
 
         private void ServerView_FormClosed(object sender, FormClosedEventArgs e)
