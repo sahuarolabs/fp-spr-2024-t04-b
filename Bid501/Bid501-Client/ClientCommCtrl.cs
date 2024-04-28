@@ -8,6 +8,8 @@ using WebSocketSharp;
 using Bid501_Shared;
 using System.Runtime.Remoting.Messaging;
 using WebSocketSharp.Server;
+using System.Windows.Forms.VisualStyles;
+using System.Runtime.CompilerServices;
 
 namespace Bid501_Client
 {
@@ -16,8 +18,9 @@ namespace Bid501_Client
         public WebSocket ws;
         BidCtrl bidCtrl;
         public delegate void SendToServer(Bid bid, ProductProxy product);
-        public delegate void LoginResponseHandler(bool success);
+        public delegate void LoginResponseHandler(bool success, string[] info);
         private LoginResponseHandler loginCallback;
+        private string[] cDetails = { "", "" };
 
         public ClientCommCtrl(WebSocket ws)
         {
@@ -37,7 +40,7 @@ namespace Bid501_Client
             if (parts[0] == "notifylogin")
             {
                 bool isValid = bool.Parse(parts[1]);
-                loginCallback?.Invoke(isValid);
+                loginCallback?.Invoke(isValid, cDetails);
             }
         }
 
@@ -52,7 +55,8 @@ namespace Bid501_Client
         /// <returns></returns>
         public void sendLogin(string username, string password, LoginResponseHandler callback)
         {
-            string x = $"login:{username}:{password}:False";
+            cDetails[0] = username; cDetails[1] = password;
+            string x = $"login:{username}:{password}";
             ws.Send(x);
             this.loginCallback = callback;
 

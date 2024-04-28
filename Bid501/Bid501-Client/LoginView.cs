@@ -13,8 +13,8 @@ namespace Bid501_Client
 {
     public partial class LoginView : Form
     {
-
         public ClientCommCtrl cCtrl;
+        private BidCtrl bCtrl;
 
         public LoginView(ClientCommCtrl cCtrl)
         {
@@ -38,11 +38,18 @@ namespace Bid501_Client
             cCtrl.sendLogin(username, password, HandleLoginResponse);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="isSuccess"></param>
         private void HandleLoginResponse(bool isSuccess)
         {
             Invoke((MethodInvoker)delegate
             {
-                MessageBox.Show("Login: " + (isSuccess ? "Successful" : "Failed"));
+                if (isSuccess)
+                {
+                    BidCtrl bCtrl = new
+                }
             });
         }
     }

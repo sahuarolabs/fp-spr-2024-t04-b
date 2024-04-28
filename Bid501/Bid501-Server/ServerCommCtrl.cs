@@ -57,7 +57,7 @@ namespace Bid501_Server
             switch(id)
             {
                 case "login":
-
+                    Send("notifylogin:True");
                     break;
                 case "logout":
 
