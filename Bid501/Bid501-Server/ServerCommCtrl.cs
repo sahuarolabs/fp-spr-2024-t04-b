@@ -13,49 +13,26 @@ using WebSocketSharp;
 using WebSocketSharp.Server;
 using static Bid501_Server.Program;
 using System.Windows.Forms;
+using Bid501_Shared;
 
 namespace Bid501_Server
 {
-
-    
-
-    //make region for 'services'
-    public class TestService : WebSocketBehavior
-    {
-        protected override void OnMessage(MessageEventArgs e)
-        {
-            Console.WriteLine("Received from client: " + e.Data);
-
-            Send("Data from server");
-        }
-    }
-
     public class ServerCommCtrl : WebSocketBehavior
     {
 
-        //private model Model;
+        private Model model;
 
-        //private addBidDel AddBid;
+        private AddBidDel AddBid;
 
-        //private Dictionary<user,websocket>
+        private Dictionary<User, WebSocket> clients;
 
-        //private logInDel LogIn;
+        private logInDel LogIn;
 
-        private string hostIP;
-
-        private WebSocketServer wss;
-
-        public ServerCommCtrl()
+        public ServerCommCtrl(AddBidDel addBidDel, logInDel logInDel)
         {
-            // this will need to change.
-            hostIP = GetLocalIPAddress();
-            wss = new WebSocketServer(hostIP);
-            MessageBox.Show(hostIP);
-            wss.AddWebSocketService<TestService>("/Test");
-            wss.Start();
-
+            AddBid = addBidDel;
+            LogIn = logInDel;
         }
-
 
         public static string GetLocalIPAddress()
         {
@@ -94,12 +71,7 @@ namespace Bid501_Server
             }
         }
 
-        public void CloseServer()
-        {
-            wss.Stop();
-        }
-
-        protected void OnOpen()
+        protected override void OnOpen()
         {
 
         }
@@ -118,5 +90,11 @@ namespace Bid501_Server
         {
 
         }
+
+        public Dictionary<User, WebSocket> GetClients()
+        {
+            return clients;
+        }  
+        
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,9 +13,11 @@ namespace Bid501_Client
 {
     public class ClientCommCtrl : WebSocketBehavior
     {
+        ClientViews
         public WebSocket ws;
         BidCtrl bidCtrl;
         public delegate void SendToServer(Bid bid, ProductProxy product);
+        // TestMergeMain
 
         public ClientCommCtrl(WebSocket ws)
         {
@@ -25,9 +27,18 @@ namespace Bid501_Client
 
         public void OnMessageHandler(object sender, MessageEventArgs e)
         {
-            //e.Data = 
+            string msg = e.Data;
+            string[] strings = msg.Split(':');
+            string id = strings[0];
+
+            switch(id)
+            {
+                case "notifylogin":
+                    receiveLogin(strings[1]);
+                    break;
+            }
         }
-         
+        
         /// <summary>
         /// Sends a bid from bidctrl to websocket for the server to check
         /// </summary>
@@ -44,12 +55,15 @@ namespace Bid501_Client
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool handleLogin(string username, string password)
+        public void sendLogin(string username, string password)
         {
             bool i = false;
-            ws.OnMessage += (sender, e) =>
-                i = Convert.ToBoolean(e.Data);
+            
+        }
 
+        public bool receiveLogin(string valid)
+        {
+            ClientViews
             Console.WriteLine(i);
             MessageBox.Show("Login: " + i);
             if(true) //replace true with i whenever we get to actually do logins

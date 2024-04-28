@@ -34,6 +34,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.UsernameTextbox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.uxSocketStat = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -95,6 +96,7 @@
             this.panel1.AutoScroll = true;
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.uxSocketStat);
             this.panel1.Controls.Add(this.UxLoginButton);
             this.panel1.Controls.Add(this.PasswordTextbox);
             this.panel1.Controls.Add(this.label2);
@@ -105,6 +107,14 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 450);
             this.panel1.TabIndex = 5;
+            // 
+            // uxSocketStat
+            // 
+            this.uxSocketStat.AutoSize = true;
+            this.uxSocketStat.Location = new System.Drawing.Point(343, 416);
+            this.uxSocketStat.Name = "uxSocketStat";
+            this.uxSocketStat.Size = new System.Drawing.Size(0, 13);
+            this.uxSocketStat.TabIndex = 5;
             // 
             // LoginView
             // 
@@ -129,6 +139,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox UsernameTextbox;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label uxSocketStat;
     }
 }
 

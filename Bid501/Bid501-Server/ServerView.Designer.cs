@@ -28,34 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listBoxProducts = new System.Windows.Forms.ListBox();
-            this.listBoxBids = new System.Windows.Forms.ListBox();
+            this.uxListBoxProducts = new System.Windows.Forms.ListBox();
+            this.uxListBoxClients = new System.Windows.Forms.ListBox();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // listBoxProducts
+            // uxListBoxProducts
             // 
-            this.listBoxProducts.FormattingEnabled = true;
-            this.listBoxProducts.Items.AddRange(new object[] {
+            this.uxListBoxProducts.FormattingEnabled = true;
+            this.uxListBoxProducts.Items.AddRange(new object[] {
             "PS4",
             "iPhone 7",
             "Bose SoundSport",
             "Arduino Microcontroller"});
-            this.listBoxProducts.Location = new System.Drawing.Point(12, 12);
-            this.listBoxProducts.Name = "listBoxProducts";
-            this.listBoxProducts.Size = new System.Drawing.Size(162, 225);
-            this.listBoxProducts.TabIndex = 0;
+            this.uxListBoxProducts.Location = new System.Drawing.Point(12, 12);
+            this.uxListBoxProducts.Name = "uxListBoxProducts";
+            this.uxListBoxProducts.Size = new System.Drawing.Size(162, 225);
+            this.uxListBoxProducts.TabIndex = 0;
             // 
-            // listBoxBids
+            // uxListBoxClients
             // 
-            this.listBoxBids.FormattingEnabled = true;
-            this.listBoxBids.Items.AddRange(new object[] {
+            this.uxListBoxClients.FormattingEnabled = true;
+            this.uxListBoxClients.Items.AddRange(new object[] {
             "Client 54181145",
             "Client 33711845"});
-            this.listBoxBids.Location = new System.Drawing.Point(180, 12);
-            this.listBoxBids.Name = "listBoxBids";
-            this.listBoxBids.Size = new System.Drawing.Size(162, 225);
-            this.listBoxBids.TabIndex = 1;
+            this.uxListBoxClients.Location = new System.Drawing.Point(180, 12);
+            this.uxListBoxClients.Name = "uxListBoxClients";
+            this.uxListBoxClients.Size = new System.Drawing.Size(162, 225);
+            this.uxListBoxClients.TabIndex = 1;
             // 
             // buttonAdd
             // 
@@ -73,12 +73,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(355, 293);
             this.Controls.Add(this.buttonAdd);
-            this.Controls.Add(this.listBoxBids);
-            this.Controls.Add(this.listBoxProducts);
+            this.Controls.Add(this.uxListBoxClients);
+            this.Controls.Add(this.uxListBoxProducts);
             this.Name = "ServerView";
             this.Text = "Admin view";
-            this.ResumeLayout(false);
-
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ServerView_FormClosed);
             this.ResumeLayout(false);
 
@@ -86,8 +84,8 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox listBoxProducts;
-        private System.Windows.Forms.ListBox listBoxBids;
+        private System.Windows.Forms.ListBox uxListBoxProducts;
+        private System.Windows.Forms.ListBox uxListBoxClients;
         private System.Windows.Forms.Button buttonAdd;
     }
 }

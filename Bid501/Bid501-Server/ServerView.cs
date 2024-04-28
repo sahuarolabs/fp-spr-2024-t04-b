@@ -12,13 +12,18 @@ namespace Bid501_Server
 {
     public partial class ServerView : Form
     {
+        //Refer to comment in contructor
+        //private ServerCommCtrl serverCommCtrl;
 
-        private ServerCommCtrl serverCommCtrl;
+        GetClientsDel GetClients;
 
-        public ServerView()
+        public ServerView(GetClientsDel getClientsDel)
         {
             InitializeComponent();
-            serverCommCtrl = new ServerCommCtrl();
+            // May need to axe this, since the web socket server opens a new ServerCommCtrl() on program init.
+            //serverCommCtrl = new ServerCommCtrl();
+            //uxListBoxClients.DataSource = serverCommCtrl.GetClients();
+            GetClients = getClientsDel;
         }
 
         private void ServerView_FormClosed(object sender, FormClosedEventArgs e)
@@ -31,6 +36,9 @@ namespace Bid501_Server
 
         }
 
-        ///REMINDER: necessary to add a Form.Closed event handler to closs the websocket server in ServerCommCtrl
+        public static void RefreshView()
+        {
+           
+        }
     }
 }
