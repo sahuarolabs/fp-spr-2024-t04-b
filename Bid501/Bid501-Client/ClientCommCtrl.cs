@@ -13,7 +13,7 @@ namespace Bid501_Client
 {
     public class ClientCommCtrl : WebSocketBehavior
     {
-        public WebSocket ws;
+        public WebSocket ws; 
 
         public ClientCommCtrl(WebSocket ws)
         {
