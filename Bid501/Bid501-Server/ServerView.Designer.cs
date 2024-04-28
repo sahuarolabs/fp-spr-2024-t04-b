@@ -76,6 +76,7 @@
             this.Controls.Add(this.uxListBoxClients);
             this.Controls.Add(this.uxListBoxProducts);
             this.Name = "ServerView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Admin view";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ServerView_FormClosed);
             this.ResumeLayout(false);

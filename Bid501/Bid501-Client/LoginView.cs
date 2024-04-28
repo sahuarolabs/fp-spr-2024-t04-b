@@ -13,29 +13,21 @@ namespace Bid501_Client
 {
     public partial class LoginView : Form
     {
-        WebSocket ws;
-        ClientCommCtrl cCtrl;
 
-        public LoginView()
+        public ClientCommCtrl cCtrl;
+
+        public LoginView(ClientCommCtrl cCtrl)
         {
             InitializeComponent();
-
-            #region WebSocket Initialization
-            string ip = "10.130.160.134";
-            ws = new WebSocket("ws://"+ ip + ":8001/server");
-            ws.Connect();
-
-            #region Check WebSocket Connection
-            bool conn = false;
-            if (ws.IsAlive)
+            this.cCtrl = cCtrl;
+            if (cCtrl.ws.IsAlive)
             {
-                conn = true;
+                uxSocketStat.Text = "  Connection: True";
             }
-            #endregion
-            #endregion
-
-            cCtrl = new ClientCommCtrl(ws);
-            uxSocketStat.Text = "  Connection: " + conn + "\n IP: " + ip;
+            else
+            {
+                uxSocketStat.Text = " Connection: False";
+            }
         }
 
         private void UxLoginButton_Click(object sender, EventArgs e)
@@ -43,8 +35,15 @@ namespace Bid501_Client
             string username = UsernameTextbox.Text;
             string password = PasswordTextbox.Text;
 
-            //bool loginResult = cCtrl.sendLogin(username, password);
-            //MessageBox.Show("Login: " + loginResult);
+            cCtrl.sendLogin(username, password, HandleLoginResponse);
+        }
+
+        private void HandleLoginResponse(bool isSuccess)
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                MessageBox.Show("Login: " + (isSuccess ? "Successful" : "Failed"));
+            });
         }
     }
 }

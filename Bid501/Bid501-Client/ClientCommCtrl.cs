@@ -13,32 +13,53 @@ namespace Bid501_Client
 {
     public class ClientCommCtrl : WebSocketBehavior
     {
-        ClientViews
         public WebSocket ws;
         BidCtrl bidCtrl;
         public delegate void SendToServer(Bid bid, ProductProxy product);
-        // TestMergeMain
+        public delegate void LoginResponseHandler(bool success);
+        private LoginResponseHandler loginCallback;
 
         public ClientCommCtrl(WebSocket ws)
         {
             this.ws = ws;
             this.ws.OnMessage += OnMessageHandler;
+            this.ws.Connect();
         }
 
+        /// <summary>
+        /// Receives messages from the server and redirects split strings to appropriate method
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">string of information</param>
         public void OnMessageHandler(object sender, MessageEventArgs e)
         {
-            string msg = e.Data;
-            string[] strings = msg.Split(':');
-            string id = strings[0];
-
-            switch(id)
+            string[] parts = e.Data.Split(':');
+            if (parts[0] == "notifylogin")
             {
-                case "notifylogin":
-                    receiveLogin(strings[1]);
-                    break;
+                bool isValid = bool.Parse(parts[1]);
+                loginCallback?.Invoke(isValid);
             }
         }
-        
+
+        #region LOGIN SHIT
+
+        /// <summary>
+        /// TO server -- Login
+        /// Working on 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public void sendLogin(string username, string password, LoginResponseHandler callback)
+        {
+            string x = $"login:{username}:{password}:False";
+            ws.Send(x);
+            this.loginCallback = callback;
+
+        }
+        #endregion
+
+        #region BID SHIT
         /// <summary>
         /// Sends a bid from bidctrl to websocket for the server to check
         /// </summary>
@@ -48,29 +69,6 @@ namespace Bid501_Client
             MessageBox.Show($"Sent to Server {bid.Ammount}");
         }
 
-        /// <summary>
-        /// FIX:
-        /// Working on 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public void sendLogin(string username, string password)
-        {
-            bool i = false;
-            
-        }
-
-        public bool receiveLogin(string valid)
-        {
-            ClientViews
-            Console.WriteLine(i);
-            MessageBox.Show("Login: " + i);
-            if(true) //replace true with i whenever we get to actually do logins
-            {
-                bidCtrl = new BidCtrl(new Account("Dummy", "Password", new List<Permission>()), SendBid);
-            }
-            return i;
-        }
+        #endregion
     }
 }
