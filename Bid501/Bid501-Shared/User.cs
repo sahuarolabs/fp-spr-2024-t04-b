@@ -11,7 +11,7 @@ namespace Bid501_Shared
         public static readonly List<Permission> PERMISSIONS = new List<Permission>
             { Permission.LoginClient, Permission.MakeBid };
 
-        public User(string username, string password) : base(username, password, PERMISSIONS)
+        public User(string username, string password) : base(username, password, false)
         {
         }
     };
