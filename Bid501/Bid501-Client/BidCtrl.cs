@@ -13,9 +13,8 @@ namespace Bid501_Client
     {
         public delegate bool MakeBid(Bid bid, ProductProxy product);
 
-        private SendToServer send;
-
         BidView bidView;
+        ClientCommCtrl cCtrl;
 
 
         public bool Attemptbid(Bid bid, ProductProxy product)
@@ -23,7 +22,7 @@ namespace Bid501_Client
 
                 if (bid.Ammount > product.Price)
                 {
-                    send(bid, product);
+                    cCtrl.SendBid(bid, product);
                 }
                 else
                 {
@@ -36,9 +35,9 @@ namespace Bid501_Client
         /// Constructor for bidcontrol
         /// </summary>
         /// <param name="account">The successfully logged in account</param>
-        public BidCtrl(Account account, SendToServer toServer)
+        public BidCtrl(Account account, ClientCommCtrl cCtrl)
         {
-            send = toServer;
+            this.cCtrl = cCtrl;
             bidView = new BidView(Attemptbid);
             bidView.Show();
         }

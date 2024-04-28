@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using WebSocketSharp;
 
 namespace Bid501_Client
@@ -42,13 +43,13 @@ namespace Bid501_Client
         /// 
         /// </summary>
         /// <param name="isSuccess"></param>
-        private void HandleLoginResponse(bool isSuccess)
+        private void HandleLoginResponse(bool isSuccess, string[] deets)
         {
             Invoke((MethodInvoker)delegate
             {
                 if (isSuccess)
                 {
-                    BidCtrl bCtrl = new
+                    bCtrl = new BidCtrl(new Bid501_Shared.Account(deets[0], deets[1], false), cCtrl);
                 }
             });
         }

@@ -16,13 +16,13 @@ namespace Bid501_Client
     {
         private MakeBid makeBid;
 
-        public List<ProductProxy> List = new List<ProductProxy>() { new ProductProxy(1,"Hotdog",999.00,new Account("a","b",new List<Permission>())), new ProductProxy(1, "Hamdog", 0.10, new Account("a", "b", new List<Permission>()))};
+        //public List<ProductProxy> List = new List<ProductProxy>() { new ProductProxy(1,"Hotdog",999.00,new Account("a","b",new List<Permission>())), new ProductProxy(1, "Hamdog", 0.10, new Account("a", "b", new List<Permission>()))};
 
         public BidView(MakeBid make)
         {
             makeBid = make;
             InitializeComponent();
-            UxProductListBox.DataSource = List;
+            //UxProductListBox.DataSource = List;
         }
 
         private void UxPlaceBid_Click(object sender, EventArgs e)
@@ -33,7 +33,7 @@ namespace Bid501_Client
                 try
                 {
                     double suggested = Math.Round(Convert.ToDouble(UxNewBidTextBox.Text), 2);
-                    makeBid(new Bid(new Account("a", "b", new List<Permission>()), suggested), List[UxProductListBox.SelectedIndex]);
+                    //makeBid(new Bid(new Account("a", "b", new List<Permission>()), suggested), List[UxProductListBox.SelectedIndex]);
                 }
                 catch { MessageBox.Show("Please enter a valid number (0.00)"); }
             }
