@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +13,11 @@ namespace Bid501_Client
 {
     public class ClientCommCtrl : WebSocketBehavior
     {
+        ClientViews
         public WebSocket ws;
+        BidCtrl bidCtrl;
+        public delegate void SendToServer(Bid bid, ProductProxy product);
+        // TestMergeMain
 
         public ClientCommCtrl(WebSocket ws)
         {
@@ -36,6 +40,15 @@ namespace Bid501_Client
         }
         
         /// <summary>
+        /// Sends a bid from bidctrl to websocket for the server to check
+        /// </summary>
+        /// <param name="bid">The bid added from bidctrl</param>
+        public void SendBid(Bid bid, IProduct product)
+        {
+            MessageBox.Show($"Sent to Server {bid.Ammount}");
+        }
+
+        /// <summary>
         /// FIX:
         /// Working on 
         /// </summary>
@@ -50,8 +63,14 @@ namespace Bid501_Client
 
         public bool receiveLogin(string valid)
         {
-            bool ret = Convert.ToBoolean(valid);
-            return ret;
+            ClientViews
+            Console.WriteLine(i);
+            MessageBox.Show("Login: " + i);
+            if(true) //replace true with i whenever we get to actually do logins
+            {
+                bidCtrl = new BidCtrl(new Account("Dummy", "Password", new List<Permission>()), SendBid);
+            }
+            return i;
         }
     }
 }

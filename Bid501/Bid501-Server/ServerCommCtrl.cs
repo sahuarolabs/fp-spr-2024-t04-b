@@ -94,10 +94,7 @@ namespace Bid501_Server
         public Dictionary<User, WebSocket> GetClients()
         {
             return clients;
-        }
-
-        
+        }  
         
     }
-
 }

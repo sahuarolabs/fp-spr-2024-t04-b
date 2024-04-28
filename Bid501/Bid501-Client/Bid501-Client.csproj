@@ -49,6 +49,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BidCtrl.cs" />
+    <Compile Include="BidView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BidView.Designer.cs">
+      <DependentUpon>BidView.cs</DependentUpon>
+    </Compile>
     <Compile Include="ClientCommCtrl.cs" />
     <Compile Include="LoginView.cs">
       <SubType>Form</SubType>
@@ -56,8 +63,12 @@
     <Compile Include="LoginView.Designer.cs">
       <DependentUpon>LoginView.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProductProxy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BidView.resx">
+      <DependentUpon>BidView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginView.resx">
       <DependentUpon>LoginView.cs</DependentUpon>
     </EmbeddedResource>
