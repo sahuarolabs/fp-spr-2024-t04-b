@@ -26,7 +26,12 @@ namespace Bid501_Client
         {
             this.ws = ws;
             this.ws.OnMessage += OnMessageHandler;
-            this.ws.Connect();
+            int tries = 0;
+            while (!ws.IsAlive && tries < 4)
+            {
+                this.ws.Connect(); 
+                tries++;
+            } 
         }
 
         /// <summary>

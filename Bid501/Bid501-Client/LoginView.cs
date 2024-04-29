@@ -21,6 +21,7 @@ namespace Bid501_Client
         {
             InitializeComponent();
             this.cCtrl = cCtrl;
+            ConnectionVerification();
         }
 
         private void ConnectionVerification()

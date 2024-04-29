@@ -12,27 +12,14 @@ using Newtonsoft.Json;
 namespace Bid501_Server
 {
     public class ServerCommCtrl : WebSocketBehavior
-    {
-
-        /// <summary>
-        /// List of all of the accounts Admin and Users
-        /// </summary>
-        private List<Account> Accounts = new List<Account>();
-
-        private Model model;
-
-        /// <summary>
-        /// Add Bid Delegate
-        /// </summary>
+    { 
         private AddBidDel AddBid;
-
-        private Dictionary<User, WebSocket> clients;
-
-        /// <summary>
-        /// Login Delegate
-        /// </summary>
         private logInDel LogIn;
 
+        private List<Account> Accounts = new List<Account>();
+        private Dictionary<User, WebSocket> clients;
+        private Model model;
+        
         public ServerCommCtrl(AddBidDel addBidDel, logInDel logInDel)
         {
             ReadTxtFile();
