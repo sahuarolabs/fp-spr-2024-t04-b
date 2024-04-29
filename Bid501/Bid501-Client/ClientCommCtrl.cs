@@ -34,7 +34,7 @@ namespace Bid501_Client
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e">string of information</param>
-        public void OnMessageHandler(object sender, MessageEventArgs e)
+        private void OnMessageHandler(object sender, MessageEventArgs e)
         {
             string[] parts = e.Data.Split(':');
             if (parts[0] == "notifylogin")

@@ -17,7 +17,7 @@ namespace Bid501_Client
         static void Main()
         {
             WebSocket ws;
-            string ip = "10.130.160.109";
+            string ip = "10.130.160.134";
             ws = new WebSocket("ws://" + ip + ":8001/server");
             ClientCommCtrl cCtrl = new ClientCommCtrl(ws);
 

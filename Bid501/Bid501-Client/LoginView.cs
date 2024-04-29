@@ -21,6 +21,10 @@ namespace Bid501_Client
         {
             InitializeComponent();
             this.cCtrl = cCtrl;
+        }
+
+        private void ConnectionVerification()
+        {
             if (cCtrl.ws.IsAlive)
             {
                 uxSocketStat.Text = "  Connection: True";
@@ -31,6 +35,11 @@ namespace Bid501_Client
             }
         }
 
+        /// <summary>
+        /// Handle Login Button Click
+        /// </summary>
+        /// <param name="sender">event</param>
+        /// <param name="e">data</param>
         private void UxLoginButton_Click(object sender, EventArgs e)
         {
             string username = UsernameTextbox.Text;
@@ -40,9 +49,9 @@ namespace Bid501_Client
         }
 
         /// <summary>
-        /// 
+        /// Method for delegate to handle the response of Login Verification
         /// </summary>
-        /// <param name="isSuccess"></param>
+        /// <param name="isSuccess">Bool indicating whether Login was successful</param>
         private void HandleLoginResponse(bool isSuccess, string[] deets)
         {
             Invoke((MethodInvoker)delegate

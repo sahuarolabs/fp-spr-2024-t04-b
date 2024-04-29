@@ -45,8 +45,8 @@ namespace Bid501_Server
         /// </summary>
         private void ReadTxtFile()
         {
-            string json = File.ReadAllText("Accounts.txt");
-            Accounts = JsonConvert.DeserializeObject<List<Account>>(json);
+            //string json = File.ReadAllText("Accounts.txt");
+            //Accounts = JsonConvert.DeserializeObject<List<Account>>(json);
         }
 
         /// <summary>
@@ -157,7 +157,13 @@ namespace Bid501_Server
 
         protected override void OnOpen()
         {
+            Console.WriteLine("ClientConnected ");
+        }
 
+        protected override void OnClose(CloseEventArgs e)
+        {
+            Console.WriteLine("ClientDisconnected: " + e);
+            base.OnClose(e);
         }
 
         public void NotifyNewProduct()
