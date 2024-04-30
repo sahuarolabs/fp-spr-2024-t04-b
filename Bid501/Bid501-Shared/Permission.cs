@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Bid501_Shared
 {
-    // Make this a bool val? i.e. isAdmin, then check if(isAdmin) before allowing them to change these things rather than an enum that overcomplicates the process.
+    //If admin permisions {1,2,4}
+    //If user permissions {0,3}
     public enum Permission
     {
         LoginClient,
         LoginServer,
         AddProduct,
-        EditProduct,
         MakeBid,
         EndAuction
     }

@@ -16,15 +16,23 @@ namespace Bid501_Client
     {
         private MakeBid makeBid;
 
-        public List<ProductProxy> List = new List<ProductProxy>() { new ProductProxy(1,"Hotdog",999.00,new Account("a","b",false)), new ProductProxy(1, "Hamdog", 0.10, new Account("a", "b", false))};
+        private Account UserAccount;
 
-        public BidView(MakeBid make)
+        public List<ProductProxy> List = new List<ProductProxy>() { new ProductProxy(1, "Hotdog", 999.00, new Account("a", "b", new List<Permission>())), new ProductProxy(1, "Hamdog", 0.10, new Account("a", "b", new List<Permission>()))};
+
+        public BidView(Account account, MakeBid make)
         {
             makeBid = make;
+            UserAccount = account;
             InitializeComponent();
-            //UxProductListBox.DataSource = List;
+            UxProductListBox.DataSource = List;
         }
 
+        /// <summary>
+        /// Checks to see if the text box has a vaild number and sends it to the delegate makeBid to BidCtrl "AttemptBid"
+        /// </summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">the Event Args</param>
         private void UxPlaceBid_Click(object sender, EventArgs e)
         {
             if (UxNewBidTextBox.Text == "") MessageBox.Show("Please enter a value!");
@@ -33,13 +41,18 @@ namespace Bid501_Client
                 try
                 {
                     double suggested = Math.Round(Convert.ToDouble(UxNewBidTextBox.Text), 2);
-                    makeBid(new Bid(new Account("a", "b", false), suggested), List[UxProductListBox.SelectedIndex]);
+                    makeBid(new Bid(UserAccount, suggested), List[UxProductListBox.SelectedIndex]); //Delegate to BidCtrl AttemptBid
                 }
                 catch { MessageBox.Show("Please enter a valid number (0.00)"); }
             }
             
         }
 
+        /// <summary>
+        /// When a different product is selected in the list update everything
+        /// </summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event args</param>
         private void UxProductListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             int index = UxProductListBox.SelectedIndex;
@@ -50,6 +63,12 @@ namespace Bid501_Client
             UxBidCount.Text = $"Currently: {List[index].Bids.Count.ToString()} Bids";
         }
 
+
+        /// <summary>
+        /// Logs out of the account
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event Args</param>
         private void UxLogoutButton_Click(object sender, EventArgs e)
         {
             this.Close();

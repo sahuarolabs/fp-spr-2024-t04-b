@@ -15,12 +15,32 @@ namespace Bid501_Client
 {
     public class ClientCommCtrl : WebSocketBehavior
     {
-        
+        /// <summary>
+        /// The WebSocket that connects to The server
+        /// </summary>
+        private WebSocket ws = new WebSocket($"ws://127.0.0.1:8001/server");
+
+        /// <summary>
+        /// The Login View
+        /// </summary>
         private LoginView lView;
         private WebSocket ws;
 
+        /// <summary>
+        /// a string[] that stores the current username, password
+        /// </summary>
         private string[] clientLoginInfo = { "", "" };
+
+        /// <summary>
+        /// Delegate for the LoginView
+        /// </summary>
+        /// <param name="success"> Bool to determine if the login was successful</param>
+        /// <param name="info">The clientLoginInfo of {"Username", "Password"}</param>
         public delegate void LoginResponseHandler(bool success, string[] info);
+
+        /// <summary>
+        /// Delegate to go back to LoginView
+        /// </summary>
         private LoginResponseHandler loginCallback;
         
 
@@ -60,7 +80,7 @@ namespace Bid501_Client
             Console.WriteLine($"Eror in Controller: {e.Message}");
         }
 
-        #region LOGIN SHIT
+        #region LOGIN Stuff
 
         public void sendLogin(string username, string password, LoginResponseHandler callback)
         {
@@ -75,14 +95,16 @@ namespace Bid501_Client
         }
         #endregion
 
-        #region BID SHIT
+        #region BID Stuff
         /// <summary>
-        /// Sends a bid from bidctrl to websocket for the server to check
+        /// Gets a bid from BidCtrl "Attemptbid", Sends that bid to the server to verify that bid is good
         /// </summary>
         /// <param name="bid">The bid added from bidctrl</param>
-        public void SendBid(Bid bid, IProduct product)
+        /// <returns>A bool for if the bid was verified</returns>
+        public bool SendBid(Bid bid, IProduct product) //Called from BidControl "Attemptbid"
         {
             MessageBox.Show($"Sent to Server {bid.Ammount}");
+            return true;
         }
 
         #endregion
