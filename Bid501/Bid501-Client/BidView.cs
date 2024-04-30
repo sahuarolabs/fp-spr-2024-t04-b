@@ -19,7 +19,7 @@ namespace Bid501_Client
         private Account UserAccount;
         
         //Automatically assuming accounts are users and not admins, BEWARE
-        public List<ProductProxy> List = new List<ProductProxy>() { new ProductProxy(1, "Hotdog", 999.00, new Account("a", "b", false)), new ProductProxy(1, "Hamdog", 0.10, new Account("a", "b", false))};
+        public List<Product> List = new List<Product>() { new Product(1, "Hotdog", 999.00, new Account("a", "b", false)), new Product(1, "Hamdog", 0.10, new Account("a", "b", false))};
 
         public BidView(Account account, MakeBid make)
         {
