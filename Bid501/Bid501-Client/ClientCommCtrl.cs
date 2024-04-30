@@ -124,7 +124,7 @@ namespace Bid501_Client
         /// </summary>
         /// <param name="bid">The bid added from bidctrl</param>
         /// <returns>A bool for if the bid was verified</returns>
-        public bool SendBid(Bid bid, IProduct product) //Called from BidControl "Attemptbid"
+        public bool SendBid(Bid bid, Product product) //Called from BidControl "Attemptbid"
         {
             MessageBox.Show($"Sent to Server {bid.Ammount}");
             return true;

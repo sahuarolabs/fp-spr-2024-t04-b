@@ -12,7 +12,7 @@ namespace Bid501_Server
 {
     public delegate void AddBidDel(Bid b, Product p);
     public delegate void RefreshViewDel();
-    public delegate void AddProductDel(IProduct p);
+    public delegate void AddProductDel(Product p);
     public delegate void EndAuctionDel(Product p);
     public delegate bool LoginDel(string username, string password, bool client);
     public delegate bool AfterLoginActionDel(bool success);
