@@ -29,7 +29,7 @@ namespace Bid501_Server
             string password = PasswordTextbox.Text;
 
             // call the delegates for login and after login logic
-            bool success = true;// login(username, password, false);
+            bool success = login(username, password, false);
             bool shouldClose = afterLogin(success);
 
             // hide the window if login is successful
