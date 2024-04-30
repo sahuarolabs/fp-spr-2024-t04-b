@@ -14,12 +14,20 @@ namespace Bid501_Shared
         public string Username { get; set; } = "";
         public string Password { get; set; } = "";
         public List<Permission> Permissions;
+        private bool v;
 
         public Account(string username, string password, List<Permission> permissions)
         {
             Username = username;
             Password = password;
             Permissions = permissions;
+        }
+
+        public Account(string username, string password, bool v)
+        {
+            Username = username;
+            Password = password;
+            this.v = v;
         }
 
         // serialize the object to JSON (allows special characters in password)

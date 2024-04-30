@@ -23,12 +23,9 @@ namespace Bid501_Client
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Checks the Connection
-        /// </summary>
-        private void ConnectionVerification()
+        public void SetController(ClientCommCtrl ctrl)
         {
-            this.cCtrl = cCtrl;
+            cCtrl = ctrl;
         }
 
         private void UxLoginButton_Click(object sender, EventArgs e)

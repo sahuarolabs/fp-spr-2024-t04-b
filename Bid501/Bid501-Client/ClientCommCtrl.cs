@@ -19,10 +19,6 @@ namespace Bid501_Client
         /// The Login View
         /// </summary>
         private LoginView lView;
-
-        /// <summary>
-        /// The websocket that handles the connection to the server
-        /// </summary>
         private WebSocket ws;
 
         /// <summary>
@@ -46,7 +42,7 @@ namespace Bid501_Client
         public ClientCommCtrl(LoginView view)
         {
             lView = view;
-            this.ws = ws = new WebSocket($"ws://10.130.160.31:8001/server");
+            this.ws = ws = new WebSocket($"ws://10.130.160.136:8001/server");
             ws.OnMessage += OnMessageHandler;
             ws.OnError += OnErrorHandler;
             this.ws.Connect();
