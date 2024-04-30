@@ -13,13 +13,13 @@ namespace Bid501_Shared
     {
         public string Username { get; set; } = "";
         public string Password { get; set; } = "";
-        public List<Permission> Permissions { get; set; }
+        public bool IsAdmin { get; set; } = false;
 
-        public Account(string username, string password, List<Permission> permissions)
+        public Account(string username, string password, bool admin)
         {
             Username = username;
             Password = password;
-            Permissions = permissions;
+            IsAdmin = admin;
         }
 
         // serialize the object to JSON (allows special characters in password)
