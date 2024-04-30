@@ -15,6 +15,7 @@ namespace Bid501_Server
         private AccountController acctCtrl;
         private string modelFileName;
         private Model model;
+        private List<RefreshViewDel> observers;
         private ServerCommCtrl serverComm;
         private RefreshViewDel refreshView;
 
@@ -22,7 +23,8 @@ namespace Bid501_Server
         {
             this.acctCtrl = acctCtrl;
             this.modelFileName = modelFileName;
-            this.model = LoadModelFromFile(modelFileName);
+            model = LoadModelFromFile(modelFileName);
+            observers = new List<RefreshViewDel>();
         }
 
         public bool AfterLoginAction(bool success)
@@ -30,7 +32,8 @@ namespace Bid501_Server
             if (success)
             {
                 acctCtrl.SaveAccounts();
-                ServerView serverView = new ServerView(model, SaveModel);
+                ServerView serverView = new ServerView(model, AddProduct, SaveModel);
+                AddObserver(serverView.RefreshView);
                 serverView.Show();
             }
             else
@@ -62,6 +65,20 @@ namespace Bid501_Server
         {
             string serialized = JsonConvert.SerializeObject(model);
             File.WriteAllText(modelFileName, serialized);
+        }
+
+        public void AddProduct(IProduct product)
+        {
+            model.Products.Add(product);
+
+            // TODO: refresh view and notify clients
+            foreach (RefreshViewDel refresh in observers)
+                refresh();
+        }
+
+        public void AddObserver(RefreshViewDel observer)
+        {
+            observers.Add(observer);
         }
 
         public void AddBid(Bid b, Product p)
