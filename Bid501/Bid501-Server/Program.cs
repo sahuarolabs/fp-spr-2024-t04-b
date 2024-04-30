@@ -34,18 +34,15 @@ namespace Bid501_Server
             ServerController servCtrl = new ServerController(acctCtrl, "model.json");
             LoginView loginView = new LoginView(acctCtrl.Login, servCtrl.AfterLoginAction);
 
-            Application.Run(loginView);
-
-            /*
             WebSocketServer wss = new WebSocketServer("ws://" + ServerCommCtrl.GetLocalIPAddress() + ":8001");
             //WebSocketServer wss = new WebSocketServer("ws://" + "127.0.0.1" + ":8001");
-            ServerController serverCtrl = new ServerController(ServerView.RefreshView);
-            wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl.AddBid, serverCtrl.LogIn));
+            ServerController serverCtrl = new ServerController(acctCtrl, "model.json");
+            wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl.AddBid, acctCtrl.Login));
             wss.ReuseAddress = true;
-            wss.Start();
-            Application.Run(new ServerView());
+            wss.Start(); 
+            Application.Run(loginView);
             wss.Stop();
-            */
+            
         } 
 
     }

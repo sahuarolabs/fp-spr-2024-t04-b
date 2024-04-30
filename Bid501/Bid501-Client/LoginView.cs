@@ -23,6 +23,7 @@ namespace Bid501_Client
             InitializeComponent();
         }
 
+
         public void SetController(ClientCommCtrl ctrl)
         {
             cCtrl = ctrl;
