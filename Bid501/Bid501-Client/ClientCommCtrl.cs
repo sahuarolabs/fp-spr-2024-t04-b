@@ -53,21 +53,6 @@ namespace Bid501_Client
             if (!ws.IsAlive) ;
         }
 
-        public static string GetLocalIPAddress()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    MessageBox.Show(ip.ToString());
-                    return ip.ToString();
-                }
-            }
-            MessageBox.Show("No network adapters with an IPv4 address in the system!");
-            return "";
-        }
-
         public void Close()
         {
             ws.Close();
@@ -130,7 +115,7 @@ namespace Bid501_Client
 
         public void OnOpen(object sender, EventArgs e)
         {
-            ws.Send("IP:"+GetLocalIPAddress());
+            //ws.Send("IP:"+GetLocalIPAddress());
         }
 
         #region BID Stuff
