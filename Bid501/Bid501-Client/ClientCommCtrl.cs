@@ -49,7 +49,7 @@ namespace Bid501_Client
             }
         }
 
-        #region LOGIN SHIT
+        #region LOGIN Stuff
 
         /// <summary>
         /// TO server -- Login
@@ -68,14 +68,16 @@ namespace Bid501_Client
         }
         #endregion
 
-        #region BID SHIT
+        #region BID Stuff
         /// <summary>
-        /// Sends a bid from bidctrl to websocket for the server to check
+        /// Gets a bid from BidCtrl "Attemptbid", Sends that bid to the server to verify that bid is good
         /// </summary>
         /// <param name="bid">The bid added from bidctrl</param>
-        public void SendBid(Bid bid, IProduct product)
+        /// <returns>A bool for if the bid was verified</returns>
+        public bool SendBid(Bid bid, IProduct product) //Called from BidControl "Attemptbid"
         {
             MessageBox.Show($"Sent to Server {bid.Ammount}");
+            return true;
         }
 
         #endregion

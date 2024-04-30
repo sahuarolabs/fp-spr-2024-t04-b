@@ -24,6 +24,9 @@ namespace Bid501_Client
             ConnectionVerification();
         }
 
+        /// <summary>
+        /// Checks the Connection
+        /// </summary>
         private void ConnectionVerification()
         {
             if (cCtrl.ws.IsAlive)
