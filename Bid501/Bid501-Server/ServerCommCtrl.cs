@@ -17,7 +17,12 @@ namespace Bid501_Server
         private logInDel LogIn;
 
         private List<Account> Accounts = new List<Account>();
-        private Dictionary<User, WebSocket> clients;
+
+        /// <summary>
+        /// Dictionary
+        /// </summary>
+        private Dictionary<string, Account> clients;
+
         private Model model;
 
         private ServerController serverController;
@@ -94,7 +99,7 @@ namespace Bid501_Server
 
         }
 
-        public Dictionary<User, WebSocket> GetClients()
+        public Dictionary<string, Account> GetClients()
         {
             return clients;
         }  
