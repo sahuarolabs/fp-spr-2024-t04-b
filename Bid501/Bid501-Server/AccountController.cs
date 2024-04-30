@@ -61,10 +61,12 @@ namespace Bid501_Server
                 return true;
             }
 
+            //FIXME: Returns all client
+            return false;
             // if the username exists, it has to be either a user trying to log into the client
             // or an admin trying to log in onto the server
-            return (client && account.Permissions.Contains(Permission.LoginClient))
-                || (!client && account.Permissions.Contains(Permission.LoginServer));
+            /*return (client && account.Permissions.Contains(Permission.LoginClient))
+                || (!client && account.Permissions.Contains(Permission.LoginServer));*/
         }
 
         public void UpdateAccountData()

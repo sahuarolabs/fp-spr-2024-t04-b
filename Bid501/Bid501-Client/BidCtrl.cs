@@ -13,17 +13,22 @@ namespace Bid501_Client
     {
         public delegate bool MakeBid(Bid bid, ProductProxy product);
 
-        private SendToServer send;
-
         BidView bidView;
+        ClientCommCtrl cCtrl;
 
 
-        public bool Attemptbid(Bid bid, ProductProxy product)
+        /// <summary>
+        /// Comming from Bid View "UxPlaceBid_Click", Checks to see if the Bid is vaild by checking the productproxy if so it goes to ClientCommCtrl
+        /// </summary>
+        /// <param name="bid">The Bid being checked</param>
+        /// <param name="product">The Product being bid on</param>
+        /// <returns>a bool whether the bid was valid</returns>
+        public bool Attemptbid(Bid bid, ProductProxy product) //Called from delegate in Bid View "UxPlaceBid_Click"
         {
 
                 if (bid.Ammount > product.Price)
                 {
-                    send(bid, product);
+                    return cCtrl.SendBid(bid, product); //Send to ClientCommCtrl Send Bid
                 }
                 else
                 {
@@ -36,10 +41,10 @@ namespace Bid501_Client
         /// Constructor for bidcontrol
         /// </summary>
         /// <param name="account">The successfully logged in account</param>
-        public BidCtrl(Account account, SendToServer toServer)
+        public BidCtrl(Account account, ClientCommCtrl cCtrl)
         {
-            send = toServer;
-            bidView = new BidView(Attemptbid);
+            this.cCtrl = cCtrl;
+            bidView = new BidView(account, Attemptbid);
             bidView.Show();
         }
     }

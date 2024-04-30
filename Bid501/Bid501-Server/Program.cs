@@ -20,8 +20,6 @@ namespace Bid501_Server
 
     public class Program
     {
-        
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -31,11 +29,12 @@ namespace Bid501_Server
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             WebSocketServer wss = new WebSocketServer("ws://" + ServerCommCtrl.GetLocalIPAddress() + ":8001");
+            //WebSocketServer wss = new WebSocketServer("ws://" + "127.0.0.1" + ":8001");
             ServerController serverCtrl = new ServerController(ServerView.RefreshView);
-            ServerCommCtrl scc = new ServerCommCtrl(serverCtrl.AddBid, serverCtrl.LogIn);
-            wss.AddWebSocketService("/server", () => scc);
+            wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl.AddBid, serverCtrl.LogIn));
+            wss.ReuseAddress = true;
             wss.Start();
-            Application.Run(new ServerView(scc.GetClients));
+            Application.Run(new ServerView());
             wss.Stop();
         } 
 

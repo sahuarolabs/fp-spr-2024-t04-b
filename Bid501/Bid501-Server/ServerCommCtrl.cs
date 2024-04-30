@@ -1,33 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Management.Instrumentation;
 using System.Net.Sockets;
 using System.Net;
-using System.Runtime.Remoting.Channels;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocketSharp;
 using WebSocketSharp.Server;
-using static Bid501_Server.Program;
-using System.Windows.Forms;
 using Bid501_Shared;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Bid501_Server
 {
     public class ServerCommCtrl : WebSocketBehavior
-    {
+    { 
+        private AddBidDel AddBid;
+        private logInDel LogIn;
+
+        private List<Account> Accounts = new List<Account>();
+
+        /// <summary>
+        /// Dictionary
+        /// </summary>
+        private Dictionary<string, Account> clients;
 
         private Model model;
 
-        private AddBidDel AddBid;
-
-        private Dictionary<User, WebSocket> clients;
-
-        private logInDel LogIn;
-
+        private ServerController serverController;
+        
         public ServerCommCtrl(AddBidDel addBidDel, logInDel logInDel)
         {
             AddBid = addBidDel;
@@ -57,7 +56,10 @@ namespace Bid501_Server
             switch(id)
             {
                 case "login":
-
+                    Send("notifylogin:True");
+                    break;
+                case "test":
+                    Send("notifytest");
                     break;
                 case "logout":
 
@@ -73,7 +75,13 @@ namespace Bid501_Server
 
         protected override void OnOpen()
         {
+            Console.WriteLine("ClientConnected ");
+        }
 
+        protected override void OnClose(CloseEventArgs e)
+        {
+            Console.WriteLine("ClientDisconnected: " + e);
+            base.OnClose(e);
         }
 
         public void NotifyNewProduct()
@@ -91,7 +99,7 @@ namespace Bid501_Server
 
         }
 
-        public Dictionary<User, WebSocket> GetClients()
+        public Dictionary<string, Account> GetClients()
         {
             return clients;
         }  
