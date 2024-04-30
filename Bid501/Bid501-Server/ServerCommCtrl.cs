@@ -19,6 +19,8 @@ namespace Bid501_Server
         private List<Account> Accounts = new List<Account>();
         private Dictionary<User, WebSocket> clients;
         private Model model;
+
+        private ServerController serverController;
         
         public ServerCommCtrl(AddBidDel addBidDel, logInDel logInDel)
         {
@@ -50,6 +52,9 @@ namespace Bid501_Server
             {
                 case "login":
                     Send("notifylogin:True");
+                    break;
+                case "test":
+                    Send("notifytest");
                     break;
                 case "logout":
 

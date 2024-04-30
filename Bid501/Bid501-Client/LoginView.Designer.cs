@@ -35,6 +35,7 @@
             this.UsernameTextbox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.uxSocketStat = new System.Windows.Forms.Label();
+            this.uxSendTest = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -96,6 +97,7 @@
             this.panel1.AutoScroll = true;
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.uxSendTest);
             this.panel1.Controls.Add(this.uxSocketStat);
             this.panel1.Controls.Add(this.UxLoginButton);
             this.panel1.Controls.Add(this.PasswordTextbox);
@@ -115,6 +117,16 @@
             this.uxSocketStat.Name = "uxSocketStat";
             this.uxSocketStat.Size = new System.Drawing.Size(0, 13);
             this.uxSocketStat.TabIndex = 5;
+            // 
+            // uxSendTest
+            // 
+            this.uxSendTest.Location = new System.Drawing.Point(364, 346);
+            this.uxSendTest.Name = "uxSendTest";
+            this.uxSendTest.Size = new System.Drawing.Size(75, 23);
+            this.uxSendTest.TabIndex = 6;
+            this.uxSendTest.Text = "Send All Clients";
+            this.uxSendTest.UseVisualStyleBackColor = true;
+            this.uxSendTest.Click += new System.EventHandler(this.uxSendTest_Click);
             // 
             // LoginView
             // 
@@ -140,6 +152,7 @@
         private System.Windows.Forms.TextBox UsernameTextbox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label uxSocketStat;
+        private System.Windows.Forms.Button uxSendTest;
     }
 }
 

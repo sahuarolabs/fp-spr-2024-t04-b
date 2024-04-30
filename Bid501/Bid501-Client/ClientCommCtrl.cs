@@ -68,6 +68,10 @@ namespace Bid501_Client
                 bool isValid = bool.Parse(parts[1]);
                 loginCallback?.Invoke(isValid, clientLoginInfo);
             }
+            else if (parts[0] == "notifytest")
+            {
+                Console.WriteLine("Received");
+            }
         }
 
         private void OnErrorHandler(object sender, ErrorEventArgs e)
@@ -89,6 +93,11 @@ namespace Bid501_Client
 
         }
         #endregion
+
+        public void sendTest()
+        {
+            ws.Send("test");
+        }
 
         #region BID Stuff
         /// <summary>
