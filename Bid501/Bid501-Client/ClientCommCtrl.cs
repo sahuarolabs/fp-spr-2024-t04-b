@@ -15,16 +15,16 @@ namespace Bid501_Client
 {
     public class ClientCommCtrl : WebSocketBehavior
     {
-        public WebSocket ws;
-        BidCtrl bidCtrl;
-        public delegate void SendToServer(Bid bid, ProductProxy product);
+        private WebSocket ws = new WebSocket($"ws://127.0.0.1:8001/server");
+        private LoginView lView;
+
+        private string[] clientLoginInfo = { "", "" };
         public delegate void LoginResponseHandler(bool success, string[] info);
         private LoginResponseHandler loginCallback;
-        private string[] cDetails = { "", "" };
+        
 
-        public ClientCommCtrl(WebSocket ws)
+        public ClientCommCtrl(LoginView view)
         {
-            this.ws = ws;
             this.ws.OnMessage += OnMessageHandler;
             int tries = 0;
             while (!ws.IsAlive && tries < 4)
@@ -32,6 +32,11 @@ namespace Bid501_Client
                 this.ws.Connect(); 
                 tries++;
             } 
+        }
+
+        public void Close()
+        {
+            ws.Close();
         }
 
         /// <summary>
@@ -45,24 +50,20 @@ namespace Bid501_Client
             if (parts[0] == "notifylogin")
             {
                 bool isValid = bool.Parse(parts[1]);
-                loginCallback?.Invoke(isValid, cDetails);
+                loginCallback?.Invoke(isValid, clientLoginInfo);
             }
         }
 
         #region LOGIN SHIT
 
-        /// <summary>
-        /// TO server -- Login
-        /// Working on 
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
         public void sendLogin(string username, string password, LoginResponseHandler callback)
         {
-            cDetails[0] = username; cDetails[1] = password;
+            clientLoginInfo[0] = username; 
+            clientLoginInfo[1] = password;
             string x = $"login:{username}:{password}";
+
             ws.Send(x);
+
             this.loginCallback = callback;
 
         }

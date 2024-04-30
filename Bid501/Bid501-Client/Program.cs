@@ -16,19 +16,14 @@ namespace Bid501_Client
         [STAThread]
         static void Main()
         {
-            WebSocket ws;
-            string ip = "127.0.0.1";
-            ws = new WebSocket($"ws://{ip}:8001/server");
-            if (ws!=null)
-            {
-                ws.Close();
-            }
-            ClientCommCtrl cCtrl = new ClientCommCtrl(ws);
-            cCtrl.ws.Connect();
+            LoginView view = new LoginView();
+            ClientCommCtrl cCtrl = new ClientCommCtrl(view);
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginView(cCtrl));
-            cCtrl.ws.Close();
+
+            Application.Run(view);
+            cCtrl.Close();
         }
 
 

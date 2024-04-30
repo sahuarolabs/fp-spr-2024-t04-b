@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bid501_Shared;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,30 +18,16 @@ namespace Bid501_Client
         public ClientCommCtrl cCtrl;
         private BidCtrl bCtrl;
 
-        public LoginView(ClientCommCtrl cCtrl)
+        public LoginView()
         {
             InitializeComponent();
-            this.cCtrl = cCtrl;
-            ConnectionVerification();
         }
 
-        private void ConnectionVerification()
+        public void SetController(ClientCommCtrl cCtrl)
         {
-            if (cCtrl.ws.IsAlive)
-            {
-                uxSocketStat.Text = "  Connection: True";
-            }
-            else
-            {
-                uxSocketStat.Text = " Connection: False";
-            }
+            this.cCtrl = cCtrl;
         }
 
-        /// <summary>
-        /// Handle Login Button Click
-        /// </summary>
-        /// <param name="sender">event</param>
-        /// <param name="e">data</param>
         private void UxLoginButton_Click(object sender, EventArgs e)
         {
             string username = UsernameTextbox.Text;
