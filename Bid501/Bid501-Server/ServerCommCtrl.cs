@@ -18,6 +18,7 @@ namespace Bid501_Server
 
         private List<Account> Accounts = new List<Account>();
 
+
         /// <summary>
         /// Dictionary
         /// </summary>
@@ -30,7 +31,7 @@ namespace Bid501_Server
         public ServerCommCtrl(AddBidDel addBidDel, logInDel logInDel)
         {
             AddBid = addBidDel;
-            LogIn = logInDel;
+            LogIn = loginDel;
         }
 
         public static string GetLocalIPAddress()

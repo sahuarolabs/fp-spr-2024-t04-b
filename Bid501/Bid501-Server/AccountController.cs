@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace Bid501_Server
 {
     public class AccountController
     {
-        public readonly string ACCOUNTS_FILE = "accounts.json";
+        private string acctFile;
 
         /// <summary>
         /// List of all accounts
@@ -23,9 +23,10 @@ namespace Bid501_Server
         /// </summary>
         private Account loggedIn;
 
-        public AccountController()
+        public AccountController(string acctFile)
         {
-            acctList = LoadAccounts(ACCOUNTS_FILE);
+            this.acctFile = acctFile;
+            this.acctList = LoadAccounts(acctFile);
         }
 
         private List<Account> LoadAccounts(string fileName)
@@ -40,11 +41,11 @@ namespace Bid501_Server
             return accounts;
         }
 
-        public void SaveAccounts(string fileName)
+        public void SaveAccounts()
         {
             // convert the account list to JSON and overwrite the file
             string serializedAccounts = JsonConvert.SerializeObject(acctList);
-            File.WriteAllText(fileName, serializedAccounts);
+            File.WriteAllText(acctFile, serializedAccounts);
         }
 
         public bool Login(string username, string password, bool client)
@@ -65,8 +66,7 @@ namespace Bid501_Server
             return false;
             // if the username exists, it has to be either a user trying to log into the client
             // or an admin trying to log in onto the server
-            /*return (client && account.Permissions.Contains(Permission.LoginClient))
-                || (!client && account.Permissions.Contains(Permission.LoginServer));*/
+
         }
 
         public void UpdateAccountData()

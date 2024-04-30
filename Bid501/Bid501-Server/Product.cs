@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bid501_Server
 {
+    [Serializable]
     public class Product : IProduct
     {
         public int Id { get; }
@@ -29,6 +30,11 @@ namespace Bid501_Server
             Expired = false;
             Consigner = consigner;
             Bids = new List<Bid>();
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }
