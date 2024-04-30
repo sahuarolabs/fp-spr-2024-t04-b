@@ -44,7 +44,7 @@ namespace Bid501_Server
 
         public static Model LoadModelFromFile(string fileName)
         {
-            Account defCons = new Admin("admin", "admin");
+            Account defCons = new Account("admin", "admin",true);
             List<IProduct> initProds = new List<IProduct> {
                 new Product(1, "PS4", 100.0, defCons),
                 new Product(2, "iPhone 7", 50.0, defCons),

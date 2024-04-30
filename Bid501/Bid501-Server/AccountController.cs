@@ -19,7 +19,7 @@ namespace Bid501_Server
         private List<Account> acctList;
 
         /// <summary>
-        /// should only be an admin account as this is server-side.
+        /// should only be an Account account as this is server-side.
         /// </summary>
         private Account loggedIn;
 
@@ -48,24 +48,24 @@ namespace Bid501_Server
             File.WriteAllText(acctFile, serializedAccounts);
         }
 
-        public bool Login(string username, string password, bool client)
+        public bool Login(string Accountname, string password, bool client)
         {
-            // find the user by username
-            Account account = acctList.Find(acct => acct.Username == username);
+            // find the Account by Accountname
+            Account account = acctList.Find(acct => acct.Username == Accountname);
 
-            // if the username doesn't exist, create a new account
+            // if the Accountname doesn't exist, create a new account
             if (account == null)
             {
-                Account newAccount = client ? (Account) new User(username, password)
-                    : (Account) new Admin(username, password);
+                Account newAccount = client ? (Account) new Account(Accountname, password, true)
+                    : (Account) new Account(Accountname, password, true);
                 acctList.Add(newAccount);
                 return true;
             }
 
             //FIXME: Returns all client
             return false;
-            // if the username exists, it has to be either a user trying to log into the client
-            // or an admin trying to log in onto the server
+            // if the Accountname exists, it has to be either a Account trying to log into the client
+            // or an Account trying to log in onto the server
 
         }
 

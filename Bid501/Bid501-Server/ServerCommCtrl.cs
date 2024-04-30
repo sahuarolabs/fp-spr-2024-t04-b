@@ -59,7 +59,7 @@ namespace Bid501_Server
                 case "login":
                     Send("notifylogin:True");
                     break;
-                case "test":
+                case "IP":
                     Send("notifytest");
                     break;
                 case "logout":

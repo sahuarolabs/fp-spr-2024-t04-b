@@ -37,7 +37,7 @@ namespace Bid501_Server
         {
             // predefined products that can be added
             int id = model.GenId();
-            Account defCons = new Admin("admin", "admin");
+            Account defCons = new Account("Account", "Account",true);
             List<IProduct> prodsToAdd = new List<IProduct>
             {
                 new Product(id, "Nintendo Switch", 35.0, defCons),

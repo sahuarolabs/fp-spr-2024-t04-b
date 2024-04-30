@@ -46,14 +46,15 @@ namespace Bid501_Client
             {
                 if (isSuccess)
                 {
-                    bCtrl = new BidCtrl(new Bid501_Shared.Account(deets[0], deets[1], new List<Permission> { Permission.LoginClient, Permission.MakeBid }), cCtrl);
+                    //assuming user no admin perms
+                    bCtrl = new BidCtrl(new Bid501_Shared.Account(deets[0], deets[1], false), cCtrl);
                 }
             });
         }
 
         private void uxSendTest_Click(object sender, EventArgs e)
         {
-            cCtrl.sendTest();
+            //cCtrl.sendTest();
         }
     }
 }

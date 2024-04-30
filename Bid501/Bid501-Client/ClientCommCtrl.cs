@@ -10,6 +10,8 @@ using System.Runtime.Remoting.Messaging;
 using WebSocketSharp.Server;
 using System.Windows.Forms.VisualStyles;
 using System.Runtime.CompilerServices;
+using System.Net.Sockets;
+using System.Net;
 
 namespace Bid501_Client
 {
@@ -45,6 +47,7 @@ namespace Bid501_Client
             this.ws = ws = new WebSocket($"ws://10.130.160.136:8001/server");
             ws.OnMessage += OnMessageHandler;
             ws.OnError += OnErrorHandler;
+            this.ws.OnOpen += OnOpen;
             this.ws.Connect();
             if (!ws.IsAlive) ;
         }
@@ -74,9 +77,24 @@ namespace Bid501_Client
             }
         }
 
+        public static string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    MessageBox.Show(ip.ToString());
+                    return ip.ToString();
+                }
+            }
+            MessageBox.Show("No network adapters with an IPv4 address in the system!");
+            return "";
+        }
+
         private void OnErrorHandler(object sender, ErrorEventArgs e)
         {
-            Console.WriteLine($"Eror in Controller: {e.Message}");
+            Console.WriteLine($"Error in Controller: {e.Message}");
         }
 
         #region LOGIN Stuff
@@ -94,9 +112,9 @@ namespace Bid501_Client
         }
         #endregion
 
-        public void sendTest()
+        public void OnOpen(object sender, EventArgs e)
         {
-            ws.Send("test");
+            ws.Send("IP:"+GetLocalIPAddress());
         }
 
         #region BID Stuff
