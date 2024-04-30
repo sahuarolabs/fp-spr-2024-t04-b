@@ -18,7 +18,7 @@ namespace Bid501_Client
 
         private Account UserAccount;
 
-        public List<ProductProxy> List = new List<ProductProxy>() { new ProductProxy(1, "Hotdog", 999.00, new Account("a", "b", new List<Permission>())), new ProductProxy(1, "Hamdog", 0.10, new Account("a", "b", new List<Permission>()))};
+        public List<ProductProxy> List = new List<ProductProxy>() { new ProductProxy(1, "Hotdog", 999.00, new Account("a", "b", false)), new ProductProxy(1, "Hamdog", 0.10, new Account("a", "b", new List<Permission>()))};
 
         public BidView(Account account, MakeBid make)
         {

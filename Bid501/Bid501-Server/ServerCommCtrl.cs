@@ -8,6 +8,7 @@ using WebSocketSharp.Server;
 using Bid501_Shared;
 using System.IO;
 using Newtonsoft.Json;
+using System.Runtime.CompilerServices;
 
 namespace Bid501_Server
 {
@@ -17,11 +18,6 @@ namespace Bid501_Server
         private LoginDel LogIn;
 
         private List<Account> Accounts = new List<Account>();
-
-
-        /// <summary>
-        /// Dictionary
-        /// </summary>
         private Dictionary<string, Account> clients;
 
         private Model model;
@@ -76,7 +72,9 @@ namespace Bid501_Server
 
         protected override void OnOpen()
         {
-            Console.WriteLine("ClientConnected ");
+            base.OnOpen();
+            var clientId = this.Context.QueryString["id"];
+            Console.WriteLine($"Client {clientId} connected with ID: {ID}");
         }
 
         protected override void OnClose(CloseEventArgs e)
