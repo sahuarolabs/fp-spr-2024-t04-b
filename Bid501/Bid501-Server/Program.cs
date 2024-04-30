@@ -16,6 +16,7 @@ namespace Bid501_Server
     public delegate void EndAuctionDel(Product p);
     public delegate bool LoginDel(string username, string password, bool client);
     public delegate bool AfterLoginActionDel(bool success);
+    public delegate void SaveModelDel();
     public delegate Dictionary<User, WebSocket> GetClientsDel();
 
     public class Program
@@ -30,8 +31,7 @@ namespace Bid501_Server
             Application.SetCompatibleTextRenderingDefault(false);
 
             AccountController acctCtrl = new AccountController("accounts.json");
-            Model model = ServerController.LoadModelFromFile("model.json");
-            ServerController servCtrl = new ServerController(acctCtrl, model);
+            ServerController servCtrl = new ServerController(acctCtrl, "model.json");
             LoginView loginView = new LoginView(acctCtrl.Login, servCtrl.AfterLoginAction);
 
             Application.Run(loginView);

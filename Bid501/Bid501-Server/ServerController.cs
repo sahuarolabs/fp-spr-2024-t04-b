@@ -13,14 +13,16 @@ namespace Bid501_Server
     public class ServerController
     {
         private AccountController acctCtrl;
+        private string modelFileName;
         private Model model;
         private ServerCommCtrl serverComm;
         private RefreshViewDel refreshView;
 
-        public ServerController(AccountController acctCtrl, Model model)
+        public ServerController(AccountController acctCtrl, string modelFileName)
         {
             this.acctCtrl = acctCtrl;
-            this.model = model;
+            this.modelFileName = modelFileName;
+            this.model = LoadModelFromFile(modelFileName);
         }
 
         public bool AfterLoginAction(bool success)
@@ -28,7 +30,7 @@ namespace Bid501_Server
             if (success)
             {
                 acctCtrl.SaveAccounts();
-                ServerView serverView = new ServerView(model);
+                ServerView serverView = new ServerView(model, SaveModel);
                 serverView.Show();
             }
             else
@@ -56,10 +58,10 @@ namespace Bid501_Server
             return model;
         }
 
-        public void SaveModelToFile(string fileName)
+        public void SaveModel()
         {
             string serialized = JsonConvert.SerializeObject(model);
-            File.WriteAllText(fileName, serialized);
+            File.WriteAllText(modelFileName, serialized);
         }
 
         public void AddBid(Bid b, Product p)
