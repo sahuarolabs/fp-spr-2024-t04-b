@@ -58,5 +58,6 @@ namespace Bid501_Server
             uxListBoxProducts.DataSource = null;
             uxListBoxProducts.DataSource = model.Products;
         }
+
     }
 }

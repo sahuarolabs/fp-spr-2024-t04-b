@@ -7,17 +7,27 @@ using WebSocketSharp;
 
 namespace Bid501_Client
 {
-    internal static class Program
+    public static class Program
     {
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
+            
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginView());
+            LoginView view = new LoginView();
+            ClientCommCtrl cCtrl = new ClientCommCtrl(view);
+            view.SetController(cCtrl);
+            Application.Run(view);
+            cCtrl.Close();
+            Console.WriteLine("Close: Program");
         }
+
+
     }
 }
