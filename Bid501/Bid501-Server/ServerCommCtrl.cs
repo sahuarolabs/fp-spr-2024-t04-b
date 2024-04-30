@@ -14,7 +14,7 @@ namespace Bid501_Server
     public class ServerCommCtrl : WebSocketBehavior
     { 
         private AddBidDel AddBid;
-        private logInDel LogIn;
+        private LoginDel LogIn;
 
         private List<Account> Accounts = new List<Account>();
 
@@ -28,10 +28,10 @@ namespace Bid501_Server
 
         private ServerController serverController;
         
-        public ServerCommCtrl(AddBidDel addBidDel, logInDel logInDel)
+        public ServerCommCtrl(AddBidDel addBidDel, LoginDel logInDel)
         {
             AddBid = addBidDel;
-            LogIn = loginDel;
+            LogIn = logInDel;
         }
 
         public static string GetLocalIPAddress()
