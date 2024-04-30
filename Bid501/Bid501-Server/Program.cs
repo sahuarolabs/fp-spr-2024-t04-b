@@ -31,15 +31,15 @@ namespace Bid501_Server
             Application.SetCompatibleTextRenderingDefault(false);
 
             AccountController acctCtrl = new AccountController("accounts.json");
-            ServerController servCtrl = new ServerController(acctCtrl, "model.json");
-            LoginView loginView = new LoginView(acctCtrl.Login, servCtrl.AfterLoginAction);
-
+            ServerController serverCtrl = new ServerController(acctCtrl, "model.json");
+            LoginView loginView = new LoginView(acctCtrl.Login, serverCtrl.AfterLoginAction);
             WebSocketServer wss = new WebSocketServer("ws://" + ServerCommCtrl.GetLocalIPAddress() + ":8001");
             //WebSocketServer wss = new WebSocketServer("ws://" + "127.0.0.1" + ":8001");
-            ServerController serverCtrl = new ServerController(acctCtrl, "model.json");
+           
             wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl.AddBid, acctCtrl.Login));
             wss.ReuseAddress = true;
             wss.Start(); 
+
             Application.Run(loginView);
             wss.Stop();
             
