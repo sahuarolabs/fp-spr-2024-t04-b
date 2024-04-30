@@ -16,14 +16,13 @@ namespace Bid501_Client
     public class ClientCommCtrl : WebSocketBehavior
     {
         /// <summary>
-        /// The WebSocket that connects to The server
-        /// </summary>
-        private WebSocket ws = new WebSocket($"ws://127.0.0.1:8001/server");
-
-        /// <summary>
         /// The Login View
         /// </summary>
         private LoginView lView;
+
+        /// <summary>
+        /// The websocket that handles the connection to the server
+        /// </summary>
         private WebSocket ws;
 
         /// <summary>
