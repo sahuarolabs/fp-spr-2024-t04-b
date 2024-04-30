@@ -16,14 +16,16 @@ namespace Bid501_Client
         [STAThread]
         static void Main()
         {
-            LoginView view = new LoginView();
-            ClientCommCtrl cCtrl = new ClientCommCtrl(view);
+            
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
+            LoginView view = new LoginView();
+            ClientCommCtrl cCtrl = new ClientCommCtrl(view);
+            view.SetController(cCtrl);
             Application.Run(view);
             cCtrl.Close();
+            Console.WriteLine("Close: Program");
         }
 
 

@@ -15,8 +15,9 @@ namespace Bid501_Client
 {
     public class ClientCommCtrl : WebSocketBehavior
     {
-        private WebSocket ws = new WebSocket($"ws://127.0.0.1:8001/server");
+        
         private LoginView lView;
+        private WebSocket ws;
 
         private string[] clientLoginInfo = { "", "" };
         public delegate void LoginResponseHandler(bool success, string[] info);
@@ -25,18 +26,18 @@ namespace Bid501_Client
 
         public ClientCommCtrl(LoginView view)
         {
-            this.ws.OnMessage += OnMessageHandler;
-            int tries = 0;
-            while (!ws.IsAlive && tries < 4)
-            {
-                this.ws.Connect(); 
-                tries++;
-            } 
+            lView = view;
+            this.ws = ws = new WebSocket($"ws://10.130.160.31:8001/server");
+            ws.OnMessage += OnMessageHandler;
+            ws.OnError += OnErrorHandler;
+            this.ws.Connect();
+            if (!ws.IsAlive) ;
         }
 
         public void Close()
         {
             ws.Close();
+            Console.WriteLine("Close: Controller");
         }
 
         /// <summary>
@@ -52,6 +53,11 @@ namespace Bid501_Client
                 bool isValid = bool.Parse(parts[1]);
                 loginCallback?.Invoke(isValid, clientLoginInfo);
             }
+        }
+
+        private void OnErrorHandler(object sender, ErrorEventArgs e)
+        {
+            Console.WriteLine($"Eror in Controller: {e.Message}");
         }
 
         #region LOGIN SHIT
