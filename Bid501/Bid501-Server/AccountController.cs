@@ -48,7 +48,7 @@ namespace Bid501_Server
             File.WriteAllText(acctFile, serializedAccounts);
         }
 
-        public bool Login(string Accountname, string password, bool client)
+        public bool Login(string Accountname, string password, bool admin)
         {
             // find the Account by Accountname
             Account account = acctList.Find(acct => acct.Username == Accountname);
@@ -56,17 +56,14 @@ namespace Bid501_Server
             // if the Accountname doesn't exist, create a new account
             if (account == null)
             {
-                Account newAccount = client ? (Account) new Account(Accountname, password, true)
-                    : (Account) new Account(Accountname, password, true);
+                Account newAccount = new Account(Accountname, password, admin);
                 acctList.Add(newAccount);
                 return true;
             }
 
-            //FIXME: Returns all client
-            return false;
-            // if the Accountname exists, it has to be either a Account trying to log into the client
-            // or an Account trying to log in onto the server
-
+            // if the username exists, it has to be either a user trying to log into the client
+            // or an admin trying to log in onto the server
+            return (password == account.Password) && (admin == account.IsAdmin);
         }
 
         public void UpdateAccountData()
