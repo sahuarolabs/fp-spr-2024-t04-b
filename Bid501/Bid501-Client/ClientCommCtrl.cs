@@ -44,12 +44,28 @@ namespace Bid501_Client
         public ClientCommCtrl(LoginView view)
         {
             lView = view;
-            this.ws = ws = new WebSocket($"ws://10.130.160.136:8001/server");
+            string clientId = GetLocalIPAddress();
+            this.ws = ws = new WebSocket($"ws://10.130.160.136:8001/server?id={clientId}");
             ws.OnMessage += OnMessageHandler;
             ws.OnError += OnErrorHandler;
             this.ws.OnOpen += OnOpen;
             this.ws.Connect();
             if (!ws.IsAlive) ;
+        }
+
+        public static string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    MessageBox.Show(ip.ToString());
+                    return ip.ToString();
+                }
+            }
+            MessageBox.Show("No network adapters with an IPv4 address in the system!");
+            return "";
         }
 
         public void Close()
