@@ -30,7 +30,8 @@ namespace Bid501_Server
             Application.SetCompatibleTextRenderingDefault(false);
 
             AccountController acctCtrl = new AccountController("accounts.json");
-            ServerController servCtrl = new ServerController(acctCtrl);
+            Model model = ServerController.LoadModelFromFile("model.json");
+            ServerController servCtrl = new ServerController(acctCtrl, model);
             LoginView loginView = new LoginView(acctCtrl.Login, servCtrl.AfterLoginAction);
 
             Application.Run(loginView);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bid501_Shared;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,18 +13,14 @@ namespace Bid501_Server
 {
     public partial class ServerView : Form
     {
-        //Refer to comment in contructor
-        //private ServerCommCtrl serverCommCtrl;
+        private Model model;
 
-        GetClientsDel GetClients;
-
-        public ServerView(/* GetClientsDel getClientsDel */)
+        public ServerView(Model model)
         {
+            this.model = model;
+
             InitializeComponent();
-            // May need to axe this, since the web socket server opens a new ServerCommCtrl() on program init.
-            //serverCommCtrl = new ServerCommCtrl();
-            //uxListBoxClients.DataSource = serverCommCtrl.GetClients();
-            // GetClients = getClientsDel;
+            uxListBoxProducts.DataSource = model.Products;
         }
 
         private void ServerView_FormClosed(object sender, FormClosedEventArgs e)

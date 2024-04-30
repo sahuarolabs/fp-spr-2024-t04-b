@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 
 namespace Bid501_Shared
 {
+    [Serializable]
     public class Model
     {
-        List<IProduct> Products;
+        public List<IProduct> Products { get; }
 
         public Model()
         {
             Products = new List<IProduct>();
+        }
+
+        public Model(List<IProduct> products)
+        {
+            Products = products;
         }
     }
 }
