@@ -49,7 +49,7 @@ namespace Bid501_Client
             {
                 if (isSuccess)
                 {
-                    bCtrl = new BidCtrl(new Bid501_Shared.Account(deets[0], deets[1], false), cCtrl);
+                    bCtrl = new BidCtrl(new Bid501_Shared.Account(deets[0], deets[1], new List<Permission> { Permission.LoginClient, Permission.MakeBid }), cCtrl);
                 }
             });
         }

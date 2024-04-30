@@ -15,11 +15,31 @@ namespace Bid501_Client
 {
     public class ClientCommCtrl : WebSocketBehavior
     {
+        /// <summary>
+        /// The WebSocket that connects to The server
+        /// </summary>
         private WebSocket ws = new WebSocket($"ws://127.0.0.1:8001/server");
+
+        /// <summary>
+        /// The Login View
+        /// </summary>
         private LoginView lView;
 
+        /// <summary>
+        /// a string[] that stores the current username, password
+        /// </summary>
         private string[] clientLoginInfo = { "", "" };
+
+        /// <summary>
+        /// Delegate for the LoginView
+        /// </summary>
+        /// <param name="success"> Bool to determine if the login was successful</param>
+        /// <param name="info">The clientLoginInfo of {"Username", "Password"}</param>
         public delegate void LoginResponseHandler(bool success, string[] info);
+
+        /// <summary>
+        /// Delegate to go back to LoginView
+        /// </summary>
         private LoginResponseHandler loginCallback;
         
 

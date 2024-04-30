@@ -11,7 +11,7 @@ namespace Bid501_Shared
         public static readonly List<Permission> PERMISSIONS = new List<Permission>
             { Permission.LoginServer, Permission.AddProduct, Permission.EndAuction };
 
-        public Admin(string username, string password) : base(username, password, true)
+        public Admin(string username, string password) : base(username, password, PERMISSIONS)
         {
         }
     }
