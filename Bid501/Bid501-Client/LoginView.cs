@@ -23,7 +23,6 @@ namespace Bid501_Client
             InitializeComponent();
         }
 
-
         public void SetController(ClientCommCtrl ctrl)
         {
             cCtrl = ctrl;
@@ -51,11 +50,6 @@ namespace Bid501_Client
                     bCtrl = new BidCtrl(new Bid501_Shared.Account(deets[0], deets[1], false), cCtrl);
                 }
             });
-        }
-
-        private void uxSendTest_Click(object sender, EventArgs e)
-        {
-            //cCtrl.sendTest();
         }
     }
 }

@@ -13,18 +13,24 @@ namespace Bid501_Server
 {
     public partial class LoginView : Form
     {
-        private LoginDel login;
-        private AfterLoginActionDel afterLogin;
+        AccountController accountController;
+        ServerController serverController;
 
-        public LoginView(LoginDel login, AfterLoginActionDel afterLogin)
+        public LoginView(AccountController aCtrl, ServerController sCtrl)
         {
-            this.login = login;
-            this.afterLogin = afterLogin;
             InitializeComponent();
+        }
+
+        /// Set controllers instantiated in Program.cs
+        public void SetController(AccountController aCtrl, ServerController sCtrl)
+        {
+            accountController = aCtrl;
+            serverController = sCtrl;
         }
 
         private void UxLoginButton_Click(object sender, EventArgs e)
         {
+            // Get username/password
             string username = UsernameTextbox.Text;
             string password = PasswordTextbox.Text;
 
@@ -32,10 +38,16 @@ namespace Bid501_Server
             bool success = login(username, password, true);
             bool shouldClose = afterLogin(success);
 
-            // hide the window if login is successful
-            // (closing it would terminate the application at this point)
-            if (shouldClose)
-                Hide();
+
+        private void HandleLoginResponse(bool isSuccess, string[] deets)
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                if (isSuccess)
+                {
+                    ServerView serverView = new ServerView()
+                }
+            });
         }
 
         // enables the login button if and only if both username and password are filled

@@ -86,7 +86,7 @@ namespace Bid501_Server
 
         }
 
-        public bool LogIn(string user, string pass)
+        public bool LogIn(string user, string pass, )
         {
             return true;
         }
