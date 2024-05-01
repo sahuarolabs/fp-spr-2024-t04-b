@@ -35,12 +35,15 @@
             this.UsernameTextbox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.uxSocketStat = new System.Windows.Forms.Label();
-            this.uxSendTest = new System.Windows.Forms.Button();
+            this.UxConnectionLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // UxLoginButton
             // 
+            this.UxLoginButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UxLoginButton.Enabled = false;
             this.UxLoginButton.Location = new System.Drawing.Point(318, 234);
             this.UxLoginButton.Name = "UxLoginButton";
             this.UxLoginButton.Size = new System.Drawing.Size(166, 36);
@@ -51,8 +54,9 @@
             // 
             // PasswordTextbox
             // 
-            this.PasswordTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.PasswordTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.PasswordTextbox.Location = new System.Drawing.Point(318, 172);
             this.PasswordTextbox.Name = "PasswordTextbox";
             this.PasswordTextbox.Size = new System.Drawing.Size(166, 20);
@@ -97,6 +101,7 @@
             this.panel1.AutoScroll = true;
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.UxConnectionLabel);
             this.panel1.Controls.Add(this.uxSendTest);
             this.panel1.Controls.Add(this.uxSocketStat);
             this.panel1.Controls.Add(this.UxLoginButton);
@@ -128,6 +133,24 @@
             this.uxSendTest.UseVisualStyleBackColor = true;
             this.uxSendTest.Click += new System.EventHandler(this.uxSendTest_Click);
             // 
+            // uxSocketStat
+            // 
+            this.uxSocketStat.AutoSize = true;
+            this.uxSocketStat.Location = new System.Drawing.Point(343, 416);
+            this.uxSocketStat.Name = "uxSocketStat";
+            this.uxSocketStat.Size = new System.Drawing.Size(0, 13);
+            this.uxSocketStat.TabIndex = 5;
+            // 
+            // UxConnectionLabel
+            // 
+            this.UxConnectionLabel.AutoSize = true;
+            this.UxConnectionLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.UxConnectionLabel.Location = new System.Drawing.Point(0, 437);
+            this.UxConnectionLabel.Name = "UxConnectionLabel";
+            this.UxConnectionLabel.Size = new System.Drawing.Size(35, 13);
+            this.UxConnectionLabel.TabIndex = 7;
+            this.UxConnectionLabel.Text = "label3";
+            // 
             // LoginView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -153,6 +176,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label uxSocketStat;
         private System.Windows.Forms.Button uxSendTest;
+        private System.Windows.Forms.Label UxConnectionLabel;
     }
 }
 
