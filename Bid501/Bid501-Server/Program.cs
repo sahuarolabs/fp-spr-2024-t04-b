@@ -32,10 +32,12 @@ namespace Bid501_Server
 
             AccountController acctCtrl = new AccountController("accounts.json");
             ServerController serverCtrl = new ServerController(acctCtrl, "model.json");
+
             LoginView loginView = new LoginView(acctCtrl, serverCtrl);
+            loginView.SetLoginDelegates(acctCtrl.Login, serverCtrl.AfterLoginAction);
+
             WebSocketServer wss = new WebSocketServer("ws://" + ServerCommCtrl.GetLocalIPAddress() + ":8001");
             //WebSocketServer wss = new WebSocketServer("ws://" + "127.0.0.1" + ":8001");
-           
             wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl.AddBid, acctCtrl.Login));
             wss.ReuseAddress = true;
             wss.Start(); 

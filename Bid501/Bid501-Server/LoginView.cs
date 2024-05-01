@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocketSharp;
+using Bid501_Shared;
 
 namespace Bid501_Server
 {
@@ -16,17 +17,35 @@ namespace Bid501_Server
         AccountController accountController;
         ServerController serverController;
 
-        public LoginView(AccountController aCtrl, ServerController sCtrl)
+        // Delegates for login button
+        private LoginDel login;
+        private AfterLoginActionDel afterLogin;
+
+        public LoginView()
         {
             InitializeComponent();
         }
 
+        public LoginView(AccountController aCtrl, ServerController sCtrl)
+        {
+            accountController = aCtrl;
+            serverController = sCtrl;
+            InitializeComponent();
+        }
+
         /// Set controllers instantiated in Program.cs
-        public void SetController(AccountController aCtrl, ServerController sCtrl)
+        public void SetControllers(AccountController aCtrl, ServerController sCtrl)
         {
             accountController = aCtrl;
             serverController = sCtrl;
         }
+
+        public void SetLoginDelegates(LoginDel lDel, AfterLoginActionDel alDel)
+        {
+            this.login = lDel;
+            this.afterLogin = alDel;
+        }
+
 
         private void UxLoginButton_Click(object sender, EventArgs e)
         {
@@ -34,7 +53,7 @@ namespace Bid501_Server
             string username = UsernameTextbox.Text;
             string password = PasswordTextbox.Text;
 
-            serverController.LogIn(username, password, HandleLoginResponse);
+            serverController.LogIn(username, password);
         }
 
         private void HandleLoginResponse(bool isSuccess, string[] deets)
@@ -43,7 +62,7 @@ namespace Bid501_Server
             {
                 if (isSuccess)
                 {
-                    ServerView serverView = new ServerView()
+                    ServerView serverView = new ServerView(new Model(), serverController.AddProduct, serverController.SaveModel);
                 }
             });
         }

@@ -22,6 +22,7 @@ namespace Bid501_Client
         /// </summary>
         private LoginView lView;
         private WebSocket ws;
+        public bool IsConnect;
 
         /// <summary>
         /// a string[] that stores the current username, password
@@ -50,7 +51,7 @@ namespace Bid501_Client
             ws.OnError += OnErrorHandler;
             this.ws.OnOpen += OnOpen;
             this.ws.Connect();
-            if (!ws.IsAlive) ;
+            IsConnect = ws.IsAlive;
         }
 
         public void Close()

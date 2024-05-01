@@ -18,6 +18,7 @@ namespace Bid501_Client
         public ClientCommCtrl cCtrl;
         private BidCtrl bCtrl;
 
+
         public LoginView()
         {
             InitializeComponent();

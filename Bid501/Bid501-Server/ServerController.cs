@@ -73,7 +73,13 @@ namespace Bid501_Server
 
             // TODO: refresh view and notify clients
             foreach (RefreshViewDel refresh in observers)
+            {
                 refresh();
+                //Roughly like this:
+                //serverComm.Send("notifyNewProducts");
+            }
+                
+                
         }
 
         public void AddObserver(RefreshViewDel observer)
@@ -86,7 +92,7 @@ namespace Bid501_Server
 
         }
 
-        public bool LogIn(string user, string pass, )
+        public bool LogIn(string user, string pass)
         {
             return true;
         }
