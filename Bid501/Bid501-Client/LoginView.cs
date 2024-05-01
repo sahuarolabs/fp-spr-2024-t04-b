@@ -17,11 +17,15 @@ namespace Bid501_Client
     {
         public ClientCommCtrl cCtrl;
         private BidCtrl bCtrl;
+        bool connection;
 
 
         public LoginView()
         {
             InitializeComponent();
+            connection = cCtrl.
+            if (connection) UxConnectionText.Text = "Connected";
+            else UxConnectionText.Text = "Not Connected";
         }
 
         public void SetController(ClientCommCtrl ctrl)
@@ -51,6 +55,21 @@ namespace Bid501_Client
                     bCtrl = new BidCtrl(new Bid501_Shared.Account(deets[0], deets[1], false), cCtrl);
                 }
             });
+        }
+
+        private void uxSendTest_Click(object sender, EventArgs e)
+        {
+            //cCtrl.sendTest();
+        }
+
+        private void UsernameTextbox_TextChanged(object sender, EventArgs e)
+        {
+            UxLoginButton.Enabled = UsernameTextbox.Text != "" && PasswordTextbox.Text != "" && connection;
+        }
+
+        private void PasswordTextbox_TextChanged(object sender, EventArgs e)
+        {
+            UxLoginButton.Enabled = UsernameTextbox.Text != "" && PasswordTextbox.Text != "" && connection;
         }
     }
 }
