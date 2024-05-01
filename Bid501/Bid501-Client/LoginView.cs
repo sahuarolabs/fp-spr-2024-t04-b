@@ -22,10 +22,9 @@ namespace Bid501_Client
         public LoginView()
         {
             InitializeComponent();
-            //connection = cCtrl.IsConnected add this after Patrick pushes
-            connection = false;
-            if (connection) UxConnectionLabel.Text = "Connected";
-            else UxConnectionLabel.Text = "Not Connected";
+            connection = cCtrl.
+            if (connection) UxConnectionText.Text = "Connected";
+            else UxConnectionText.Text = "Not Connected";
         }
 
 
