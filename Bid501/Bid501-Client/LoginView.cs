@@ -56,5 +56,15 @@ namespace Bid501_Client
         {
             //cCtrl.sendTest();
         }
+
+        private void UsernameTextbox_TextChanged(object sender, EventArgs e)
+        {
+            UxLoginButton.Enabled = UsernameTextbox.Text != "" && PasswordTextbox.Text != "";
+        }
+
+        private void PasswordTextbox_TextChanged(object sender, EventArgs e)
+        {
+            UxLoginButton.Enabled = UsernameTextbox.Text != "" && PasswordTextbox.Text != "";
+        }
     }
 }

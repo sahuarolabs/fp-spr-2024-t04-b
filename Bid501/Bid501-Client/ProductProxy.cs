@@ -49,7 +49,7 @@ namespace Bid501_Client
                 double x = StartingPrice;
                 foreach (Bid bid in Bids)
                 {
-                    if(x < bid.Ammount) x = bid.Ammount;
+                    if(x < bid.Amount) x = bid.Amount;
                 }
                 return x;
             }

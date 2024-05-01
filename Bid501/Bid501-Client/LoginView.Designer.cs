@@ -34,13 +34,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.UsernameTextbox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.uxSocketStat = new System.Windows.Forms.Label();
             this.uxSendTest = new System.Windows.Forms.Button();
+            this.uxSocketStat = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // UxLoginButton
             // 
+            this.UxLoginButton.Enabled = false;
             this.UxLoginButton.Location = new System.Drawing.Point(318, 234);
             this.UxLoginButton.Name = "UxLoginButton";
             this.UxLoginButton.Size = new System.Drawing.Size(166, 36);
@@ -57,8 +58,8 @@
             this.PasswordTextbox.Name = "PasswordTextbox";
             this.PasswordTextbox.Size = new System.Drawing.Size(166, 20);
             this.PasswordTextbox.TabIndex = 2;
-            this.PasswordTextbox.Text = "Password";
             this.PasswordTextbox.UseSystemPasswordChar = true;
+            this.PasswordTextbox.TextChanged += new System.EventHandler(this.PasswordTextbox_TextChanged);
             // 
             // label1
             // 
@@ -90,7 +91,7 @@
             this.UsernameTextbox.Name = "UsernameTextbox";
             this.UsernameTextbox.Size = new System.Drawing.Size(166, 20);
             this.UsernameTextbox.TabIndex = 1;
-            this.UsernameTextbox.Text = "Username";
+            this.UsernameTextbox.TextChanged += new System.EventHandler(this.UsernameTextbox_TextChanged);
             // 
             // panel1
             // 
@@ -110,14 +111,6 @@
             this.panel1.Size = new System.Drawing.Size(800, 450);
             this.panel1.TabIndex = 5;
             // 
-            // uxSocketStat
-            // 
-            this.uxSocketStat.AutoSize = true;
-            this.uxSocketStat.Location = new System.Drawing.Point(343, 416);
-            this.uxSocketStat.Name = "uxSocketStat";
-            this.uxSocketStat.Size = new System.Drawing.Size(0, 13);
-            this.uxSocketStat.TabIndex = 5;
-            // 
             // uxSendTest
             // 
             this.uxSendTest.Location = new System.Drawing.Point(364, 346);
@@ -127,6 +120,14 @@
             this.uxSendTest.Text = "Send All Clients";
             this.uxSendTest.UseVisualStyleBackColor = true;
             this.uxSendTest.Click += new System.EventHandler(this.uxSendTest_Click);
+            // 
+            // uxSocketStat
+            // 
+            this.uxSocketStat.AutoSize = true;
+            this.uxSocketStat.Location = new System.Drawing.Point(343, 416);
+            this.uxSocketStat.Name = "uxSocketStat";
+            this.uxSocketStat.Size = new System.Drawing.Size(0, 13);
+            this.uxSocketStat.TabIndex = 5;
             // 
             // LoginView
             // 
