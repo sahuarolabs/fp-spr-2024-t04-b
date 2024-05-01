@@ -46,7 +46,7 @@ namespace Bid501_Client
         {
             lView = view;
             string clientId = GetLocalIPAddress();
-            this.ws = ws = new WebSocket($"ws://10.130.160.106:8001/server?id={clientId}");
+            this.ws = ws = new WebSocket($"ws://127.0.0.1:8001/server?id={clientId}");
             ws.OnMessage += OnMessageHandler;
             ws.OnError += OnErrorHandler;
             this.ws.OnOpen += OnOpen;

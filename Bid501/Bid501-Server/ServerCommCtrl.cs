@@ -70,6 +70,7 @@ namespace Bid501_Server
             }
         }
 
+        // NEEDS: add clientIP to Dictionary of connected clients
         protected override void OnOpen()
         {
             base.OnOpen();
@@ -77,22 +78,26 @@ namespace Bid501_Server
             Console.WriteLine($"Client {clientId} connected with ID: {ID}");
         }
 
+        // generic imp, needs to be changed
         protected override void OnClose(CloseEventArgs e)
         {
             Console.WriteLine("ClientDisconnected: " + e);
             base.OnClose(e);
         }
 
+        // empty
         public void NotifyNewProduct()
         {
 
         }
 
+        // empty
         public void NotfyNewBid()
         {
 
         }
 
+        // empty
         public void EndAuction()
         {
 
