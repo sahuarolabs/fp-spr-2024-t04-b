@@ -22,6 +22,7 @@ namespace Bid501_Client
         /// </summary>
         private LoginView lView;
         private WebSocket ws;
+        public bool IsConnect;
 
         /// <summary>
         /// a string[] that stores the current username, password
@@ -50,7 +51,7 @@ namespace Bid501_Client
             ws.OnError += OnErrorHandler;
             this.ws.OnOpen += OnOpen;
             this.ws.Connect();
-            if (!ws.IsAlive) ;
+            IsConnect = ws.IsAlive;
         }
 
         public void Close()
@@ -124,7 +125,7 @@ namespace Bid501_Client
         /// </summary>
         /// <param name="bid">The bid added from bidctrl</param>
         /// <returns>A bool for if the bid was verified</returns>
-        public bool SendBid(Bid bid, IProduct product) //Called from BidControl "Attemptbid"
+        public bool SendBid(Bid bid, Product product) //Called from BidControl "Attemptbid"
         {
             MessageBox.Show($"Sent to Server {bid.Ammount}");
             return true;

@@ -13,9 +13,9 @@ namespace Bid501_Server
 {
     public partial class AddProductView : Form
     {
-        public IProduct SelectedProd { get; private set; }
+        public Product SelectedProd { get; private set; }
 
-        public AddProductView(List<IProduct> products)
+        public AddProductView(List<Product> products)
         {
             InitializeComponent();
             listBoxProducts.DataSource = products;
@@ -23,7 +23,7 @@ namespace Bid501_Server
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            IProduct selected = (IProduct) listBoxProducts.SelectedItem;
+            Product selected = (Product) listBoxProducts.SelectedItem;
 
             if (selected == null)
                 MessageBox.Show("No product selected!", "Error");

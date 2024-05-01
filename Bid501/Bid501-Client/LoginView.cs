@@ -19,6 +19,7 @@ namespace Bid501_Client
         private BidCtrl bCtrl;
         bool connection;
 
+
         public LoginView()
         {
             InitializeComponent();
@@ -26,7 +27,6 @@ namespace Bid501_Client
             if (connection) UxConnectionText.Text = "Connected";
             else UxConnectionText.Text = "Not Connected";
         }
-
 
         public void SetController(ClientCommCtrl ctrl)
         {
