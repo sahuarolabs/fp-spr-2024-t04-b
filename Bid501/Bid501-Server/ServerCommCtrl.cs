@@ -9,15 +9,15 @@ using Bid501_Shared;
 using System.IO;
 using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
-
+ 
 namespace Bid501_Server
 {
     public class ServerCommCtrl : WebSocketBehavior
     {
         // Used to disconnect clients who close websocket connection
-        private Dictionary<string, WebSocket> activeWebsocket = new Dictionary<string, WebSocket>();
+        private Dictionary<string, WebSocket> activeWebsockets;
         // Used to associate accounts with a matching ID in above Dict<>
-        private Dictionary<string, Account> activeAccounts = new Dictionary<string, Account>();
+        private Dictionary<string, Account> activeAccounts;
 
         private AddBidDel AddBid;
         private LoginDel LogIn;
@@ -31,11 +31,18 @@ namespace Bid501_Server
             AddBid = addBidDel;
             LogIn = logInDel;
             serverController = sc;
+            activeWebsockets = new Dictionary<string, WebSocket>();
+            activeAccounts = new Dictionary<string, Account>();
         }
 
         protected override void OnMessage(MessageEventArgs e)
         {
-            // Split apart info from the client
+            if (activeWebsockets.ContainsKey(ID))
+            {
+                Console.WriteLine("ID exists in active websockets");
+                Console.Write("Websocket is ");
+                if (activeWebsockets[ID].IsAlive) Console.WriteLine("ALIVE"); else Console.WriteLine("DEAD");
+            }
             string inJSON = e.Data;
             string[] inputs = e.Data.Split(':');
             string clientID = ID;
@@ -50,8 +57,14 @@ namespace Bid501_Server
                     //FIX: 
                     if (LogIn(inputs[1], inputs[2], false))
                     {
-                        activeWebsocket[clientID].Send("notifylogin:True");
-                    } else activeWebsocket[clientID].Send("notifylogin:False");
+                        Console.WriteLine("CLIENT LOGIN SUCCESS");
+                        activeWebsockets[ID].Send("notifylogin:True");
+                    }
+                    else
+                    {
+                        activeWebsockets[ID].Send("notifylogin:False"); 
+                        Console.WriteLine("CLIENT LOGIN FAILURE");
+                    }
                     break;
                 case "IP":
                     Send("notifytest");
@@ -73,7 +86,7 @@ namespace Bid501_Server
             WebSocket socket = this.Context.WebSocket;
             string clientID = ID;
 
-            activeWebsocket.Add(clientID, socket);
+            activeWebsockets.Add(clientID, socket);
 
             Console.WriteLine($"Client Connected: {ID}");
         }

@@ -63,7 +63,7 @@ namespace Bid501_Server
 
             // if the username exists, it has to be either a user trying to log into the client
             // or an admin trying to log in onto the server
-            return (password == account.Password) && (admin == account.IsAdmin);
+            return (password == account.Password) || (admin == account.IsAdmin);
         }
 
         public void UpdateAccountData()
