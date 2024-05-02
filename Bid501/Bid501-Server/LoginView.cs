@@ -14,8 +14,8 @@ namespace Bid501_Server
 {
     public partial class LoginView : Form
     {
-        AccountController accountController;
-        ServerController serverController;
+        LoginDel login;
+        AfterLoginActionDel afterLogin;
 
         // Delegates for login button
         private LoginDel login;

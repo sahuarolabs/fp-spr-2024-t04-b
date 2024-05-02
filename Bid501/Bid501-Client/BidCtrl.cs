@@ -26,13 +26,13 @@ namespace Bid501_Client
         public bool Attemptbid(Bid bid, Product product) //Called from delegate in Bid View "UxPlaceBid_Click"
         {
 
-                if (bid.Ammount > product.Price)
+                if (bid.Amount > product.Price)
                 {
                     return cCtrl.SendBid(bid, product); //Send to ClientCommCtrl Send Bid
                 }
                 else
                 {
-                    MessageBox.Show($"Did not send {bid.Ammount}");
+                    MessageBox.Show($"Did not send {bid.Amount}");
                 }
             return false;
         }

@@ -42,6 +42,7 @@
             // 
             // UxLoginButton
             // 
+            this.UxLoginButton.Enabled = false;
             this.UxLoginButton.Location = new System.Drawing.Point(318, 234);
             this.UxLoginButton.Name = "UxLoginButton";
             this.UxLoginButton.Size = new System.Drawing.Size(166, 36);
@@ -60,6 +61,7 @@
             this.PasswordTextbox.Size = new System.Drawing.Size(166, 20);
             this.PasswordTextbox.TabIndex = 2;
             this.PasswordTextbox.UseSystemPasswordChar = true;
+            this.PasswordTextbox.TextChanged += new System.EventHandler(this.PasswordTextbox_TextChanged);
             // 
             // label1
             // 
@@ -91,6 +93,7 @@
             this.UsernameTextbox.Name = "UsernameTextbox";
             this.UsernameTextbox.Size = new System.Drawing.Size(166, 20);
             this.UsernameTextbox.TabIndex = 1;
+            this.UsernameTextbox.TextChanged += new System.EventHandler(this.UsernameTextbox_TextChanged);
             // 
             // panel1
             // 
