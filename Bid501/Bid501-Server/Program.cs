@@ -10,7 +10,7 @@ using Bid501_Shared;
 
 namespace Bid501_Server
 {
-    public delegate void AddBidDel(Bid b, Product p);
+    public delegate bool AddBidDel(Bid b, Product p);
     public delegate void RefreshViewDel();
     public delegate void AddProductDel(Product p);
     public delegate void EndAuctionDel(Product p);
@@ -32,11 +32,14 @@ namespace Bid501_Server
 
             AccountController acctCtrl = new AccountController("accounts.json");
             ServerController serverCtrl = new ServerController(acctCtrl, "model.json");
-            LoginView loginView = new LoginView(acctCtrl, serverCtrl);
+            ServerCommCtrl servCommCtrl = new ServerCommCtrl(serverCtrl.AddBid, acctCtrl.Login);
+            LoginView loginView = new LoginView(acctCtrl.Login, serverCtrl.AfterLoginAction);
             WebSocketServer wss = new WebSocketServer("ws://" + ServerCommCtrl.GetLocalIPAddress() + ":8001");
             //WebSocketServer wss = new WebSocketServer("ws://" + "127.0.0.1" + ":8001");
+
+            serverCtrl.ServerComm = servCommCtrl;
            
-            wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl.AddBid, acctCtrl.Login));
+            wss.AddWebSocketService<ServerCommCtrl>("/server", () => servCommCtrl);
             wss.ReuseAddress = true;
             wss.Start(); 
 

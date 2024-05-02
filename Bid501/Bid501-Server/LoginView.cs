@@ -13,19 +13,15 @@ namespace Bid501_Server
 {
     public partial class LoginView : Form
     {
-        AccountController accountController;
-        ServerController serverController;
+        LoginDel login;
+        AfterLoginActionDel afterLogin;
 
-        public LoginView(AccountController aCtrl, ServerController sCtrl)
+        public LoginView(LoginDel login, AfterLoginActionDel afterLogin)
         {
+            this.login = login;
+            this.afterLogin = afterLogin;
+
             InitializeComponent();
-        }
-
-        /// Set controllers instantiated in Program.cs
-        public void SetController(AccountController aCtrl, ServerController sCtrl)
-        {
-            accountController = aCtrl;
-            serverController = sCtrl;
         }
 
         private void UxLoginButton_Click(object sender, EventArgs e)
@@ -37,6 +33,7 @@ namespace Bid501_Server
             // call the delegates for login and after login logic
             bool success = login(username, password, true);
             bool shouldClose = afterLogin(success);
+        }
 
 
         private void HandleLoginResponse(bool isSuccess, string[] deets)
@@ -45,7 +42,7 @@ namespace Bid501_Server
             {
                 if (isSuccess)
                 {
-                    ServerView serverView = new ServerView()
+                    // ServerView serverView = new ServerView();
                 }
             });
         }
