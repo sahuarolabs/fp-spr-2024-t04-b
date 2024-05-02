@@ -16,9 +16,6 @@ namespace Bid501_Server
     {
         // Used to disconnect clients who close websocket connection
         private Dictionary<string, WebSocket> activeWebsockets;
-        // Used to associate accounts with a matching ID in above Dict<>
-        private Dictionary<string, Account> activeAccounts;
-
 
         private AddBidDel AddBid;
         private LoginDel LogIn;
@@ -26,45 +23,38 @@ namespace Bid501_Server
         private Model model;
 
         private ServerController serverController;
+        private AccountController accountController;
         
-        public ServerCommCtrl(ServerController sc, AddBidDel addBidDel, LoginDel logInDel)
+        public ServerCommCtrl(ServerController sc, AddBidDel addBidDel, AccountController ac)
         {
             AddBid = addBidDel;
-            LogIn = logInDel;
+            accountController = ac;
             serverController = sc;
             activeWebsockets = new Dictionary<string, WebSocket>();
-            activeAccounts = new Dictionary<string, Account>();
+            //activeAccounts = new Dictionary<string, Account>();
         }
 
         protected override void OnMessage(MessageEventArgs e)
         {
-            if (activeWebsockets.ContainsKey(ID))
-            {
-                Console.WriteLine("ID exists in active websockets");
-                Console.Write("Websocket is ");
-                if (activeWebsockets[ID].ReadyState == WebSocketState.Open) Console.WriteLine("Ready"); else Console.WriteLine("Closed");
-            }
             string inJSON = e.Data;
             string[] inputs = e.Data.Split(':');
             string clientID = ID;
-
-            Console.WriteLine($"Message from Client: {ID}");
 
             foreach (string s in inputs) Console.WriteLine(s);
 
             switch(inputs[0])
             {
                 case "login": //FIX: not adding new account to acnts.json
-                    //FIX: 
-                    if (LogIn(inputs[1], inputs[2], false))
+                    Account account = accountController.ClientLogin(inputs[1], inputs[2], false, clientID);
+                    if (account != null)
                     {
-                        Console.WriteLine("CLIENT LOGIN SUCCESS");
+                        accountController.activeAccounts.Add(clientID, account);
                         activeWebsockets[ID].Send("notifylogin:True");
+                        Console.WriteLine(accountController.activeAccounts[clientID].Username);
                     }
                     else
                     {
                         activeWebsockets[ID].Send("notifylogin:False"); 
-                        Console.WriteLine("CLIENT LOGIN FAILURE");
                     }
                     break;
                 case "IP":
