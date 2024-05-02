@@ -40,6 +40,8 @@ namespace Bid501_Server
             string[] inputs = e.Data.Split(':');
             string clientID = ID;
 
+            Console.WriteLine($"Message from Client: {ID}");
+
             foreach (string s in inputs) Console.WriteLine(s);
 
             switch(inputs[0])
@@ -73,7 +75,7 @@ namespace Bid501_Server
 
             activeWebsocket.Add(clientID, socket);
 
-            Console.WriteLine($"Client {clientID} connected with ID: {ID}");
+            Console.WriteLine($"Client Connected: {ID}");
         }
 
         // generic imp, needs to be changed
