@@ -32,7 +32,7 @@ namespace Bid501_Server
             LogIn = logInDel;
             serverController = sc;
             activeWebsockets = new Dictionary<string, WebSocket>();
-            activeAccounts = new Dictionary<string, Account>();
+            //activeAccounts = new Dictionary<string, Account>();
         }
 
         protected override void OnMessage(MessageEventArgs e)
