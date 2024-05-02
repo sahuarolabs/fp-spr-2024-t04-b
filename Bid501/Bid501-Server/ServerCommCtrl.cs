@@ -15,7 +15,7 @@ namespace Bid501_Server
     public class ServerCommCtrl : WebSocketBehavior
     {
         // Used to disconnect clients who close websocket connection
-        private Dictionary<string, WebSocket> activeWebsockets = new Dictionary<string, WebSocket>();
+        private Dictionary<string, WebSocket> activeWebsocket = new Dictionary<string, WebSocket>();
         // Used to associate accounts with a matching ID in above Dict<>
         private Dictionary<string, Account> activeAccounts = new Dictionary<string, Account>();
 
@@ -35,8 +35,11 @@ namespace Bid501_Server
 
         protected override void OnMessage(MessageEventArgs e)
         {
+            // Split apart info from the client
             string inJSON = e.Data;
             string[] inputs = e.Data.Split(':');
+            string clientID = ID;
+
             foreach (string s in inputs) Console.WriteLine(s);
             switch(inputs[0])
             {
@@ -44,8 +47,8 @@ namespace Bid501_Server
                     //FIX: 
                     if (serverController.acctCtrl.Login(inputs[1], inputs[2], false))
                     {
-                        Send("notifylogin:True");
-                    } else Send("notifylogin:False");
+                        activeWebsocket[clientID].Send("notifylogin:True");
+                    } else activeWebsocket[clientID].Send("notifylogin:False");
                     break;
                 case "IP":
                     Send("notifytest");
@@ -67,7 +70,7 @@ namespace Bid501_Server
             WebSocket socket = this.Context.WebSocket;
             string clientID = ID;
 
-            activeWebsockets.Add(clientID, socket);
+            activeWebsocket.Add(clientID, socket);
 
             Console.WriteLine($"Client {clientID} connected with ID: {ID}");
         }
