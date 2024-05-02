@@ -9,25 +9,21 @@ namespace Bid501_Client
 {
     public static class Program
     {
-
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            
-            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Initialize: LoginView, ClientCommCtrl and set 
+            // initialized controller to the instance of the loginView
             LoginView view = new LoginView();
             ClientCommCtrl cCtrl = new ClientCommCtrl(view);
             view.SetController(cCtrl);
+
+            // Run view and close when application's done running view
             Application.Run(view);
             cCtrl.Close();
-            Console.WriteLine("Close: Program");
         }
-
-
     }
 }

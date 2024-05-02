@@ -12,7 +12,7 @@ namespace Bid501_Server
 {
     public delegate void AddBidDel(Bid b, Product p);
     public delegate void RefreshViewDel();
-    public delegate void AddProductDel(IProduct p);
+    public delegate void AddProductDel(Product p);
     public delegate void EndAuctionDel(Product p);
     public delegate bool LoginDel(string username, string password, bool client);
     public delegate bool AfterLoginActionDel(bool success);
@@ -31,21 +31,18 @@ namespace Bid501_Server
             Application.SetCompatibleTextRenderingDefault(false);
 
             AccountController acctCtrl = new AccountController("accounts.json");
-            ServerController servCtrl = new ServerController(acctCtrl, "model.json");
-            LoginView loginView = new LoginView(acctCtrl.Login, servCtrl.AfterLoginAction);
-
-            Application.Run(loginView);
-
-            /*
+            ServerController serverCtrl = new ServerController(acctCtrl, "model.json");
+            LoginView loginView = new LoginView(acctCtrl, serverCtrl);
             WebSocketServer wss = new WebSocketServer("ws://" + ServerCommCtrl.GetLocalIPAddress() + ":8001");
             //WebSocketServer wss = new WebSocketServer("ws://" + "127.0.0.1" + ":8001");
-            ServerController serverCtrl = new ServerController(ServerView.RefreshView);
-            wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl.AddBid, serverCtrl.LogIn));
+           
+            wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl.AddBid, acctCtrl.Login));
             wss.ReuseAddress = true;
-            wss.Start();
-            Application.Run(new ServerView());
+            wss.Start(); 
+
+            Application.Run(loginView);
             wss.Stop();
-            */
+            
         } 
 
     }

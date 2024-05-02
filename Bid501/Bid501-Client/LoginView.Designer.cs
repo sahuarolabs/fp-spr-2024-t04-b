@@ -98,7 +98,6 @@
             this.panel1.AutoScroll = true;
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel1.Controls.Add(this.uxSendTest);
             this.panel1.Controls.Add(this.uxSocketStat);
             this.panel1.Controls.Add(this.UxLoginButton);
             this.panel1.Controls.Add(this.PasswordTextbox);
@@ -153,7 +152,6 @@
         private System.Windows.Forms.TextBox UsernameTextbox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label uxSocketStat;
-        private System.Windows.Forms.Button uxSendTest;
     }
 }
 

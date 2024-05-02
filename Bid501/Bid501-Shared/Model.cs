@@ -10,14 +10,14 @@ namespace Bid501_Shared
     [Serializable]
     public class Model
     {
-        public List<IProduct> Products { get; }
+        public List<Product> Products { get; }
 
         public Model()
         {
-            Products = new List<IProduct>();
+            Products = new List<Product>();
         }
 
-        public Model(List<IProduct> products)
+        public Model(List<Product> products)
         {
             Products = products;
         }

@@ -45,7 +45,7 @@ namespace Bid501_Client
         {
             lView = view;
             string clientId = GetLocalIPAddress();
-            this.ws = ws = new WebSocket($"ws://10.130.160.136:8001/server?id={clientId}");
+            this.ws = ws = new WebSocket($"ws://10.130.160.106:8001/server?id={clientId}");
             ws.OnMessage += OnMessageHandler;
             ws.OnError += OnErrorHandler;
             this.ws.OnOpen += OnOpen;
@@ -124,7 +124,7 @@ namespace Bid501_Client
         /// </summary>
         /// <param name="bid">The bid added from bidctrl</param>
         /// <returns>A bool for if the bid was verified</returns>
-        public bool SendBid(Bid bid, IProduct product) //Called from BidControl "Attemptbid"
+        public bool SendBid(Bid bid, Product product) //Called from BidControl "Attemptbid"
         {
             MessageBox.Show($"Sent to Server {bid.Amount}");
             return true;
