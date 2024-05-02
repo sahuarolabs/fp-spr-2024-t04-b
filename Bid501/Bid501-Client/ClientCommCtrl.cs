@@ -39,6 +39,8 @@ namespace Bid501_Client
             
             // Build Websocket connection and connect
             ws = new WebSocket($"ws://10.130.160.98:8001/server");
+
+            ws.OnMessage += OnMessageHandler;
             ws.Connect();
 
             // Update field to show current websocket connection
@@ -58,7 +60,7 @@ namespace Bid501_Client
         }
 
         // Redirects messages from the server
-        protected override void OnMessage(MessageEventArgs e)
+        public void OnMessageHandler(object sender, MessageEventArgs e)
         {
             base.OnMessage(e);
             string[] parts = e.Data.Split(':');

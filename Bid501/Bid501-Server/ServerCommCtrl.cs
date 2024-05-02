@@ -9,7 +9,7 @@ using Bid501_Shared;
 using System.IO;
 using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
- 
+
 namespace Bid501_Server
 {
     public class ServerCommCtrl : WebSocketBehavior
@@ -18,6 +18,7 @@ namespace Bid501_Server
         private Dictionary<string, WebSocket> activeWebsockets;
         // Used to associate accounts with a matching ID in above Dict<>
         private Dictionary<string, Account> activeAccounts;
+
 
         private AddBidDel AddBid;
         private LoginDel LogIn;
@@ -41,7 +42,7 @@ namespace Bid501_Server
             {
                 Console.WriteLine("ID exists in active websockets");
                 Console.Write("Websocket is ");
-                if (activeWebsockets[ID].IsAlive) Console.WriteLine("ALIVE"); else Console.WriteLine("DEAD");
+                if (activeWebsockets[ID].ReadyState == WebSocketState.Open) Console.WriteLine("Ready"); else Console.WriteLine("Closed");
             }
             string inJSON = e.Data;
             string[] inputs = e.Data.Split(':');
