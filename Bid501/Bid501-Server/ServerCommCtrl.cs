@@ -13,47 +13,39 @@ using System.Runtime.CompilerServices;
 namespace Bid501_Server
 {
     public class ServerCommCtrl : WebSocketBehavior
-    { 
+    {
+        // Used to disconnect clients who close websocket connection
+        private Dictionary<string, WebSocket> activeWebsockets = new Dictionary<string, WebSocket>();
+        // Used to associate accounts with a matching ID in above Dict<>
+        private Dictionary<string, Account> activeAccounts = new Dictionary<string, Account>();
+
         private AddBidDel AddBid;
         private LoginDel LogIn;
-
-        private List<Account> Accounts = new List<Account>();
-        private Dictionary<string, Account> clients;
 
         private Model model;
 
         private ServerController serverController;
         
-        public ServerCommCtrl(AddBidDel addBidDel, LoginDel logInDel)
+        public ServerCommCtrl(ServerController sc, AddBidDel addBidDel, LoginDel logInDel)
         {
             AddBid = addBidDel;
             LogIn = logInDel;
-        }
-
-        public static string GetLocalIPAddress()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    MessageBox.Show(ip.ToString());
-                    return ip.ToString();
-                }
-            }
-            MessageBox.Show("No network adapters with an IPv4 address in the system!");
-            return "";
+            serverController = sc;
         }
 
         protected override void OnMessage(MessageEventArgs e)
         {
             string inJSON = e.Data;
             string[] inputs = e.Data.Split(':');
-            string id = inputs[0];
-            switch(id)
+            foreach (string s in inputs) Console.WriteLine(s);
+            switch(inputs[0])
             {
-                case "login":
-                    Send("notifylogin:True");
+                case "login": //FIX: not adding new account to acnts.json
+                    //FIX: 
+                    if (serverController.acctCtrl.Login(inputs[1], inputs[2], false))
+                    {
+                        Send("notifylogin:True");
+                    } else Send("notifylogin:False");
                     break;
                 case "IP":
                     Send("notifytest");
@@ -65,43 +57,46 @@ namespace Bid501_Server
 
                     break;
                 default:
-                    Console.WriteLine("Fuck yourself");
                     break;
             }
         }
 
+        // NEEDS: add clientIP to Dictionary of connected clients
         protected override void OnOpen()
         {
-            base.OnOpen();
-            var clientId = this.Context.QueryString["id"];
-            Console.WriteLine($"Client {clientId} connected with ID: {ID}");
+            WebSocket socket = this.Context.WebSocket;
+            string clientID = ID;
+
+            activeWebsockets.Add(clientID, socket);
+
+            Console.WriteLine($"Client {clientID} connected with ID: {ID}");
         }
 
+        // generic imp, needs to be changed
         protected override void OnClose(CloseEventArgs e)
         {
-            Console.WriteLine("ClientDisconnected: " + e);
+
+            Console.WriteLine($"ClientDisconnected: {ID}");
             base.OnClose(e);
         }
 
+        // empty
         public void NotifyNewProduct()
         {
 
         }
 
-        public void NotfyNewBid()
+        // empty
+        public void NotifyNewBid()
         {
 
         }
 
+        // empty
         public void EndAuction()
         {
 
         }
-
-        public Dictionary<string, Account> GetClients()
-        {
-            return clients;
-        }  
         
     }
 }

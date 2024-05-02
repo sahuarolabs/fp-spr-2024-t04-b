@@ -12,7 +12,8 @@ namespace Bid501_Server
 {
     public class ServerController
     {
-        private AccountController acctCtrl;
+        public AccountController acctCtrl;
+
         private string modelFileName;
         private Model model;
         private List<RefreshViewDel> observers;
@@ -74,10 +75,11 @@ namespace Bid501_Server
 
             // refresh view
             foreach (RefreshViewDel refresh in observers)
+            {
                 refresh();
-
-            // notify clients
-            ServerComm.NotifyNewProduct();
+                //Roughly like this:
+                //serverComm.Send("notifyNewProducts");
+            }
         }
 
         public void AddObserver(RefreshViewDel observer)
@@ -93,9 +95,6 @@ namespace Bid501_Server
 
             product.Bids.Add(bid);
 
-            // notify clients about new bid
-            ServerComm.NotfyNewBid();
-            return true;
-        }
+
     }
 }

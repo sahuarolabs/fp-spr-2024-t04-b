@@ -34,6 +34,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.UsernameTextbox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.UxConnectionText = new System.Windows.Forms.Label();
             this.uxSendTest = new System.Windows.Forms.Button();
             this.uxSocketStat = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
@@ -52,8 +53,9 @@
             // 
             // PasswordTextbox
             // 
-            this.PasswordTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.PasswordTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.PasswordTextbox.Location = new System.Drawing.Point(318, 172);
             this.PasswordTextbox.Name = "PasswordTextbox";
             this.PasswordTextbox.Size = new System.Drawing.Size(166, 20);
@@ -98,6 +100,8 @@
             this.panel1.AutoScroll = true;
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.UxConnectionText);
+            this.panel1.Controls.Add(this.uxSendTest);
             this.panel1.Controls.Add(this.uxSocketStat);
             this.panel1.Controls.Add(this.UxLoginButton);
             this.panel1.Controls.Add(this.PasswordTextbox);
@@ -109,6 +113,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 450);
             this.panel1.TabIndex = 5;
+            // 
+            // UxConnectionText
+            // 
+            this.UxConnectionText.AutoSize = true;
+            this.UxConnectionText.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.UxConnectionText.Location = new System.Drawing.Point(0, 437);
+            this.UxConnectionText.Name = "UxConnectionText";
+            this.UxConnectionText.Size = new System.Drawing.Size(35, 13);
+            this.UxConnectionText.TabIndex = 7;
+            this.UxConnectionText.Text = "label3";
             // 
             // uxSendTest
             // 
@@ -152,6 +166,9 @@
         private System.Windows.Forms.TextBox UsernameTextbox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label uxSocketStat;
+        private System.Windows.Forms.Button uxSendTest;
+        private System.Windows.Forms.Label UxConnectionLabel;
+        private System.Windows.Forms.Label UxConnectionText;
     }
 }
 

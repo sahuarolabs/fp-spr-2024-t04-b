@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocketSharp;
+using Bid501_Shared;
 
 namespace Bid501_Server
 {
@@ -16,13 +17,35 @@ namespace Bid501_Server
         LoginDel login;
         AfterLoginActionDel afterLogin;
 
-        public LoginView(LoginDel login, AfterLoginActionDel afterLogin)
-        {
-            this.login = login;
-            this.afterLogin = afterLogin;
+        // Delegates for login button
+        private LoginDel login;
+        private AfterLoginActionDel afterLogin;
 
+        public LoginView()
+        {
             InitializeComponent();
         }
+
+        public LoginView(AccountController aCtrl, ServerController sCtrl)
+        {
+            accountController = aCtrl;
+            serverController = sCtrl;
+            InitializeComponent();
+        }
+
+        /// Set controllers instantiated in Program.cs
+        public void SetControllers(AccountController aCtrl, ServerController sCtrl)
+        {
+            accountController = aCtrl;
+            serverController = sCtrl;
+        }
+
+        public void SetLoginDelegates(LoginDel lDel, AfterLoginActionDel alDel)
+        {
+            this.login = lDel;
+            this.afterLogin = alDel;
+        }
+
 
         private void UxLoginButton_Click(object sender, EventArgs e)
         {
@@ -35,14 +58,13 @@ namespace Bid501_Server
             bool shouldClose = afterLogin(success);
         }
 
-
         private void HandleLoginResponse(bool isSuccess, string[] deets)
         {
             Invoke((MethodInvoker)delegate
             {
                 if (isSuccess)
                 {
-                    // ServerView serverView = new ServerView();
+                    ServerView serverView = new ServerView(new Model(), serverController.AddProduct, serverController.SaveModel);
                 }
             });
         }

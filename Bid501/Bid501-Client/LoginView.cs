@@ -17,15 +17,15 @@ namespace Bid501_Client
     {
         public ClientCommCtrl cCtrl;
         private BidCtrl bCtrl;
+        bool isConnected;
 
-        public LoginView()
+        public LoginView(ClientCommCtrl Ctrl)
         {
+            cCtrl = Ctrl;
             InitializeComponent();
-        }
-
-        public void SetController(ClientCommCtrl ctrl)
-        {
-            cCtrl = ctrl;
+            isConnected = cCtrl.IsConnect;
+            if (isConnected) UxConnectionText.Text = "Connected";
+            else UxConnectionText.Text = "Not Connected";
         }
 
         private void UxLoginButton_Click(object sender, EventArgs e)
@@ -59,12 +59,12 @@ namespace Bid501_Client
 
         private void UsernameTextbox_TextChanged(object sender, EventArgs e)
         {
-            UxLoginButton.Enabled = UsernameTextbox.Text != "" && PasswordTextbox.Text != "";
+            UxLoginButton.Enabled = UsernameTextbox.Text != "" && PasswordTextbox.Text != "" && isConnected;
         }
 
         private void PasswordTextbox_TextChanged(object sender, EventArgs e)
         {
-            UxLoginButton.Enabled = UsernameTextbox.Text != "" && PasswordTextbox.Text != "";
+            UxLoginButton.Enabled = UsernameTextbox.Text != "" && PasswordTextbox.Text != "" && isConnected;
         }
     }
 }
