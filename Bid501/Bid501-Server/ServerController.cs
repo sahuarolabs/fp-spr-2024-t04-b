@@ -12,14 +12,15 @@ namespace Bid501_Server
 {
     public class ServerController
     {
+        public delegate void DelNotifyNewProduct();
+        public DelNotifyNewProduct NotifyNewProduct;
+
         public AccountController acctCtrl;
 
         private string modelFileName;
         private Model model;
         private List<RefreshViewDel> observers;
         private RefreshViewDel refreshView;
-
-        public ServerCommCtrl ServerComm { get; set; }
 
         public ServerController(AccountController acctCtrl, string modelFileName)
         {
@@ -28,6 +29,12 @@ namespace Bid501_Server
             model = LoadModelFromFile(modelFileName);
             observers = new List<RefreshViewDel>();
         }
+
+        public void SetDelegates(DelNotifyNewProduct np)
+        {
+            NotifyNewProduct = np;
+        }
+
 
         public bool AfterLoginAction(bool success)
         {
@@ -94,8 +101,8 @@ namespace Bid501_Server
                 return false;
 
             product.Bids.Add(bid);
-
-            ServerComm.NotifyNewBid();
+            
+            // FIXME: Notify new bid
             return true;
         }
     }

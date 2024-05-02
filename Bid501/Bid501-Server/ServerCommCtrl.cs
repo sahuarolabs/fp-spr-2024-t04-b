@@ -33,6 +33,7 @@ namespace Bid501_Server
             serverController = sc;
             activeWebsockets = new Dictionary<string, WebSocket>();
             //activeAccounts = new Dictionary<string, Account>();
+            serverController.SetDelegates(NotifyNewProduct);
         }
 
         protected override void OnMessage(MessageEventArgs e)

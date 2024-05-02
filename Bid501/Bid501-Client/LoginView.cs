@@ -49,11 +49,6 @@ namespace Bid501_Client
             }
         }
 
-        private void uxSendTest_Click(object sender, EventArgs e)
-        {
-            //cCtrl.sendTest();
-        }
-
         private void UsernameTextbox_TextChanged(object sender, EventArgs e)
         {
             UxLoginButton.Enabled = UsernameTextbox.Text != "" && PasswordTextbox.Text != "" && isConnected;

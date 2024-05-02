@@ -18,12 +18,12 @@ namespace Bid501_Client
             // Initialize: LoginView, ClientCommCtrl and set 
             // initialized controller to the instance of the loginView
             ClientCommCtrl cCtrl = new ClientCommCtrl();
-            LoginView view = new LoginView(cCtrl);
+            LoginView loginView = new LoginView(cCtrl);
 
-            cCtrl.SetView(view);
+            cCtrl.SetView(loginView);
 
             // Run view and close when application's done running view
-            Application.Run(view);
+            Application.Run(loginView);
             cCtrl.Close();
         }
     }
