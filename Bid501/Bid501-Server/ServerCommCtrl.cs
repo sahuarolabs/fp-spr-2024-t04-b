@@ -26,24 +26,26 @@ namespace Bid501_Server
 
         private ServerController serverController;
         
-        public ServerCommCtrl(AddBidDel addBidDel, LoginDel logInDel)
+        public ServerCommCtrl(ServerController sc, AddBidDel addBidDel, LoginDel logInDel)
         {
             AddBid = addBidDel;
             LogIn = logInDel;
+            serverController = sc;
         }
 
         protected override void OnMessage(MessageEventArgs e)
         {
             string inJSON = e.Data;
             string[] inputs = e.Data.Split(':');
-            string id = inputs[0];
-            switch(id)
+            foreach (string s in inputs) Console.WriteLine(s);
+            switch(inputs[0])
             {
-                case "login":
+                case "login": //FIX: not adding new account to acnts.json
+                    //FIX: 
                     if (serverController.acctCtrl.Login(inputs[1], inputs[2], false))
                     {
                         Send("notifylogin:True");
-                    } else Send("notifyLogin:False");
+                    } else Send("notifylogin:False");
                     break;
                 case "IP":
                     Send("notifytest");
