@@ -63,6 +63,7 @@ namespace Bid501_Client
             base.OnMessage(e);
             string[] parts = e.Data.Split(':');
             foreach (string s in parts) Console.WriteLine(s);
+
             if (parts[0] == "notifylogin")
             {
                 bool isValid = bool.Parse(parts[1]);

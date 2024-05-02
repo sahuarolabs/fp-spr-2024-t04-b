@@ -41,11 +41,12 @@ namespace Bid501_Server
             string clientID = ID;
 
             foreach (string s in inputs) Console.WriteLine(s);
+
             switch(inputs[0])
             {
                 case "login": //FIX: not adding new account to acnts.json
                     //FIX: 
-                    if (serverController.acctCtrl.Login(inputs[1], inputs[2], false))
+                    if (LogIn(inputs[1], inputs[2], false))
                     {
                         activeWebsocket[clientID].Send("notifylogin:True");
                     } else activeWebsocket[clientID].Send("notifylogin:False");
