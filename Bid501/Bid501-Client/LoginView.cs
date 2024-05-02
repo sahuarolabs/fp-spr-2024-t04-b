@@ -40,12 +40,12 @@ namespace Bid501_Client
         /// Method for delegate to handle the response of Login Verification
         /// </summary>
         /// <param name="isSuccess">Bool indicating whether Login was successful</param>
-        private void HandleLoginResponse(bool isSuccess, string[] deets)
+        private void HandleLoginResponse(bool isSuccess, string[] userInfo)
         {
             if (isSuccess)
             {
                 //assuming user no admin perms
-                bCtrl = new BidCtrl(new Bid501_Shared.Account(deets[0], deets[1], false), cCtrl);
+                bCtrl = new BidCtrl(new Bid501_Shared.Account(userInfo[0], userInfo[1], false), cCtrl);
             }
         }
 
