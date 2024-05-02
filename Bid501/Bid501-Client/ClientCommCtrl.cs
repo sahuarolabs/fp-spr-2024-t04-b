@@ -33,10 +33,7 @@ namespace Bid501_Client
         
         // Constructor
         public ClientCommCtrl()
-        {
-
-            string clientId = Bid501_Shared.Program.GetLocalIPAddress();
-            
+        {          
             // Build Websocket connection and connect
             ws = new WebSocket($"ws://10.130.160.82:8001/server");
 
