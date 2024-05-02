@@ -21,6 +21,8 @@ namespace Bid501_Server
         /// </summary>
         private List<Account> acctList;
 
+        public Dictionary<string, Account> activeAccounts;
+
         /// <summary>
         /// should only be an admin account as this is server-side.
         /// </summary>
@@ -30,6 +32,7 @@ namespace Bid501_Server
         {
             this.acctFile = acctFile;
             this.acctList = LoadAccounts(acctFile);
+            activeAccounts = new Dictionary<string, Account>();
         }
 
         private List<Account> LoadAccounts(string fileName)
@@ -49,6 +52,12 @@ namespace Bid501_Server
             // convert the account list to JSON and overwrite the file
             string serializedAccounts = JsonConvert.SerializeObject(acctList);
             File.WriteAllText(acctFile, serializedAccounts);
+        }
+
+        public Account ClientLogin(string Accountname, string password, bool admin, string clientID)
+        {
+            if (Login(Accountname, password, admin)) { return acctList.Find(acct => acct.Username == Accountname); }
+            else { return null; }
         }
 
         public bool Login(string Accountname, string password, bool admin)
