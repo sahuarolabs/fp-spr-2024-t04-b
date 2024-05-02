@@ -95,6 +95,8 @@ namespace Bid501_Server
 
             product.Bids.Add(bid);
 
-
+            ServerComm.NotifyNewBid();
+            return true;
+        }
     }
 }

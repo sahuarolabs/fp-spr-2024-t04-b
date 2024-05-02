@@ -14,12 +14,12 @@ namespace Bid501_Server
 {
     public partial class LoginView : Form
     {
-        LoginDel login;
-        AfterLoginActionDel afterLogin;
-
         // Delegates for login button
         private LoginDel login;
         private AfterLoginActionDel afterLogin;
+
+        AccountController accountController;
+        ServerController serverController;
 
         public LoginView()
         {
@@ -31,13 +31,6 @@ namespace Bid501_Server
             accountController = aCtrl;
             serverController = sCtrl;
             InitializeComponent();
-        }
-
-        /// Set controllers instantiated in Program.cs
-        public void SetControllers(AccountController aCtrl, ServerController sCtrl)
-        {
-            accountController = aCtrl;
-            serverController = sCtrl;
         }
 
         public void SetLoginDelegates(LoginDel lDel, AfterLoginActionDel alDel)
