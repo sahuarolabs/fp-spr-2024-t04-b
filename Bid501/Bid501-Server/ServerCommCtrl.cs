@@ -9,15 +9,14 @@ using Bid501_Shared;
 using System.IO;
 using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
+using System.ComponentModel;
 
 namespace Bid501_Server
 {
     public class ServerCommCtrl : WebSocketBehavior
     {
         // Used to disconnect clients who close websocket connection
-        private Dictionary<string, WebSocket> activeWebsockets;
-        // Used to associate accounts with a matching ID in above Dict<>
-        private Dictionary<string, Account> activeAccounts;
+        private Dictionary<string, WebSocket> activeWebsockets = new Dictionary<string, WebSocket>();
 
 
         private AddBidDel AddBid;
@@ -116,6 +115,18 @@ namespace Bid501_Server
         public void EndAuction()
         {
 
+        }
+
+        public BindingList<string> GiveConnectedClients()
+        {
+            BindingList<string> connectedClients = new BindingList<string>();
+
+            foreach(KeyValuePair<string, WebSocket> client in activeWebsockets)
+            {
+                connectedClients.Add(client.Key);
+            }
+
+            return connectedClients;
         }
         
     }

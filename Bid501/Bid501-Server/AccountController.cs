@@ -13,13 +13,16 @@ namespace Bid501_Server
     {
         private string acctFile;
 
+        // Used to associate accounts with a matching ID in above Dict<>
+        private Dictionary<string, Account> activeAccounts = new Dictionary<string, Account>();
+
         /// <summary>
         /// List of all accounts
         /// </summary>
         private List<Account> acctList;
 
         /// <summary>
-        /// should only be an Account account as this is server-side.
+        /// should only be an admin account as this is server-side.
         /// </summary>
         private Account loggedIn;
 

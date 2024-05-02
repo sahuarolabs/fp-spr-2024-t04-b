@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 using Bid501_Shared;
+using System.ComponentModel;
 
 namespace Bid501_Server
 {
@@ -17,7 +18,7 @@ namespace Bid501_Server
     public delegate bool LoginDel(string username, string password, bool client);
     public delegate bool AfterLoginActionDel(bool success);
     public delegate void SaveModelDel();
-    public delegate Dictionary<Account, WebSocket> GetClientsDel();
+    public delegate BindingList<string> GetClientsDel();
 
     public class Program
     {
