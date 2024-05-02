@@ -41,10 +41,10 @@ namespace Bid501_Client
         /// Constructor for bidcontrol
         /// </summary>
         /// <param name="account">The successfully logged in account</param>
-        public BidCtrl(Account account, ClientCommCtrl cCtrl)
+        public BidCtrl(Account account, ClientCommCtrl cCtrl, List<Product> products)
         {
             this.cCtrl = cCtrl;
-            bidView = new BidView(account, Attemptbid);
+            bidView = new BidView(account, Attemptbid, products);
             bidView.Show();
         }
     }

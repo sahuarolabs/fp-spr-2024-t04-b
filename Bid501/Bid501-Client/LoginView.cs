@@ -46,8 +46,9 @@ namespace Bid501_Client
             {
                 if (isSuccess)
                 {
+
                     //assuming user no admin perms
-                    bCtrl = new BidCtrl(new Bid501_Shared.Account(deets[0], deets[1], false), cCtrl);
+                    bCtrl = new BidCtrl(new Bid501_Shared.Account(deets[0], deets[1], false), cCtrl, null); //FIX ME: the null needs to be the product list
                 }
             });
         }
