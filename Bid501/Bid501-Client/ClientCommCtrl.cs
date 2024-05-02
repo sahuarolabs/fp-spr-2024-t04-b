@@ -38,7 +38,7 @@ namespace Bid501_Client
             string clientId = Bid501_Shared.Program.GetLocalIPAddress();
             
             // Build Websocket connection and connect
-            ws = new WebSocket($"ws://10.130.160.99:8001/server?id={clientId}");
+            ws = new WebSocket($"ws://10.130.160.32:8001/server?id={clientId}");
             ws.Connect();
 
             // Update field to show current websocket connection

@@ -12,11 +12,11 @@ namespace Bid501_Server
 {
     public class ServerController
     {
-        private AccountController acctCtrl;
+        public AccountController acctCtrl;
+
         private string modelFileName;
         private Model model;
         private List<RefreshViewDel> observers;
-        private ServerCommCtrl serverComm;
         private RefreshViewDel refreshView;
 
         public ServerController(AccountController acctCtrl, string modelFileName)

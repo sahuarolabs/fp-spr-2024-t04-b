@@ -59,7 +59,6 @@
             this.PasswordTextbox.Name = "PasswordTextbox";
             this.PasswordTextbox.Size = new System.Drawing.Size(166, 20);
             this.PasswordTextbox.TabIndex = 2;
-            this.PasswordTextbox.Text = "Password";
             this.PasswordTextbox.UseSystemPasswordChar = true;
             // 
             // label1
@@ -92,7 +91,6 @@
             this.UsernameTextbox.Name = "UsernameTextbox";
             this.UsernameTextbox.Size = new System.Drawing.Size(166, 20);
             this.UsernameTextbox.TabIndex = 1;
-            this.UsernameTextbox.Text = "Username";
             // 
             // panel1
             // 
