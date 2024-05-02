@@ -17,41 +17,38 @@ namespace Bid501_Client
 {
     public class ClientCommCtrl : WebSocketBehavior
     {
-        /// <summary>
-        /// The Login View
-        /// </summary>
+        // View and Websocket for ClientComm instance
         private LoginView lView;
         private WebSocket ws;
+
+        // Websocket State -- Alive or Dead
         public bool IsConnect;
 
-        /// <summary>
-        /// a string[] that stores the current username, password
-        /// </summary>
+        // Session credentials [ username, password ]
         private string[] clientLoginInfo = { "", "" };
 
-        /// <summary>
-        /// Delegate for the LoginView
-        /// </summary>
-        /// <param name="success"> Bool to determine if the login was successful</param>
-        /// <param name="info">The clientLoginInfo of {"Username", "Password"}</param>
+        // Delegate post-login -> returns to instance of LoginView
         public delegate void LoginResponseHandler(bool success, string[] info);
-
-        /// <summary>
-        /// Delegate to go back to LoginView
-        /// </summary>
         private LoginResponseHandler loginCallback;
         
-
-        public ClientCommCtrl(LoginView view)
+        // Constructor
+        public ClientCommCtrl()
         {
-            lView = view;
-            string clientId = GetLocalIPAddress();
-            this.ws = ws = new WebSocket($"ws://127.0.0.1:8001/server?id={clientId}");
-            ws.OnMessage += OnMessageHandler;
-            ws.OnError += OnErrorHandler;
-            this.ws.OnOpen += OnOpen;
-            this.ws.Connect();
+
+            string clientId = Bid501_Shared.Program.GetLocalIPAddress();
+            
+            // Build Websocket connection and connect
+            ws = new WebSocket($"ws://10.130.160.99:8001/server?id={clientId}");
+            ws.Connect();
+
+            // Update field to show current websocket connection
             IsConnect = ws.IsAlive;
+            Console.WriteLine($"Client Connection: {IsConnect}");
+        }
+
+        public void SetView(LoginView lv)
+        {
+            lView = lv;
         }
 
         public void Close()
@@ -60,13 +57,10 @@ namespace Bid501_Client
             Console.WriteLine("Close: Controller");
         }
 
-        /// <summary>
-        /// Receives messages from the server and redirects split strings to appropriate method
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e">string of information</param>
-        private void OnMessageHandler(object sender, MessageEventArgs e)
+        // Redirects messages from the server
+        protected override void OnMessage(MessageEventArgs e)
         {
+            base.OnMessage(e);
             string[] parts = e.Data.Split(':');
             if (parts[0] == "notifylogin")
             {
@@ -79,27 +73,13 @@ namespace Bid501_Client
             }
         }
 
-        public static string GetLocalIPAddress()
+        protected override void OnError(ErrorEventArgs e)
         {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    MessageBox.Show(ip.ToString());
-                    return ip.ToString();
-                }
-            }
-            MessageBox.Show("No network adapters with an IPv4 address in the system!");
-            return "";
-        }
-
-        private void OnErrorHandler(object sender, ErrorEventArgs e)
-        {
+            base.OnError(e);
             Console.WriteLine($"Error in Controller: {e.Message}");
         }
-
-        #region LOGIN Stuff
+         
+        #region LOGIN {Stuff}
 
         public void sendLogin(string username, string password, LoginResponseHandler callback)
         {
@@ -113,11 +93,6 @@ namespace Bid501_Client
 
         }
         #endregion
-
-        public void OnOpen(object sender, EventArgs e)
-        {
-            //ws.Send("IP:"+GetLocalIPAddress());
-        }
 
         #region BID Stuff
         /// <summary>

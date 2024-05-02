@@ -37,7 +37,7 @@ namespace Bid501_Server
             loginView.SetLoginDelegates(acctCtrl.Login, serverCtrl.AfterLoginAction);
 
             //WebSocketServer wss = new WebSocketServer($"ws://{ServerCommCtrl.GetLocalIPAddress()}:8001");
-            WebSocketServer wss = new WebSocketServer("ws://" + "10.130.160.101" + ":8001");
+            WebSocketServer wss = new WebSocketServer("ws://10.130.160.98:8001");
             wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl.AddBid, acctCtrl.Login));
             wss.ReuseAddress = true;
             wss.Start(); 

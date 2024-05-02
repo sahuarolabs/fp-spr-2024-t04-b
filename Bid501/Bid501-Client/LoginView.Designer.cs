@@ -34,9 +34,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.UsernameTextbox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.UxConnectionText = new System.Windows.Forms.Label();
             this.uxSendTest = new System.Windows.Forms.Button();
             this.uxSocketStat = new System.Windows.Forms.Label();
-            this.UxConnectionText = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -113,6 +113,16 @@
             this.panel1.Size = new System.Drawing.Size(800, 450);
             this.panel1.TabIndex = 5;
             // 
+            // UxConnectionText
+            // 
+            this.UxConnectionText.AutoSize = true;
+            this.UxConnectionText.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.UxConnectionText.Location = new System.Drawing.Point(0, 437);
+            this.UxConnectionText.Name = "UxConnectionText";
+            this.UxConnectionText.Size = new System.Drawing.Size(35, 13);
+            this.UxConnectionText.TabIndex = 7;
+            this.UxConnectionText.Text = "label3";
+            // 
             // uxSendTest
             // 
             this.uxSendTest.Location = new System.Drawing.Point(364, 346);
@@ -130,16 +140,6 @@
             this.uxSocketStat.Name = "uxSocketStat";
             this.uxSocketStat.Size = new System.Drawing.Size(0, 13);
             this.uxSocketStat.TabIndex = 5;
-            // 
-            // UxConnectionText
-            // 
-            this.UxConnectionText.AutoSize = true;
-            this.UxConnectionText.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.UxConnectionText.Location = new System.Drawing.Point(0, 437);
-            this.UxConnectionText.Name = "UxConnectionText";
-            this.UxConnectionText.Size = new System.Drawing.Size(35, 13);
-            this.UxConnectionText.TabIndex = 7;
-            this.UxConnectionText.Text = "label3";
             // 
             // LoginView
             // 
