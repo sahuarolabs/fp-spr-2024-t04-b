@@ -74,10 +74,14 @@ namespace Bid501_Server
             base.OnClose(e);
         }
 
-        // empty
-        public void NotifyNewProduct()
+        public void NotifyNewProduct(Product newProd)
         {
+            NewProductMsg prodMsg = new NewProductMsg(newProd);
+            string msg = JsonConvert.SerializeObject(prodMsg);
 
+            // notify each of the connected clients of the new product
+            foreach (var entry in activeWebsockets)
+                entry.Value.Send(msg);
         }
 
         // empty
