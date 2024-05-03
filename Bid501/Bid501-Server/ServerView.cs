@@ -28,7 +28,7 @@ namespace Bid501_Server
             this.getClientsDel = gcDel;
 
             InitializeComponent();
-            //RefreshView();
+            UpdateProducts();
         }
 
         private void ServerView_FormClosed(object sender, FormClosedEventArgs e)
@@ -55,6 +55,13 @@ namespace Bid501_Server
                 addProduct(dialog.SelectedProd);
         }
 
+        public void UpdateProducts()
+        {
+            // reload the products in the list
+            uxListBoxProducts.DataSource = null;
+            uxListBoxProducts.DataSource = model.Products;
+        }
+
         public void UpdateClients()
         {
             // Get clients from ServerComm
@@ -71,15 +78,11 @@ namespace Bid501_Server
                     }
                 }
             }));
-            
-            
         }
 
         public void RefreshView()
         {
-            // reload the products in the list
-            uxListBoxProducts.DataSource = null;
-            uxListBoxProducts.DataSource = model.Products;
+            UpdateProducts();
             UpdateClients();
         }
 
