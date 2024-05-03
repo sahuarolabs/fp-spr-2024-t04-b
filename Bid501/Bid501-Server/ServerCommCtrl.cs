@@ -63,7 +63,7 @@ namespace Bid501_Server
                     Send("notifytest");
                     break;
                 case "logout":
-
+                    accountController.activeAccounts.Remove(clientID);
                     break;
                 case "newbid":
 
