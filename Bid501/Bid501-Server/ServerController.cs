@@ -20,6 +20,7 @@ namespace Bid501_Server
         private string modelFileName;
         private Model model;
         private List<RefreshViewDel> observers;
+        private GetClientsDel getClients;
         private RefreshViewDel refreshView;
 
         public ServerController(AccountController acctCtrl, string modelFileName)
@@ -41,7 +42,7 @@ namespace Bid501_Server
             if (success)
             {
                 acctCtrl.SaveAccounts();
-                ServerView serverView = new ServerView(model, AddProduct, SaveModel);
+                ServerView serverView = new ServerView(model, AddProduct, SaveModel, getClients);
                 AddObserver(serverView.RefreshView);
                 serverView.Show();
             }
@@ -92,6 +93,11 @@ namespace Bid501_Server
         public void AddObserver(RefreshViewDel observer)
         {
             observers.Add(observer);
+        }
+
+        public void setGetClientsDel(GetClientsDel g)
+        {
+            getClients = g;
         }
 
         public bool AddBid(Bid bid, Product product)
