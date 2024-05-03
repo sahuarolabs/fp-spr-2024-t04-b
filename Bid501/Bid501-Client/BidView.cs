@@ -17,10 +17,8 @@ namespace Bid501_Client
         private MakeBid makeBid;
 
         private Account UserAccount;
-        
-        //Automatically assuming accounts are users and not admins, BEWARE
-        //When Server is fully connected delete         V from this brace to the ;
-        public List<Product> ProductList = new List<Product>() { new Product(1, "Hotdog", 999.00, new Account("a", "b", false)), new Product(1, "Hamdog", 0.10, new Account("a", "b", false))};
+
+        public List<Product> ProductList = new List<Product>();
 
         public BidView(Account account, MakeBid make)
         {
@@ -32,7 +30,11 @@ namespace Bid501_Client
         public void UpdateProductList(List<Product> productList)
         {
             ProductList = productList;
-            UxProductListBox.DataSource = ProductList;
+            UxProductListBox.BeginInvoke(new Action(() =>
+            {
+                UxProductListBox.DataSource = ProductList;
+                UxProductListBox.Update();
+            }));
         }
 
 
