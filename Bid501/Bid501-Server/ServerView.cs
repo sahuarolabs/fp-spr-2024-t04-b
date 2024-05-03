@@ -19,7 +19,7 @@ namespace Bid501_Server
         private SaveModelDel saveModel;
         private GetClientsDel getClientsDel;
 
-        public ServerView(Model model, AddProductDel addProduct, SaveModelDel saveModel)
+        public ServerView(Model model, AddProductDel addProduct, SaveModelDel saveModel, GetClientsDel getClients)
         {
             this.model = model;
             this.addProduct = addProduct;
