@@ -13,7 +13,7 @@ namespace Bid501_Client
     {
         public delegate bool MakeBid(Bid bid, Product product);
 
-        BidView bidView;
+        private BidView bidView;
         ClientCommCtrl cCtrl;
 
         public BidCtrl(Account account, ClientCommCtrl cCtrl)
@@ -34,6 +34,10 @@ namespace Bid501_Client
             bidView.Show();
         }
 
+        public void UpdateList(List<Product> products)
+        {
+            bidView.UpdateProductList(products);
+        }
 
         /// <summary>
         /// Comming from Bid View "UxPlaceBid_Click", Checks to see if the Bid is vaild by checking the Product if so it goes to ClientCommCtrl

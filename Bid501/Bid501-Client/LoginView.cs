@@ -15,8 +15,9 @@ namespace Bid501_Client
 {
     public partial class LoginView : Form
     {
+
         public ClientCommCtrl cCtrl;
-        private BidCtrl bCtrl;
+        public BidCtrl bCtrl;
         bool isConnected;
 
         public LoginView(ClientCommCtrl Ctrl)
