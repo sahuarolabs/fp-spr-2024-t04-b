@@ -14,9 +14,6 @@ namespace Bid501_Server
 
     public class ServerController
     {
-        public delegate void DelNotifyNewProduct();
-        public DelNotifyNewProduct NotifyNewProduct;
-
         public AccountController acctCtrl;
 
         private string modelFileName;
@@ -34,12 +31,6 @@ namespace Bid501_Server
             model = LoadModelFromFile(modelFileName);
             observers = new List<RefreshViewDel>();
         }
-
-        public void SetDelegates(DelNotifyNewProduct np)
-        {
-            NotifyNewProduct = np;
-        }
-
 
         public bool AfterLoginAction(bool success)
         {
