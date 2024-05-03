@@ -12,11 +12,15 @@ using System.Windows.Forms.VisualStyles;
 using System.Runtime.CompilerServices;
 using System.Net.Sockets;
 using System.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Message = Bid501_Shared.Message;
 
 namespace Bid501_Client
 {
     public class ClientCommCtrl : WebSocketBehavior
     {
+
         // View and Websocket for ClientComm instance
         private LoginView lView;
         private WebSocket ws;
@@ -33,12 +37,11 @@ namespace Bid501_Client
         
         // Constructor
         public ClientCommCtrl()
-        {
-
-            string clientId = Bid501_Shared.Program.GetLocalIPAddress();
-            
+        {          
             // Build Websocket connection and connect
-            ws = new WebSocket($"ws://10.130.160.109:8001/server?id={clientId}");
+            ws = new WebSocket($"ws://10.130.160.109:8001/server");
+
+            ws.OnMessage += OnMessageHandler;
             ws.Connect();
 
             // Update field to show current websocket connection
@@ -58,18 +61,34 @@ namespace Bid501_Client
         }
 
         // Redirects messages from the server
-        protected override void OnMessage(MessageEventArgs e)
+        public void OnMessageHandler(object sender, MessageEventArgs e)
         {
             base.OnMessage(e);
-            string[] parts = e.Data.Split(':');
-            if (parts[0] == "notifylogin")
+
+            JObject jObj = JObject.Parse(e.Data);
+            Message.Type msgType = (Message.Type) Enum.Parse(typeof(Message.Type), (string)jObj["MsgType"]);
+
+            switch (msgType)
             {
-                bool isValid = bool.Parse(parts[1]);
-                loginCallback?.Invoke(isValid, clientLoginInfo);
-            }
-            else if (parts[0] == "notifytest")
-            {
-                Console.WriteLine("Received");
+                case Message.Type.LoginResponse:
+                    LoginResponse resp = JsonConvert.DeserializeObject<LoginResponse>(e.Data);
+                    loginCallback?.Invoke(resp.Success, clientLoginInfo);
+                    break;
+
+                case Message.Type.ProductList:
+                    ProductListMsg prodMsg = JsonConvert.DeserializeObject<ProductListMsg>(e.Data);
+                    UpdateBidViewList(prodMsg.Products);
+                    break;
+
+                case Message.Type.NewProduct:
+                    NewProductMsg newProdMsg = JsonConvert.DeserializeObject<NewProductMsg>(e.Data);
+                    // TODO: add the product to the client's list
+                    break;
+
+                case Message.Type.NewBid:
+                    NewBidMsg newBidMsg = JsonConvert.DeserializeObject<NewBidMsg>(e.Data);
+                    // TODO: add the bid to the item in the product list
+                    break;
             }
         }
 
@@ -78,16 +97,30 @@ namespace Bid501_Client
             base.OnError(e);
             Console.WriteLine($"Error in Controller: {e.Message}");
         }
-         
+        
+        // add EVERYTHING
+        private void UpdateBidViewList(List<Product> products)
+        {
+            lView.bCtrl.UpdateList(products);
+        }
+
+        // to add one product
+        private void UpdateBidViewList(Product product)
+        {
+            lView.bCtrl.UpdateList(product);
+        }
+
         #region LOGIN {Stuff}
 
         public void sendLogin(string username, string password, LoginResponseHandler callback)
         {
-            clientLoginInfo[0] = username; 
+            clientLoginInfo[0] = username;
             clientLoginInfo[1] = password;
-            string x = $"login:{username}:{password}";
 
-            ws.Send(x);
+            LoginRequest req = new LoginRequest(username, password);
+            string msg = JsonConvert.SerializeObject(req);
+
+            ws.Send(msg);
 
             this.loginCallback = callback;
 

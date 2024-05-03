@@ -51,16 +51,6 @@ namespace Bid501_Server
             bool shouldClose = afterLogin(success);
         }
 
-        private void HandleLoginResponse(bool isSuccess, string[] deets)
-        {
-            Invoke((MethodInvoker)delegate
-            {
-                if (isSuccess)
-                {
-                    ServerView serverView = new ServerView(new Model(), serverController.AddProduct, serverController.SaveModel);
-                }
-            });
-        }
 
         // enables the login button if and only if both username and password are filled
         private void CheckCredentialsFilled(object sender, EventArgs e)

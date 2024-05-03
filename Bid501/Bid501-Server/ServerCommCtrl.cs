@@ -9,55 +9,50 @@ using Bid501_Shared;
 using System.IO;
 using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
+using System.ComponentModel;
+using Newtonsoft.Json.Linq;
+using Message = Bid501_Shared.Message;
 
 namespace Bid501_Server
 {
     public class ServerCommCtrl : WebSocketBehavior
     {
         // Used to disconnect clients who close websocket connection
-        private Dictionary<string, WebSocket> activeWebsockets = new Dictionary<string, WebSocket>();
-        // Used to associate accounts with a matching ID in above Dict<>
-        private Dictionary<string, Account> activeAccounts = new Dictionary<string, Account>();
+        private static Dictionary<string, WebSocket> activeWebsockets = new Dictionary<string, WebSocket>();
 
         private AddBidDel AddBid;
         private LoginDel LogIn;
 
-        private Model model;
-
         private ServerController serverController;
+        private AccountController accountController;
         
-        public ServerCommCtrl(ServerController sc, AddBidDel addBidDel, LoginDel logInDel)
+        public ServerCommCtrl(ServerController sc, AddBidDel addBidDel, AccountController ac)
         {
             AddBid = addBidDel;
-            LogIn = logInDel;
+            accountController = ac;
             serverController = sc;
         }
 
         protected override void OnMessage(MessageEventArgs e)
         {
-            string inJSON = e.Data;
-            string[] inputs = e.Data.Split(':');
-            foreach (string s in inputs) Console.WriteLine(s);
-            switch(inputs[0])
-            {
-                case "login": //FIX: not adding new account to acnts.json
-                    //FIX: 
-                    if (serverController.acctCtrl.Login(inputs[1], inputs[2], false))
-                    {
-                        Send("notifylogin:True");
-                    } else Send("notifylogin:False");
+            JObject jObj = JObject.Parse(e.Data);
+            Message.Type msgType = (Message.Type) Enum.Parse(typeof(Message.Type), (string)jObj["MsgType"]);
+
+            switch (msgType) { 
+                case Message.Type.LoginRequest:
+                    LoginRequest req = JsonConvert.DeserializeObject<LoginRequest>(e.Data);
+                    bool success = accountController.Login(req.Username, req.Password, false);
+                    LoginResponse resp = new LoginResponse(success);
+                    Send(JsonConvert.SerializeObject(resp));
+
+                    List<Product> products = serverController.GetProducts();
+                    ProductListMsg prodMsg = new ProductListMsg(products);
+                    Send(JsonConvert.SerializeObject(prodMsg));
                     break;
-                case "IP":
-                    Send("notifytest");
-                    break;
-                case "logout":
+                case Message.Type.NewBid:
 
                     break;
-                case "newbid":
 
-                    break;
-                default:
-                    break;
             }
         }
 
@@ -69,33 +64,53 @@ namespace Bid501_Server
 
             activeWebsockets.Add(clientID, socket);
 
-            Console.WriteLine($"Client {clientID} connected with ID: {ID}");
+            Console.WriteLine($"Client Connected: {ID}");
         }
 
         // generic imp, needs to be changed
         protected override void OnClose(CloseEventArgs e)
         {
-
+            activeWebsockets.Remove(ID);
             Console.WriteLine($"ClientDisconnected: {ID}");
             base.OnClose(e);
         }
 
+        public static void NotifyNewProduct(Product newProd)
+        {
+            NewProductMsg prodMsg = new NewProductMsg(newProd);
+            string msg = JsonConvert.SerializeObject(prodMsg);
+
+            // notify each of the connected clients of the new product
+            foreach (var entry in activeWebsockets)
+                entry.Value.Send(msg);
+        }
+
+        public static void NotifyNewBid(int productId, Bid bid)
+        {
+            NewBidMsg bidMsg = new NewBidMsg(productId, bid);
+            string msg = JsonConvert.SerializeObject(bidMsg);
+
+            // notify each of the connected clients of the new bid
+            foreach (var entry in activeWebsockets)
+                entry.Value.Send(msg);
+        }
+
         // empty
-        public void NotifyNewProduct()
+        public static void EndAuction()
         {
 
         }
 
-        // empty
-        public void NotifyNewBid()
+        public static BindingList<string> GiveConnectedClients()
         {
+            BindingList<string> connectedClients = new BindingList<string>();
 
-        }
+            foreach(KeyValuePair<string, WebSocket> client in activeWebsockets)
+            {
+                connectedClients.Add(client.Key);
+            }
 
-        // empty
-        public void EndAuction()
-        {
-
+            return connectedClients;
         }
         
     }

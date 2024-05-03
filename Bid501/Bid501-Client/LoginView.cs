@@ -15,8 +15,9 @@ namespace Bid501_Client
 {
     public partial class LoginView : Form
     {
+
         public ClientCommCtrl cCtrl;
-        private BidCtrl bCtrl;
+        public BidCtrl bCtrl;
         bool isConnected;
 
         public LoginView(ClientCommCtrl Ctrl)
@@ -32,7 +33,7 @@ namespace Bid501_Client
         {
             string username = UsernameTextbox.Text;
             string password = PasswordTextbox.Text;
-
+            UxLoginButton.Enabled = false;
             cCtrl.sendLogin(username, password, HandleLoginResponse);
         }
 
@@ -40,21 +41,16 @@ namespace Bid501_Client
         /// Method for delegate to handle the response of Login Verification
         /// </summary>
         /// <param name="isSuccess">Bool indicating whether Login was successful</param>
-        private void HandleLoginResponse(bool isSuccess, string[] deets)
+        private void HandleLoginResponse(bool isSuccess, string[] userInfo)
         {
             Invoke((MethodInvoker)delegate
             {
                 if (isSuccess)
                 {
                     //assuming user no admin perms
-                    bCtrl = new BidCtrl(new Bid501_Shared.Account(deets[0], deets[1], false), cCtrl);
+                    bCtrl = new BidCtrl(new Bid501_Shared.Account(userInfo[0], userInfo[1], false), cCtrl);
                 }
             });
-        }
-
-        private void uxSendTest_Click(object sender, EventArgs e)
-        {
-            //cCtrl.sendTest();
         }
 
         private void UsernameTextbox_TextChanged(object sender, EventArgs e)

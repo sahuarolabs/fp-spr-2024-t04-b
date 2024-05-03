@@ -52,11 +52,24 @@ namespace Bid501_Server
                 addProduct(dialog.SelectedProd);
         }
 
+        public void UpdateClients()
+        {
+            List<string> clients = getClientsDel();
+            uxListBoxClients.Items.Clear();
+            foreach (string client in clients)
+            {
+                uxListBoxClients.Items.Add(client);
+            }
+            
+        }
+
         public void RefreshView()
         {
             // reload the products in the list
             uxListBoxProducts.DataSource = null;
             uxListBoxProducts.DataSource = model.Products;
+            uxListBoxClients.DataSource = null;
+            uxListBoxClients.DataSource = ServerCommCtrl.GiveConnectedClients();
         }
 
     }
