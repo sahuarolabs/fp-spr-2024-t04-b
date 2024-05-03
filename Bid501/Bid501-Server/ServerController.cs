@@ -90,8 +90,9 @@ namespace Bid501_Server
                 return false;
 
             product.Bids.Add(bid);
-            
-            // FIXME: Notify new bid
+
+            // notify the clients
+            ServerCommCtrl.NotifyNewBid(product.Id, bid);
             return true;
         }
 

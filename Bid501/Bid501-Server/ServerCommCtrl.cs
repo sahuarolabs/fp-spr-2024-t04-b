@@ -87,7 +87,12 @@ namespace Bid501_Server
 
         public static void NotifyNewBid(int productId, Bid bid)
         {
+            NewBidMsg bidMsg = new NewBidMsg(productId, bid);
+            string msg = JsonConvert.SerializeObject(bidMsg);
 
+            // notify each of the connected clients of the new bid
+            foreach (var entry in activeWebsockets)
+                entry.Value.Send(msg);
         }
 
         // empty
