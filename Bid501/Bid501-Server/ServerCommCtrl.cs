@@ -115,10 +115,14 @@ namespace Bid501_Server
                 entry.Value.Send(msg);
         }
 
-        // empty
-        public static void EndAuction()
+        public static void NotifyAuctionEnd(int productId, Bid highestBid)
         {
+            AuctionEndMsg endMsg = new AuctionEndMsg(productId, highestBid.Bidder.Username, highestBid.Amount);
+            string msg = JsonConvert.SerializeObject(endMsg);
 
+            // notify all clients about the auction end
+            foreach (var entry in activeWebsockets)
+                entry.Value.Send(msg);
         }        
     }
 }

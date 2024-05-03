@@ -77,5 +77,25 @@ namespace Bid501_Client
                 bidView.UpdateBids();
             }
         }
+
+        public void HandleAuctionEnd(int productId, string winner, double finalPrice)
+        {
+            Product product = products.Find(prod => prod.Id == productId);
+            if (product == null)
+                return;
+
+            // set the product as expired
+            product.Expired = true;
+            bidView.UpdateBids();
+
+            // alert the user if he won
+            if (LoggedUser.Username == winner)
+            {
+                bidView.Invoke(new Action(() =>
+                {
+                    MessageBox.Show($"You've won the auction for {product.Name} for {finalPrice:0.00} $");
+                }));
+            }
+        }
     }
 }

@@ -74,6 +74,11 @@ namespace Bid501_Client
                     NewBidMsg newBidMsg = JsonConvert.DeserializeObject<NewBidMsg>(e.Data);
                     BidController.AddNewBid(newBidMsg.ProductId, newBidMsg.BidInfo);
                     break;
+
+                case Message.Type.AuctionEnd:
+                    AuctionEndMsg endMsg = JsonConvert.DeserializeObject<AuctionEndMsg>(e.Data);
+                    BidController.HandleAuctionEnd(endMsg.ProductId, endMsg.Winner, endMsg.FinalPrice);
+                    break;
             }
         }
 

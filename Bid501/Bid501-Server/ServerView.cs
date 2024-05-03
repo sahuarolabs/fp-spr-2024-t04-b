@@ -17,14 +17,15 @@ namespace Bid501_Server
         private Model model;
         private AddProductDel addProduct;
         private SaveModelDel saveModel;
+        private EndAuctionDel endAuction;
+        private GetClientsDel getClientsDel;
 
-        GetClientsDel getClientsDel;
-
-        public ServerView(Model model, AddProductDel addProduct, SaveModelDel saveModel, GetClientsDel gcDel)
+        public ServerView(Model model, AddProductDel addProduct, SaveModelDel saveModel, EndAuctionDel endAuction, GetClientsDel gcDel)
         {
             this.model = model;
             this.addProduct = addProduct;
             this.saveModel = saveModel;
+            this.endAuction = endAuction;
             this.getClientsDel = gcDel;
 
             InitializeComponent();
@@ -86,5 +87,12 @@ namespace Bid501_Server
             UpdateClients();
         }
 
+        private void buttonEnd_Click(object sender, EventArgs e)
+        {
+            Product selProd = (Product) uxListBoxProducts.SelectedItem;
+
+            if (selProd != null)
+                endAuction(selProd);
+        }
     }
 }

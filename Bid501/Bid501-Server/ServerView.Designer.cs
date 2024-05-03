@@ -75,6 +75,7 @@
             this.buttonEnd.TabIndex = 3;
             this.buttonEnd.Text = "End auction";
             this.buttonEnd.UseVisualStyleBackColor = true;
+            this.buttonEnd.Click += new System.EventHandler(this.buttonEnd_Click);
             // 
             // ServerView
             // 

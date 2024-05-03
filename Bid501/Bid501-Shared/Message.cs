@@ -13,7 +13,7 @@ namespace Bid501_Shared
         [JsonConverter(typeof(StringEnumConverter))]
         public enum Type
         {
-            LoginRequest, LoginResponse, ProductList, NewProduct, NewBid
+            LoginRequest, LoginResponse, ProductList, NewProduct, NewBid, AuctionEnd
         }
 
         public Type MsgType { get; set; }

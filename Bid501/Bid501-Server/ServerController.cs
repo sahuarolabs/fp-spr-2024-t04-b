@@ -34,7 +34,7 @@ namespace Bid501_Server
             if (success)
             {
                 accountController.SaveAccounts();
-                serverView = new ServerView(model, AddProduct, SaveModel, GetClients);
+                serverView = new ServerView(model, AddProduct, SaveModel, EndAuction, GetClients);
                 AddObserver(serverView.RefreshView);
                 serverView.Show();
             }
@@ -99,6 +99,26 @@ namespace Bid501_Server
 
             product.Bids.Add(bid);
             return true;
+        }
+
+        public static void EndAuction(Product product)
+        {
+            // if the product doesn't have any bids, do nothing
+            if (product.Bids.Count == 0)
+                return;
+
+            product.Expired = true;
+
+            // go through the list to find the highest bid
+            Bid highestBid = product.Bids.First();
+            foreach (Bid bid in product.Bids)
+            {
+                if (bid.Amount > highestBid.Amount)
+                    highestBid = bid;
+            }
+
+            // notify the clients
+            ServerCommCtrl.NotifyAuctionEnd(product.Id, highestBid);
         }
 
         public List<Product> GetProducts()

@@ -30,7 +30,7 @@ namespace Bid501_Shared
             }
         }
 
-        public bool Expired { get; }
+        public bool Expired { get; set; }
 
         public Account Consigner { get; }
 
