@@ -41,7 +41,7 @@ namespace Bid501_Server
             if (success)
             {
                 acctCtrl.SaveAccounts();
-                ServerView serverView = new ServerView(model, AddProduct, SaveModel, ServerComm.GiveConnectedClients);
+                ServerView serverView = new ServerView(model, AddProduct, SaveModel);
                 AddObserver(serverView.RefreshView);
                 serverView.Show();
             }

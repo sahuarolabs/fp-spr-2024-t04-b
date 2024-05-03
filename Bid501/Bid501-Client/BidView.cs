@@ -27,14 +27,14 @@ namespace Bid501_Client
             makeBid = make;
             UserAccount = account;
             InitializeComponent();
-            List = products;
-            UxProductListBox.DataSource = List;
+            ProductList = products;
+            UxProductListBox.DataSource = ProductList;
         }
 
         public void UpdateProductList(List<Product> productList)
         {
-            List = productList;
-            UxProductListBox.DataSource = List;
+            ProductList = productList;
+            UxProductListBox.DataSource = ProductList;
         }
 
 
