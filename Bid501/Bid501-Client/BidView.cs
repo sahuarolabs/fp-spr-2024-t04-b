@@ -22,13 +22,11 @@ namespace Bid501_Client
         //When Server is fully connected delete         V from this brace to the ;
         public List<Product> ProductList = new List<Product>() { new Product(1, "Hotdog", 999.00, new Account("a", "b", false)), new Product(1, "Hamdog", 0.10, new Account("a", "b", false))};
 
-        public BidView(Account account, MakeBid make, List<Product> products)
+        public BidView(Account account, MakeBid make)
         {
             makeBid = make;
             UserAccount = account;
             InitializeComponent();
-            ProductList = products;
-            UxProductListBox.DataSource = ProductList;
         }
 
         public void UpdateProductList(List<Product> productList)

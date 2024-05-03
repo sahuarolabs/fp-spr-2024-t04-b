@@ -15,22 +15,15 @@ namespace Bid501_Client
 
         private BidView bidView;
         ClientCommCtrl cCtrl;
-
-        public BidCtrl(Account account, ClientCommCtrl cCtrl)
-        {
-            this.cCtrl = cCtrl;
-            bidView = new BidView(account, Attemptbid, null); // FIX ME: Needs a product list
-            bidView.Show();
-        }
       
         /// <summary>
         /// Constructor for bidcontrol
         /// </summary>
         /// <param name="account">The successfully logged in account</param>
-        public BidCtrl(Account account, ClientCommCtrl cCtrl, List<Product> products)
+        public BidCtrl(Account account, ClientCommCtrl cCtrl)
         {
             this.cCtrl = cCtrl;
-            bidView = new BidView(account, Attemptbid, products);
+            bidView = new BidView(account, Attemptbid);
             bidView.Show();
         }
 
