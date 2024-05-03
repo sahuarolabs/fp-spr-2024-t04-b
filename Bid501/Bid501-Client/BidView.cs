@@ -12,6 +12,7 @@ using static Bid501_Client.BidCtrl;
 
 namespace Bid501_Client
 {
+
     public partial class BidView : Form
     {
         private MakeBid makeBid;
@@ -40,9 +41,13 @@ namespace Bid501_Client
             }));
         }
 
+
         public void UpdateProductList(Product product)
         {
-            UxProductListBox.Items.Add(product);
+            UxProductListBox.BeginInvoke(new Action(() =>
+            {
+                UxProductListBox.Items.Add(product);
+            }));
         }
 
         /// Checks to see if the text box has a vaild number and sends it to the delegate makeBid to BidCtrl "AttemptBid"

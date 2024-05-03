@@ -39,7 +39,7 @@ namespace Bid501_Client
         public ClientCommCtrl()
         {          
             // Build Websocket connection and connect
-            ws = new WebSocket($"ws://10.130.160.108:8001/server");
+            ws = new WebSocket($"ws://10.130.160.109:8001/server");
 
             ws.OnMessage += OnMessageHandler;
             ws.Connect();
@@ -93,11 +93,13 @@ namespace Bid501_Client
             Console.WriteLine($"Error in Controller: {e.Message}");
         }
         
+        // add EVERYTHING
         private void UpdateBidViewList(List<Product> products)
         {
             lView.bCtrl.UpdateList(products);
         }
 
+        // to add one product
         private void UpdateBidViewList(Product product)
         {
             lView.bCtrl.UpdateList(product);
