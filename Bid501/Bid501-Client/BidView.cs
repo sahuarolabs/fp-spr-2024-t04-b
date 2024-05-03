@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -61,7 +62,19 @@ namespace Bid501_Client
                     // round to 1/100's
                     double suggested = Math.Round(Convert.ToDouble(UxNewBidTextBox.Text), 2);
                     // SendBid
-                    makeBid(new Bid(UserAccount, suggested), UxProductListBox.Items[UxProductListBox.SelectedIndex] as Product); //Delegate to BidCtrl AttemptBid
+                    Bid newBid = new Bid(UserAccount, suggested);
+                    bool Validbid = makeBid(newBid, UxProductListBox.Items[UxProductListBox.SelectedIndex] as Product); //Delegate to BidCtrl AttemptBid
+                    if(Validbid)
+                    {
+                        (UxProductListBox.Items[UxProductListBox.SelectedIndex] as Product).Bids.Add(newBid);
+                    }
+                    Product selectedProduct = UxProductListBox.Items[UxProductListBox.SelectedIndex] as Product;
+                    if (selectedProduct.Expired)
+                        UxStatusLabel.Text = "Bid is closed.";
+                    else
+                        UxStatusLabel.Text = "Open Bid";
+                    UxCurrentPriceTextBox.Text = String.Format("Current Price: {0:C}", selectedProduct.Price);
+                    UxBidCount.Text = $"Currently: {selectedProduct.Bids.Count.ToString()} Bids";
                 }
                 catch { MessageBox.Show("Please enter a valid number (0.00)"); }
             }

@@ -39,7 +39,7 @@ namespace Bid501_Client
         public ClientCommCtrl()
         {          
             // Build Websocket connection and connect
-            ws = new WebSocket($"ws://10.130.160.109:8001/server");
+            ws = new WebSocket($"ws://10.130.160.108:8001/server");
 
             ws.OnMessage += OnMessageHandler;
             ws.Connect();
@@ -131,11 +131,11 @@ namespace Bid501_Client
         /// <summary>
         /// Gets a bid from BidCtrl "Attemptbid", Sends that bid to the server to verify that bid is good
         /// </summary>
-        /// <param name="bid">The bid added from bidctrl</param>
         /// <returns>A bool for if the bid was verified</returns>
         public bool SendBid(Bid bid, Product product) //Called from BidControl "Attemptbid"
         {
             MessageBox.Show($"Sent to Server {bid.Amount}");
+
             return true;
         }
 
