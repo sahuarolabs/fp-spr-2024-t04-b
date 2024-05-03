@@ -49,14 +49,15 @@ namespace Bid501_Server
                     ProductListMsg prodMsg = new ProductListMsg(products);
                     Send(JsonConvert.SerializeObject(prodMsg));
                     break;
+
                 case Message.Type.NewBid:
-                    // Console.WriteLine("Bid Received");
                     NewBidMsg bidReq = JsonConvert.DeserializeObject<NewBidMsg>(e.Data);
 
                     // if the bid is valid, send it back to all clients
-                    NotifyNewBid(bidReq.ProductId, bidReq.BidInfo);
-                    break;
+                    if (serverController.AddBid(bidReq.ProductId, bidReq.BidInfo))
+                        NotifyNewBid(bidReq.ProductId, bidReq.BidInfo);
 
+                    break;
             }
         }
 

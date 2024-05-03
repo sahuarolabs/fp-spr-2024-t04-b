@@ -83,16 +83,18 @@ namespace Bid501_Server
             observers.Add(observer);
         }
 
-        public bool AddBid(Product product, Bid bid)
+        public bool AddBid(int productId, Bid bid)
         {
+            // if there is not a product with that ID, do nothing
+            Product product = model.Products.Find(prod => prod.Id == productId);
+            if (product == null)
+                return false;
+
             // ignore the bid if the amount is below the starting price
             if (bid.Amount < product.StartingPrice)
                 return false;
 
             product.Bids.Add(bid);
-
-            // notify the clients
-            ServerCommCtrl.NotifyNewBid(product.Id, bid);
             return true;
         }
 
