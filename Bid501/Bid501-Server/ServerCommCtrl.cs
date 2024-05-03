@@ -24,6 +24,7 @@ namespace Bid501_Server
         
         // Controller for lower server
         private ServerController serverController;
+        private AccountController accountController;
 
         // Delegates
         private AddBidDel AddBid;
@@ -33,7 +34,7 @@ namespace Bid501_Server
         {
             AddBid = addBidDel;
             serverController = sc;
-            serverController.accountController = ac;
+            accountController = ac;
         }
 
         protected override void OnMessage(MessageEventArgs e)
@@ -44,14 +45,18 @@ namespace Bid501_Server
             switch (msgType) { 
                 case Message.Type.LoginRequest:
                     LoginRequest req = JsonConvert.DeserializeObject<LoginRequest>(e.Data);
-                    bool success = serverController.accountController.Login(req.Username, req.Password, false);
-                    if (success)
-                    {
-                        serverController.accountController.activeAccounts.Add(ID, serverController.accountController.FindAccount(req.Username));
-                        if (serverController.serverView != null) serverController.serverView.UpdateClients();
-                    }
+
+                    bool success = accountController.Login(req.Username, req.Password, false);
                     LoginResponse resp = new LoginResponse(success);
                     Send(JsonConvert.SerializeObject(resp));
+
+                    // if the login is unsuccessful, don't register the client and don't send the product list
+                    if (!success)
+                        break;
+
+                    serverController.accountController.activeAccounts.Add(ID, serverController.accountController.FindAccount(req.Username));
+                    if (serverController.serverView != null)
+                        serverController.serverView.UpdateClients();
 
                     List<Product> products = serverController.GetProducts();
                     ProductListMsg prodMsg = new ProductListMsg(products);
