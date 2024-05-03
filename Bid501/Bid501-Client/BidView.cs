@@ -18,22 +18,25 @@ namespace Bid501_Client
 
         private Account UserAccount;
 
-        public List<Product> ProductList = new List<Product>();
 
         public BidView(Account account, MakeBid make)
         {
             makeBid = make;
             UserAccount = account;
+
             InitializeComponent();
+
         }
 
         public void UpdateProductList(List<Product> productList)
         {
-            ProductList = productList;
             UxProductListBox.BeginInvoke(new Action(() =>
             {
-                UxProductListBox.DataSource = ProductList;
-                UxProductListBox.Update();
+                UxProductListBox.Items.Clear();
+                foreach (Product p in productList)
+                {
+                    UxProductListBox.Items.Add(p);
+                }
             }));
         }
 
@@ -54,7 +57,7 @@ namespace Bid501_Client
                     // round to 1/100's
                     double suggested = Math.Round(Convert.ToDouble(UxNewBidTextBox.Text), 2);
                     // SendBid
-                    makeBid(new Bid(UserAccount, suggested), ProductList[UxProductListBox.SelectedIndex]); //Delegate to BidCtrl AttemptBid
+                    makeBid(new Bid(UserAccount, suggested), UxProductListBox.Items[UxProductListBox.SelectedIndex] as Product); //Delegate to BidCtrl AttemptBid
                 }
                 catch { MessageBox.Show("Please enter a valid number (0.00)"); }
             }
@@ -68,11 +71,20 @@ namespace Bid501_Client
         private void UxProductListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             int index = UxProductListBox.SelectedIndex;
-            UxProductName.Text = ProductList[index].Name;
-            if (ProductList[index].Expired) UxStatusLabel.Text = "Bid is closed.";
-            else UxStatusLabel.Text = "Open Bid";
-            UxCurrentPriceTextBox.Text = String.Format("Current Price: {0:C}", ProductList[index].Price);
-            UxBidCount.Text = $"Currently: {ProductList[index].Bids.Count.ToString()} Bids";
+            if (index >= 0 && index < UxProductListBox.Items.Count)
+            {
+                Product selectedProduct = UxProductListBox.Items[index] as Product;
+                if (selectedProduct != null)
+                {
+                    UxProductName.Text = selectedProduct.Name;
+                    if (selectedProduct.Expired)
+                        UxStatusLabel.Text = "Bid is closed.";
+                    else
+                        UxStatusLabel.Text = "Open Bid";
+                    UxCurrentPriceTextBox.Text = String.Format("Current Price: {0:C}", selectedProduct.Price);
+                    UxBidCount.Text = $"Currently: {selectedProduct.Bids.Count.ToString()} Bids";
+                }
+            }
         }
 
         /// <summary>
