@@ -66,11 +66,18 @@ namespace Bid501_Client
             base.OnMessage(e);
 
             JObject jObj = JObject.Parse(e.Data);
-            switch (Enum.Parse(typeof(Message.Type), (string) jObj["MsgType"]))
+            Message.Type msgType = (Message.Type) Enum.Parse(typeof(Message.Type), (string)jObj["MsgType"]);
+
+            switch (msgType)
             {
                 case Message.Type.LoginResponse:
                     LoginResponse resp = JsonConvert.DeserializeObject<LoginResponse>(e.Data);
                     loginCallback?.Invoke(resp.Success, clientLoginInfo);
+                    break;
+
+                case Message.Type.ProductList:
+                    ProductListMsg prodMsg = JsonConvert.DeserializeObject<ProductListMsg>(e.Data);
+                    UpdateBidViewList(prodMsg.Products);
                     break;
             }
         }

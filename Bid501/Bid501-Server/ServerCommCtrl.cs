@@ -23,8 +23,6 @@ namespace Bid501_Server
         private AddBidDel AddBid;
         private LoginDel LogIn;
 
-        private Model model;
-
         private ServerController serverController;
         private AccountController accountController;
         
@@ -49,6 +47,10 @@ namespace Bid501_Server
                     bool success = accountController.Login(req.Username, req.Password, false);
                     LoginResponse resp = new LoginResponse(success);
                     activeWebsockets[ID].Send(JsonConvert.SerializeObject(resp));
+
+                    List<Product> products = serverController.GetProducts();
+                    ProductListMsg prodMsg = new ProductListMsg(products);
+                    activeWebsockets[ID].Send(JsonConvert.SerializeObject(prodMsg));
                     break;
             }
         }
