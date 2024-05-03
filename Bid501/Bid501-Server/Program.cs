@@ -41,7 +41,7 @@ namespace Bid501_Server
             serverCtrl.setGetClientsDel(servCommCtrl.GiveConnectedClients);
             //WebSocketServer wss = new WebSocketServer($"ws://{Bid501_Shared.Program.GetLocalIPAddress()}:8001");
             WebSocketServer wss = new WebSocketServer("ws://10.130.160.107:8001");
-            wss.AddWebSocketService<ServerCommCtrl>("/server", () => servCommCtrl);\
+            wss.AddWebSocketService<ServerCommCtrl>("/server", () => servCommCtrl);
             wss.ReuseAddress = true;
             wss.Start(); 
 

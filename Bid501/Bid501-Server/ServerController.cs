@@ -113,5 +113,10 @@ namespace Bid501_Server
             // FIXME: Notify new bid
             return true;
         }
+
+        public List<Product> GetProducts()
+        {
+            return model.Products;
+        }
     }
 }
