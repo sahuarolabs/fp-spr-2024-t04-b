@@ -37,10 +37,11 @@ namespace Bid501_Server
             LoginView loginView = new LoginView(acctCtrl, serverCtrl);
             loginView.SetLoginDelegates(acctCtrl.Login, serverCtrl.AfterLoginAction);
 
-            //WebSocketServer wss = new WebSocketServer($"ws://{Bid501_Shared.Program.GetLocalIPAddress()}:8001");
-            WebSocketServer wss = new WebSocketServer("ws://10.130.160.81:8001");
-            wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl, serverCtrl.AddBid, acctCtrl));
-
+            WebSocketServer wss = new WebSocketServer($"ws://{Bid501_Shared.Program.GetLocalIPAddress()}:8001");
+            //WebSocketServer wss = new WebSocketServer("ws://10.130.160.81:8001");
+            ServerCommCtrl scc = new ServerCommCtrl(serverCtrl, serverCtrl.AddBid, acctCtrl);
+            wss.AddWebSocketService<ServerCommCtrl>("/server", () =>  scc);
+            serverCtrl.setGetClientsDel(scc.GiveConnectedClients);
             wss.ReuseAddress = true;
             wss.Start(); 
 
