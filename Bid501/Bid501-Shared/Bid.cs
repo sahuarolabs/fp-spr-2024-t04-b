@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bid501_Shared
 {
+    [Serializable]
     public class Bid
     {
 
@@ -19,7 +21,7 @@ namespace Bid501_Shared
         /// </summary>
         public double Amount { get; private set; }
 
-        public Product GetProduct { get; private set; }
+        public Product GetProduct { get; set; }
 
         /// <summary>
         /// Constructor for the Bid.
@@ -31,6 +33,12 @@ namespace Bid501_Shared
             Bidder = bidder;
             Amount = amount;
             GetProduct = product;
+        }
+
+        // serialize the object to JSON (allows special characters in password)
+        public string Serialize()
+        {
+            return JsonConvert.SerializeObject(this);
         }
     }
 }

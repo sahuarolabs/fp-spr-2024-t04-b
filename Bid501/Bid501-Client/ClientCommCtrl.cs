@@ -44,7 +44,7 @@ namespace Bid501_Client
         public ClientCommCtrl()
         {          
             // Build Websocket connection and connect
-            ws = new WebSocket($"ws://10.130.160.107:8001/server");
+            ws = new WebSocket($"ws://10.130.160.106:8001/server");
 
             ws.OnMessage += OnMessageHandler;
             ws.Connect();
