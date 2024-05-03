@@ -85,11 +85,10 @@ namespace Bid501_Server
 
             // refresh view
             foreach (RefreshViewDel refresh in observers)
-            {
                 refresh();
-                //Roughly like this:
-                //serverComm.Send("notifyNewProducts");
-            }
+
+            // notify clients
+            ServerComm.NotifyNewProduct(product);
         }
 
         public void AddObserver(RefreshViewDel observer)
