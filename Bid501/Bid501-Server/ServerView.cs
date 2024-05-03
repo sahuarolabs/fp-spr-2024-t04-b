@@ -54,7 +54,7 @@ namespace Bid501_Server
 
         public void UpdateClients()
         {
-            List<string> clients = getClientsDel();
+            List<string> clients = ServerCommCtrl.GiveConnectedClients().ToList();
             uxListBoxClients.Items.Clear();
             foreach (string client in clients)
             {
