@@ -82,7 +82,7 @@ namespace Bid501_Client
 
                 case Message.Type.NewProduct:
                     NewProductMsg newProdMsg = JsonConvert.DeserializeObject<NewProductMsg>(e.Data);
-                    // TODO: add the product to the client's list
+                    UpdateBidViewList(newProdMsg.Prod);
                     break;
 
                 case Message.Type.NewBid:
