@@ -19,13 +19,21 @@ namespace Bid501_Client
         private Account UserAccount;
         
         //Automatically assuming accounts are users and not admins, BEWARE
+        //When Server is fully connected delete         V from this brace to the ;
         public List<Product> ProductList = new List<Product>() { new Product(1, "Hotdog", 999.00, new Account("a", "b", false)), new Product(1, "Hamdog", 0.10, new Account("a", "b", false))};
 
-        public BidView(Account account, MakeBid make)
+        public BidView(Account account, MakeBid make, List<Product> products)
         {
             makeBid = make;
             UserAccount = account;
             InitializeComponent();
+            ProductList = products;
+            UxProductListBox.DataSource = ProductList;
+        }
+
+        public void UpdateProductList(List<Product> productList)
+        {
+            ProductList = productList;
             UxProductListBox.DataSource = ProductList;
         }
 
@@ -66,7 +74,6 @@ namespace Bid501_Client
             UxCurrentPriceTextBox.Text = String.Format("Current Price: {0:C}", ProductList[index].Price);
             UxBidCount.Text = $"Currently: {ProductList[index].Bids.Count.ToString()} Bids";
         }
-
 
         /// <summary>
         /// Logs out of the account

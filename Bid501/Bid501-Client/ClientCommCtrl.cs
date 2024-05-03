@@ -20,6 +20,7 @@ namespace Bid501_Client
 {
     public class ClientCommCtrl : WebSocketBehavior
     {
+
         // View and Websocket for ClientComm instance
         private LoginView lView;
         private WebSocket ws;
@@ -79,7 +80,12 @@ namespace Bid501_Client
             base.OnError(e);
             Console.WriteLine($"Error in Controller: {e.Message}");
         }
-         
+        
+        private void UpdateBidViewList(List<Product> products)
+        {
+            lView.bCtrl.UpdateList(products);
+        }
+
         #region LOGIN {Stuff}
 
         public void sendLogin(string username, string password, LoginResponseHandler callback)

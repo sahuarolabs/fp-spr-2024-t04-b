@@ -13,16 +13,31 @@ namespace Bid501_Client
     {
         public delegate bool MakeBid(Bid bid, Product product);
 
-        BidView bidView;
+        private BidView bidView;
         ClientCommCtrl cCtrl;
 
         public BidCtrl(Account account, ClientCommCtrl cCtrl)
         {
             this.cCtrl = cCtrl;
-            bidView = new BidView(account, Attemptbid);
+            bidView = new BidView(account, Attemptbid, null); // FIX ME: Needs a product list
+            bidView.Show();
+        }
+      
+        /// <summary>
+        /// Constructor for bidcontrol
+        /// </summary>
+        /// <param name="account">The successfully logged in account</param>
+        public BidCtrl(Account account, ClientCommCtrl cCtrl, List<Product> products)
+        {
+            this.cCtrl = cCtrl;
+            bidView = new BidView(account, Attemptbid, products);
             bidView.Show();
         }
 
+        public void UpdateList(List<Product> products)
+        {
+            bidView.UpdateProductList(products);
+        }
 
         /// <summary>
         /// Comming from Bid View "UxPlaceBid_Click", Checks to see if the Bid is vaild by checking the Product if so it goes to ClientCommCtrl

@@ -15,8 +15,9 @@ namespace Bid501_Client
 {
     public partial class LoginView : Form
     {
+
         public ClientCommCtrl cCtrl;
-        private BidCtrl bCtrl;
+        public BidCtrl bCtrl;
         bool isConnected;
 
         public LoginView(ClientCommCtrl Ctrl)
@@ -40,14 +41,14 @@ namespace Bid501_Client
         /// Method for delegate to handle the response of Login Verification
         /// </summary>
         /// <param name="isSuccess">Bool indicating whether Login was successful</param>
-        private void HandleLoginResponse(bool isSuccess, string[] deets)
+        private void HandleLoginResponse(bool isSuccess, string[] userInfo)
         {
             Invoke((MethodInvoker)delegate
             {
                 if (isSuccess)
                 {
                     //assuming user no admin perms
-                    bCtrl = new BidCtrl(new Account(deets[0], deets[1], false), cCtrl);
+                    bCtrl = new BidCtrl(new Bid501_Shared.Account(userInfo[0], userInfo[1], false), cCtrl, null); //FIX ME: the null needs to be the product list
                 }
             });
         }
