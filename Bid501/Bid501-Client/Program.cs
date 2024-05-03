@@ -9,7 +9,7 @@ using WebSocketSharp;
 namespace Bid501_Client
 {
     public delegate void HandleLoginResponseDel(bool success);
-    public delegate void PlaceBidDel(Product product, double amount);
+    public delegate bool PlaceBidDel(Product product, double amount);
 
     public static class Program
     {

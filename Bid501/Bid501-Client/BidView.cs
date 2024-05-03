@@ -49,7 +49,7 @@ namespace Bid501_Client
         private void UxPlaceBid_Click(object sender, EventArgs e)
         {
             if (UxNewBidTextBox.Text == "")
-                MessageBox.Show("Please enter a value!");
+                UxMessageBox.Text = "Please enter a value!";
             else
             {
                 try
@@ -58,11 +58,16 @@ namespace Bid501_Client
                     double suggested = Math.Round(Convert.ToDouble(UxNewBidTextBox.Text), 2);
                     Product selProd = (Product) UxProductListBox.SelectedItem;
 
-                    placeBid(selProd, suggested); //Delegate to BidCtrl AttemptBid
+                    if (placeBid(selProd, suggested)) //Delegate to BidCtrl AttemptBid
+                    {
+                        UxMessageBox.Text = "";
+                    }
+                    else UxMessageBox.Text = $"Did not send the bid {suggested}";
+
                 }
                 catch
                 {
-                    MessageBox.Show("Please enter a valid number (0.00)");
+                    UxMessageBox.Text = "Please enter a valid number (0.00)";
                 }
             }
         }

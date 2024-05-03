@@ -46,14 +46,19 @@ namespace Bid501_Client
             }));
         }
 
-        public void PlaceBid(Product product, double amount)
+        public bool PlaceBid(Product product, double amount)
         {
             Bid bid = new Bid(LoggedUser, amount);
 
             if (amount > product.Price)
-                cCtrl.SendBid(product.Id, bid);
-            else
-                MessageBox.Show($"Did not send {bid.Amount}");
+            {
+                if (!product.Expired)
+                {
+                    cCtrl.SendBid(product.Id, bid);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void UpdateList(List<Product> products)

@@ -37,6 +37,7 @@
             this.UxPlaceBid = new System.Windows.Forms.Button();
             this.UxBidCount = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.UxMessageBox = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // UxLogoutButton
@@ -130,11 +131,21 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "$";
             // 
+            // UxMessageBox
+            // 
+            this.UxMessageBox.AutoSize = true;
+            this.UxMessageBox.Location = new System.Drawing.Point(41, 356);
+            this.UxMessageBox.Name = "UxMessageBox";
+            this.UxMessageBox.Size = new System.Drawing.Size(10, 13);
+            this.UxMessageBox.TabIndex = 9;
+            this.UxMessageBox.Text = " ";
+            // 
             // BidView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.UxMessageBox);
             this.Controls.Add(this.UxBidCount);
             this.Controls.Add(this.UxPlaceBid);
             this.Controls.Add(this.UxNewBidTextBox);
@@ -162,5 +173,6 @@
         private System.Windows.Forms.Button UxPlaceBid;
         private System.Windows.Forms.Label UxBidCount;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label UxMessageBox;
     }
 }
