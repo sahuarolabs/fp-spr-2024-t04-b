@@ -18,14 +18,17 @@ namespace Bid501_Server
         private AddProductDel addProduct;
         private SaveModelDel saveModel;
 
-        public ServerView(Model model, AddProductDel addProduct, SaveModelDel saveModel)
+        GetClientsDel getClientsDel;
+
+        public ServerView(Model model, AddProductDel addProduct, SaveModelDel saveModel, GetClientsDel gcDel)
         {
             this.model = model;
             this.addProduct = addProduct;
             this.saveModel = saveModel;
+            this.getClientsDel = gcDel;
 
             InitializeComponent();
-            uxListBoxProducts.DataSource = model.Products;
+            //RefreshView();
         }
 
         private void ServerView_FormClosed(object sender, FormClosedEventArgs e)
@@ -54,12 +57,21 @@ namespace Bid501_Server
 
         public void UpdateClients()
         {
-            List<string> clients = ServerCommCtrl.GiveConnectedClients().ToList();
-            uxListBoxClients.Items.Clear();
-            foreach (string client in clients)
+            // Get clients from ServerComm
+            uxListBoxClients.BeginInvoke(new Action(() =>
             {
-                uxListBoxClients.Items.Add(client);
-            }
+
+                Dictionary<string, Account> activeClients = getClientsDel();
+                if (activeClients != null)
+                {
+                    uxListBoxClients.Items.Clear();
+                    foreach (Account client in activeClients.Values)
+                    {
+                        uxListBoxClients.Items.Add(client.Username);
+                    }
+                }
+            }));
+            
             
         }
 
@@ -68,8 +80,7 @@ namespace Bid501_Server
             // reload the products in the list
             uxListBoxProducts.DataSource = null;
             uxListBoxProducts.DataSource = model.Products;
-            uxListBoxClients.DataSource = null;
-            uxListBoxClients.DataSource = ServerCommCtrl.GiveConnectedClients();
+            UpdateClients();
         }
 
     }

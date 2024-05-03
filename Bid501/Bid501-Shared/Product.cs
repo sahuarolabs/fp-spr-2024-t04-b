@@ -1,4 +1,5 @@
 ﻿
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,12 @@ namespace Bid501_Shared
         public override string ToString()
         {
             return Name;
+        }
+
+        // serialize the object to JSON (allows special characters in password)
+        public string Serialize()
+        {
+            return JsonConvert.SerializeObject(this);
         }
     }
 }
