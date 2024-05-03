@@ -33,6 +33,7 @@ namespace Bid501_Client
                 {
                     UxProductListBox.Items.Add(p);
                 }
+                UpdateBids();
             }));
         }
 
@@ -97,6 +98,7 @@ namespace Bid501_Client
         {
             Invoke(new Action(() =>
             {
+                if (UxProductListBox.SelectedIndex == -1) UxProductListBox.SelectedIndex = 0;
                 Product selectedProduct = UxProductListBox.Items[UxProductListBox.SelectedIndex] as Product;
                 if (selectedProduct.Expired)
                     UxStatusLabel.Text = "Bid is closed.";

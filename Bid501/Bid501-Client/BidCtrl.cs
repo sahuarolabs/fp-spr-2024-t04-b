@@ -59,7 +59,7 @@ namespace Bid501_Client
         public void UpdateList(List<Product> products)
         {
             this.products = products;
-            bidView.UpdateProductList(this.products);
+            if (bidView != null) bidView.UpdateProductList(this.products);
         }
 
         public void UpdateList(Product product)
