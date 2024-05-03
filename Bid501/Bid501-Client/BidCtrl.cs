@@ -32,6 +32,11 @@ namespace Bid501_Client
             bidView.UpdateProductList(products);
         }
 
+        public void UpdateList(Product product)
+        {
+            bidView.UpdateProductList(product);
+        }
+
         /// <summary>
         /// Comming from Bid View "UxPlaceBid_Click", Checks to see if the Bid is vaild by checking the Product if so it goes to ClientCommCtrl
         /// </summary>

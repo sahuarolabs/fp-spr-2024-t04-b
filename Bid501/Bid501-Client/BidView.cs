@@ -37,6 +37,11 @@ namespace Bid501_Client
             }));
         }
 
+        public void UpdateProductList(Product product)
+        {
+            UxProductListBox.Items.Add(product);
+        }
+
         /// Checks to see if the text box has a vaild number and sends it to the delegate makeBid to BidCtrl "AttemptBid"
         private void UxPlaceBid_Click(object sender, EventArgs e)
         {

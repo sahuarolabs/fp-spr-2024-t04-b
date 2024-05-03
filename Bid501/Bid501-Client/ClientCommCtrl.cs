@@ -98,6 +98,11 @@ namespace Bid501_Client
             lView.bCtrl.UpdateList(products);
         }
 
+        private void UpdateBidViewList(Product product)
+        {
+            lView.bCtrl.UpdateList(product);
+        }
+
         #region LOGIN {Stuff}
 
         public void sendLogin(string username, string password, LoginResponseHandler callback)
