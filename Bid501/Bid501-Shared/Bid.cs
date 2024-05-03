@@ -20,10 +20,8 @@ namespace Bid501_Shared
         /// </summary>
         public double Amount { get; private set; }
 
-        public Product GetProduct { get; set; }
-
         /// Bid Constructor
-        public Bid(Account bidder, double amount, Product product)
+        public Bid(Account bidder, double amount)
 
         {
             Bidder = bidder;

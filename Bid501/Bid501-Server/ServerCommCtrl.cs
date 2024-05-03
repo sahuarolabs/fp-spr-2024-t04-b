@@ -59,20 +59,12 @@ namespace Bid501_Server
                     break;
 
                 case Message.Type.NewBid:
-                    Console.WriteLine("Bid Received");
-                    ///FROM
-                    JsonSerializerSettings settings = new JsonSerializerSettings
-                    {
-                        MissingMemberHandling = MissingMemberHandling.Ignore,
-                        ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
-                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                    };
-                    BidRequest bidreq = JsonConvert.DeserializeObject<BidRequest>(e.Data, settings);
-                    ///TO
-                    //BidRequest bidreq = JsonConvert.DeserializeObject<BidRequest>(e.Data);
-                    bool bidsuccess = serverController.AddBid(bidreq.NewBid);
-                    NewBidMsg bidMsg = new NewBidMsg(bidsuccess, bidreq.NewBid);
-                    Send(JsonConvert.SerializeObject(bidMsg));
+                    NewBidMsg bidReq = JsonConvert.DeserializeObject<NewBidMsg>(e.Data);
+
+                    // if the bid is valid, send it back to all clients
+                    if (serverController.AddBid(bidReq.ProductId, bidReq.BidInfo))
+                        NotifyNewBid(bidReq.ProductId, bidReq.BidInfo);
+
                     break;
             }
         }
