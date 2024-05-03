@@ -43,11 +43,11 @@ namespace Bid501_Server
                     LoginRequest req = JsonConvert.DeserializeObject<LoginRequest>(e.Data);
                     bool success = accountController.Login(req.Username, req.Password, false);
                     LoginResponse resp = new LoginResponse(success);
-                    activeWebsockets[ID].Send(JsonConvert.SerializeObject(resp));
+                    Send(JsonConvert.SerializeObject(resp));
 
                     List<Product> products = serverController.GetProducts();
                     ProductListMsg prodMsg = new ProductListMsg(products);
-                    activeWebsockets[ID].Send(JsonConvert.SerializeObject(prodMsg));
+                    Send(JsonConvert.SerializeObject(prodMsg));
                     break;
                 case Message.Type.NewBid:
 
@@ -75,7 +75,7 @@ namespace Bid501_Server
             base.OnClose(e);
         }
 
-        public void NotifyNewProduct(Product newProd)
+        public static void NotifyNewProduct(Product newProd)
         {
             NewProductMsg prodMsg = new NewProductMsg(newProd);
             string msg = JsonConvert.SerializeObject(prodMsg);
@@ -85,19 +85,18 @@ namespace Bid501_Server
                 entry.Value.Send(msg);
         }
 
-        // empty
-        public void NotifyNewBid()
+        public static void NotifyNewBid(int productId, Bid bid)
         {
 
         }
 
         // empty
-        public void EndAuction()
+        public static void EndAuction()
         {
 
         }
 
-        public BindingList<string> GiveConnectedClients()
+        public static BindingList<string> GiveConnectedClients()
         {
             BindingList<string> connectedClients = new BindingList<string>();
 

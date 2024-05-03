@@ -36,8 +36,6 @@ namespace Bid501_Server
             LoginView loginView = new LoginView(acctCtrl, serverCtrl);
             loginView.SetLoginDelegates(acctCtrl.Login, serverCtrl.AfterLoginAction);
 
-            //serverCtrl.ServerComm = servCommCtrl;
-            //serverCtrl.setGetClientsDel(servCommCtrl.GiveConnectedClients);
             //WebSocketServer wss = new WebSocketServer($"ws://{Bid501_Shared.Program.GetLocalIPAddress()}:8001");
             WebSocketServer wss = new WebSocketServer("ws://10.130.160.108:8001");
             wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl, serverCtrl.AddBid, acctCtrl));
