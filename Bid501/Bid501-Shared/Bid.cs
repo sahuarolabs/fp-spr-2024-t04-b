@@ -23,11 +23,7 @@ namespace Bid501_Shared
 
         public Product GetProduct { get; set; }
 
-        /// <summary>
-        /// Constructor for the Bid.
-        /// </summary>
-        /// <param name="bidder">The person who just placed the bid.</param>
-        /// <param name="amount">The ammount the user wants to bid.</param>
+        /// Bid Constructor
         public Bid(Account bidder, double amount, Product product)
         {
             Bidder = bidder;
@@ -35,7 +31,7 @@ namespace Bid501_Shared
             GetProduct = product;
         }
 
-        // serialize the object to JSON (allows special characters in password)
+        /// serialize the object to JSON 
         public string Serialize()
         {
             return JsonConvert.SerializeObject(this);

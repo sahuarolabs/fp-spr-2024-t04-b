@@ -48,10 +48,9 @@
             // 
             // uxListBoxClients
             // 
+            this.uxListBoxClients.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.uxListBoxClients.FormattingEnabled = true;
-            this.uxListBoxClients.Items.AddRange(new object[] {
-            "Client 54181145",
-            "Client 33711845"});
             this.uxListBoxClients.Location = new System.Drawing.Point(180, 12);
             this.uxListBoxClients.Name = "uxListBoxClients";
             this.uxListBoxClients.Size = new System.Drawing.Size(162, 225);

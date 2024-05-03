@@ -15,6 +15,8 @@ namespace Bid501_Server
 
         // Used to associate accounts with a matching ID in above Dict<>
         public Dictionary<string, Account> activeAccounts = new Dictionary<string, Account>();
+        public ActiveClientsDel activeClientsDel;
+
 
         /// <summary>
         /// List of all accounts
@@ -71,19 +73,14 @@ namespace Bid501_Server
                 acctList.Add(newAccount);
                 return true;
             }
-
             // if the username exists, it has to be either a user trying to log into the client
             // or an admin trying to log in onto the server
             return (password == account.Password) && (admin == account.IsAdmin);
         }
 
-        public void UpdateAccountData()
+        public Account FindAccount(string Accountname)
         {
-            foreach(Account a in acctList)
-            {
-
-            }
+            return acctList.Find(acct => acct.Username == Accountname);
         }
-
     }
 }

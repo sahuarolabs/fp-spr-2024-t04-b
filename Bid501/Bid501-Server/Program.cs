@@ -18,7 +18,6 @@ namespace Bid501_Server
     public delegate bool LoginDel(string username, string password, bool client);
     public delegate bool AfterLoginActionDel(bool success);
     public delegate void SaveModelDel();
-    public delegate BindingList<string> GetClientsDel();
 
     public class Program
     {

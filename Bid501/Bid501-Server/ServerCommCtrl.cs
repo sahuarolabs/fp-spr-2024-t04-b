@@ -15,22 +15,25 @@ using Message = Bid501_Shared.Message;
 
 namespace Bid501_Server
 {
+    public delegate Dictionary<string, Account> ActiveClientsDel();
+
     public class ServerCommCtrl : WebSocketBehavior
     {
         // Used to disconnect clients who close websocket connection
         private static Dictionary<string, WebSocket> activeWebsockets = new Dictionary<string, WebSocket>();
-
-        private AddBidDel AddBid;
-        private LoginDel LogIn;
-
+        
+        // Controller for lower server
         private ServerController serverController;
-        private AccountController accountController;
+
+        // Delegates
+        private AddBidDel AddBid;
+        private LoginDel LogIn;        
         
         public ServerCommCtrl(ServerController sc, AddBidDel addBidDel, AccountController ac)
         {
             AddBid = addBidDel;
-            accountController = ac;
             serverController = sc;
+            serverController.accountController = ac;
         }
 
         protected override void OnMessage(MessageEventArgs e)
@@ -41,7 +44,12 @@ namespace Bid501_Server
             switch (msgType) { 
                 case Message.Type.LoginRequest:
                     LoginRequest req = JsonConvert.DeserializeObject<LoginRequest>(e.Data);
-                    bool success = accountController.Login(req.Username, req.Password, false);
+                    bool success = serverController.accountController.Login(req.Username, req.Password, false);
+                    if (success)
+                    {
+                        serverController.accountController.activeAccounts.Add(ID, serverController.accountController.FindAccount(req.Username));
+                        if (serverController.serverView != null) serverController.serverView.UpdateClients();
+                    }
                     LoginResponse resp = new LoginResponse(success);
                     Send(JsonConvert.SerializeObject(resp));
 
@@ -55,7 +63,8 @@ namespace Bid501_Server
                     JsonSerializerSettings settings = new JsonSerializerSettings
                     {
                         MissingMemberHandling = MissingMemberHandling.Ignore,
-                        ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
+                        ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                     };
                     BidRequest bidreq = JsonConvert.DeserializeObject<BidRequest>(e.Data, settings);
                     ///TO
@@ -64,7 +73,6 @@ namespace Bid501_Server
                     NewBidMsg bidMsg = new NewBidMsg(bidsuccess, bidreq.NewBid);
                     Send(JsonConvert.SerializeObject(bidMsg));
                     break;
-
             }
         }
 
@@ -82,6 +90,8 @@ namespace Bid501_Server
         // generic imp, needs to be changed
         protected override void OnClose(CloseEventArgs e)
         {
+            serverController.accountController.activeAccounts.Remove(ID);
+            if (serverController.serverView != null) serverController.serverView.RefreshView();
             activeWebsockets.Remove(ID);
             Console.WriteLine($"ClientDisconnected: {ID}");
             base.OnClose(e);
@@ -113,19 +123,6 @@ namespace Bid501_Server
         public static void EndAuction()
         {
 
-        }
-
-        public static BindingList<string> GiveConnectedClients()
-        {
-            BindingList<string> connectedClients = new BindingList<string>();
-
-            foreach(KeyValuePair<string, WebSocket> client in activeWebsockets)
-            {
-                connectedClients.Add(client.Key);
-            }
-
-            return connectedClients;
-        }
-        
+        }        
     }
 }

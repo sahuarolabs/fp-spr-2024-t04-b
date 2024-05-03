@@ -10,17 +10,20 @@ using Newtonsoft.Json;
 
 namespace Bid501_Server
 {
+    public delegate Dictionary<string, Account> GetClientsDel();
+
     public class ServerController
     {
-        public AccountController acctCtrl;
+        public AccountController accountController;
 
         private string modelFileName;
         private Model model;
         private List<RefreshViewDel> observers;
+        public ServerView serverView;
 
         public ServerController(AccountController acctCtrl, string modelFileName)
         {
-            this.acctCtrl = acctCtrl;
+            this.accountController = acctCtrl;
             this.modelFileName = modelFileName;
             model = LoadModelFromFile(modelFileName);
             observers = new List<RefreshViewDel>();
@@ -30,8 +33,8 @@ namespace Bid501_Server
         {
             if (success)
             {
-                acctCtrl.SaveAccounts();
-                ServerView serverView = new ServerView(model, AddProduct, SaveModel);
+                accountController.SaveAccounts();
+                serverView = new ServerView(model, AddProduct, SaveModel, GetClients);
                 AddObserver(serverView.RefreshView);
                 serverView.Show();
             }
@@ -99,6 +102,11 @@ namespace Bid501_Server
         public List<Product> GetProducts()
         {
             return model.Products;
+        }
+
+        public Dictionary<string, Account> GetClients()
+        {
+            return accountController.activeAccounts;
         }
     }
 }
