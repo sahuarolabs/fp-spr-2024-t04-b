@@ -10,6 +10,8 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
+using Newtonsoft.Json.Linq;
+using Message = Bid501_Shared.Message;
 
 namespace Bid501_Server
 {
@@ -38,37 +40,15 @@ namespace Bid501_Server
 
         protected override void OnMessage(MessageEventArgs e)
         {
-            string inJSON = e.Data;
-            string[] inputs = e.Data.Split(':');
-            string clientID = ID;
+            JObject jObj = JObject.Parse(e.Data);
+            Message.Type msgType = (Message.Type) Enum.Parse(typeof(Message.Type), (string)jObj["MsgType"]);
 
-            foreach (string s in inputs) Console.WriteLine(s);
-
-            switch(inputs[0])
-            {
-                case "login": //FIX: not adding new account to acnts.json
-                    Account account = accountController.ClientLogin(inputs[1], inputs[2], false, clientID);
-                    if (account != null)
-                    {
-                        accountController.activeAccounts.Add(clientID, account);
-                        activeWebsockets[ID].Send("notifylogin:True");
-                        Console.WriteLine(accountController.activeAccounts[clientID].Username);
-                    }
-                    else
-                    {
-                        activeWebsockets[ID].Send("notifylogin:False"); 
-                    }
-                    break;
-                case "IP":
-                    Send("notifytest");
-                    break;
-                case "logout":
-
-                    break;
-                case "newbid":
-
-                    break;
-                default:
+            switch (msgType) { 
+                case Message.Type.LoginRequest:
+                    LoginRequest req = JsonConvert.DeserializeObject<LoginRequest>(e.Data);
+                    bool success = accountController.Login(req.Username, req.Password, false);
+                    LoginResponse resp = new LoginResponse(success);
+                    activeWebsockets[ID].Send(JsonConvert.SerializeObject(resp));
                     break;
             }
         }

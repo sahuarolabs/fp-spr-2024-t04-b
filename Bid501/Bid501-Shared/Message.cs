@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,16 +10,17 @@ namespace Bid501_Shared
 {
     public class Message
     {
+        [JsonConverter(typeof(StringEnumConverter))]
         public enum Type
         {
             LoginRequest, LoginResponse, ProductList, NewProduct, NewBid
         }
 
-        public Type MessType { get; set; }
+        public Type MsgType { get; set; }
 
-        public Message(Type messType)
+        public Message(Type msgType)
         {
-            MessType = messType;
+            MsgType = msgType;
         }
     }
 }

@@ -12,6 +12,9 @@ using System.Windows.Forms.VisualStyles;
 using System.Runtime.CompilerServices;
 using System.Net.Sockets;
 using System.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Message = Bid501_Shared.Message;
 
 namespace Bid501_Client
 {
@@ -35,7 +38,7 @@ namespace Bid501_Client
         public ClientCommCtrl()
         {          
             // Build Websocket connection and connect
-            ws = new WebSocket($"ws://10.130.160.82:8001/server");
+            ws = new WebSocket($"ws://10.130.160.107:8001/server");
 
             ws.OnMessage += OnMessageHandler;
             ws.Connect();
@@ -60,17 +63,14 @@ namespace Bid501_Client
         public void OnMessageHandler(object sender, MessageEventArgs e)
         {
             base.OnMessage(e);
-            string[] parts = e.Data.Split(':');
-            foreach (string s in parts) Console.WriteLine(s);
 
-            if (parts[0] == "notifylogin")
+            JObject jObj = JObject.Parse(e.Data);
+            switch (Enum.Parse(typeof(Message.Type), (string) jObj["MsgType"]))
             {
-                bool isValid = bool.Parse(parts[1]);
-                loginCallback?.Invoke(isValid, clientLoginInfo);
-            }
-            else if (parts[0] == "notifytest")
-            {
-                Console.WriteLine("Received");
+                case Message.Type.LoginResponse:
+                    LoginResponse resp = JsonConvert.DeserializeObject<LoginResponse>(e.Data);
+                    loginCallback?.Invoke(resp.Success, clientLoginInfo);
+                    break;
             }
         }
 
@@ -84,11 +84,13 @@ namespace Bid501_Client
 
         public void sendLogin(string username, string password, LoginResponseHandler callback)
         {
-            clientLoginInfo[0] = username; 
+            clientLoginInfo[0] = username;
             clientLoginInfo[1] = password;
-            string x = $"login:{username}:{password}";
 
-            ws.Send(x);
+            LoginRequest req = new LoginRequest(username, password);
+            string msg = JsonConvert.SerializeObject(req);
+
+            ws.Send(msg);
 
             this.loginCallback = callback;
 

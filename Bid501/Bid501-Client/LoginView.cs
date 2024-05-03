@@ -42,11 +42,14 @@ namespace Bid501_Client
         /// <param name="isSuccess">Bool indicating whether Login was successful</param>
         private void HandleLoginResponse(bool isSuccess, string[] deets)
         {
-            if (isSuccess)
+            Invoke((MethodInvoker)delegate
             {
-                //assuming user no admin perms
-                bCtrl = new BidCtrl(new Bid501_Shared.Account(deets[0], deets[1], false), cCtrl);
-            }
+                if (isSuccess)
+                {
+                    //assuming user no admin perms
+                    bCtrl = new BidCtrl(new Account(deets[0], deets[1], false), cCtrl);
+                }
+            });
         }
 
         private void UsernameTextbox_TextChanged(object sender, EventArgs e)

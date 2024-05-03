@@ -22,6 +22,8 @@ namespace Bid501_Server
         private List<RefreshViewDel> observers;
         private RefreshViewDel refreshView;
 
+        public ServerCommCtrl ServerComm { get; set; }
+
         public ServerController(AccountController acctCtrl, string modelFileName)
         {
             this.acctCtrl = acctCtrl;

@@ -33,13 +33,15 @@ namespace Bid501_Server
 
             AccountController acctCtrl = new AccountController("accounts.json");
             ServerController serverCtrl = new ServerController(acctCtrl, "model.json");
-          
+            ServerCommCtrl servCommCtrl = new ServerCommCtrl(serverCtrl, serverCtrl.AddBid, acctCtrl);
             LoginView loginView = new LoginView(acctCtrl, serverCtrl);
             loginView.SetLoginDelegates(acctCtrl.Login, serverCtrl.AfterLoginAction);
 
+            serverCtrl.ServerComm = servCommCtrl;
+
             //WebSocketServer wss = new WebSocketServer($"ws://{Bid501_Shared.Program.GetLocalIPAddress()}:8001");
-            WebSocketServer wss = new WebSocketServer("ws://10.130.160.81:8001");
-            wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl, serverCtrl.AddBid, acctCtrl));
+            WebSocketServer wss = new WebSocketServer("ws://10.130.160.107:8001");
+            wss.AddWebSocketService<ServerCommCtrl>("/server", () => servCommCtrl);
 
             wss.ReuseAddress = true;
             wss.Start(); 
