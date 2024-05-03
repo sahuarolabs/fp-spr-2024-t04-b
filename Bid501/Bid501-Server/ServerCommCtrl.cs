@@ -57,6 +57,7 @@ namespace Bid501_Server
                     ProductListMsg prodMsg = new ProductListMsg(products);
                     Send(JsonConvert.SerializeObject(prodMsg));
                     break;
+
                 case Message.Type.NewBid:
                     Console.WriteLine("Bid Received");
                     ///FROM
@@ -107,17 +108,15 @@ namespace Bid501_Server
                 entry.Value.Send(msg);
         }
 
-        /*
-        public static void NotifyNewBid(Bid bid)
+        public static void NotifyNewBid(int productId, Bid bid)
         {
-            NewBidMsg bidMsg = new NewBidMsg(bid);
+            NewBidMsg bidMsg = new NewBidMsg(productId, bid);
             string msg = JsonConvert.SerializeObject(bidMsg);
 
             // notify each of the connected clients of the new bid
             foreach (var entry in activeWebsockets)
                 entry.Value.Send(msg);
         }
-        */
 
         // empty
         public static void EndAuction()

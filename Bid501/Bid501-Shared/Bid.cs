@@ -10,7 +10,6 @@ namespace Bid501_Shared
     [Serializable]
     public class Bid
     {
-
         /// <summary>
         /// The person who just placed the bid.
         /// </summary>
@@ -25,10 +24,10 @@ namespace Bid501_Shared
 
         /// Bid Constructor
         public Bid(Account bidder, double amount, Product product)
+
         {
             Bidder = bidder;
             Amount = amount;
-            GetProduct = product;
         }
 
         /// serialize the object to JSON 

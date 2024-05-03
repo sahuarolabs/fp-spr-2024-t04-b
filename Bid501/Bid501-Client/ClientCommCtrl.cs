@@ -20,43 +20,25 @@ namespace Bid501_Client
 {
     public class ClientCommCtrl : WebSocketBehavior
     {
-
-        // View and Websocket for ClientComm instance
-        private LoginView lView;
+        // Websocket for ClientComm instance
         private WebSocket ws;
 
-        // Websocket State -- Alive or Dead
-        public bool IsConnect;
-
         // Session credentials [ username, password ]
-        private string[] clientLoginInfo = { "", "" };
+        public string[] Credentials = { "", "" };
+        public bool IsConnect = false;
+        public BidCtrl BidController { get; set; }
 
-        private Bid bidInfo;
-
-        // Delegate post-login -> returns to instance of LoginView
-        public delegate void LoginResponseHandler(bool success, string[] info);
-        private LoginResponseHandler loginCallback;
-
-        public delegate void BidResponseHandler(bool success, Bid bid);
-        private BidResponseHandler bidCallback;
-        
         // Constructor
         public ClientCommCtrl()
-        {          
+        {
             // Build Websocket connection and connect
             ws = new WebSocket($"ws://10.130.160.106:8001/server");
+
 
             ws.OnMessage += OnMessageHandler;
             ws.Connect();
 
-            // Update field to show current websocket connection
             IsConnect = ws.IsAlive;
-            Console.WriteLine($"Client Connection: {IsConnect}");
-        }
-
-        public void SetView(LoginView lv)
-        {
-            lView = lv;
         }
 
         public void Close()
@@ -77,23 +59,22 @@ namespace Bid501_Client
             {
                 case Message.Type.LoginResponse:
                     LoginResponse resp = JsonConvert.DeserializeObject<LoginResponse>(e.Data);
-                    loginCallback?.Invoke(resp.Success, clientLoginInfo);
+                    BidController.HandleLoginResponse(resp.Success);
                     break;
 
                 case Message.Type.ProductList:
                     ProductListMsg prodMsg = JsonConvert.DeserializeObject<ProductListMsg>(e.Data);
-                    UpdateBidViewList(prodMsg.Products);
+                    BidController.UpdateList(prodMsg.Products);
                     break;
 
                 case Message.Type.NewProduct:
                     NewProductMsg newProdMsg = JsonConvert.DeserializeObject<NewProductMsg>(e.Data);
-                    UpdateBidViewList(newProdMsg.Prod);
+                    BidController.UpdateList(newProdMsg.Prod);
                     break;
 
                 case Message.Type.NewBid:
                     NewBidMsg newBidMsg = JsonConvert.DeserializeObject<NewBidMsg>(e.Data);
-                    bidCallback?.Invoke(newBidMsg.Success,newBidMsg.BidInfo);
-                    // TODO: add the bid to the item in the product list
+                    BidController.AddNewBid(newBidMsg.ProductId, newBidMsg.BidInfo);
                     break;
             }
         }
@@ -103,32 +84,18 @@ namespace Bid501_Client
             base.OnError(e);
             Console.WriteLine($"Error in Controller: {e.Message}");
         }
-        
-        // add EVERYTHING
-        private void UpdateBidViewList(List<Product> products)
-        {
-            lView.bCtrl.UpdateList(products);
-        }
-
-        // to add one product
-        private void UpdateBidViewList(Product product)
-        {
-            lView.bCtrl.UpdateList(product);
-        }
 
         #region LOGIN {Stuff}
 
-        public void sendLogin(string username, string password, LoginResponseHandler callback)
+        public void sendLogin(string username, string password)
         {
-            clientLoginInfo[0] = username;
-            clientLoginInfo[1] = password;
+            Credentials[0] = username;
+            Credentials[1] = password;
 
             LoginRequest req = new LoginRequest(username, password);
             string msg = JsonConvert.SerializeObject(req);
 
             ws.Send(msg);
-
-            this.loginCallback = callback;
 
         }
         #endregion
@@ -138,20 +105,11 @@ namespace Bid501_Client
         /// Gets a bid from BidCtrl "Attemptbid", Sends that bid to the server to verify that bid is good
         /// </summary>
         /// <returns>A bool for if the bid was verified</returns>
-        public void SendBid(Bid bid, BidResponseHandler callback) //Called from BidControl "Attemptbid"
+        public void SendBid(int productId, Bid bid) //Called from BidControl "Attemptbid"
         {
-            bidInfo = bid;
-
-            BidRequest bidreq = new BidRequest(bid);
-            string msg = JsonConvert.SerializeObject(bidreq);
-
-            if (!ws.IsAlive)
-            {
-                ws.Connect();
-            }
+            NewBidMsg bidMsg = new NewBidMsg(productId, bid);
+            string msg = JsonConvert.SerializeObject(bidMsg);
             ws.Send(msg);
-
-            this.bidCallback = callback;
         }
 
         #endregion

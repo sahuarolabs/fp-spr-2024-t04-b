@@ -9,12 +9,12 @@ namespace Bid501_Shared
     [Serializable]
     public class NewBidMsg : Message
     {
-        public bool Success { get; set; }
+        public int ProductId { get; set; }
         public Bid BidInfo { get; set; }
 
-        public NewBidMsg(bool succ, Bid bid) : base(Message.Type.NewBid)
+        public NewBidMsg(int productId, Bid bid) : base(Message.Type.NewBid)
         {
-            Success = succ;
+            ProductId = productId;
             BidInfo = bid;
         }
     }

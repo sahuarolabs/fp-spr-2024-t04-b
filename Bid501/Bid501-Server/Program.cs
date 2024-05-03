@@ -11,7 +11,7 @@ using System.ComponentModel;
 
 namespace Bid501_Server
 {
-    public delegate bool AddBidDel(Bid b);
+    public delegate bool AddBidDel(Product p, Bid b);
     public delegate void RefreshViewDel();
     public delegate void AddProductDel(Product p);
     public delegate void EndAuctionDel(Product p);
