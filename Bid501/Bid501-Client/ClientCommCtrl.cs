@@ -31,9 +31,14 @@ namespace Bid501_Client
         // Session credentials [ username, password ]
         private string[] clientLoginInfo = { "", "" };
 
+        private Bid bidInfo;
+
         // Delegate post-login -> returns to instance of LoginView
         public delegate void LoginResponseHandler(bool success, string[] info);
         private LoginResponseHandler loginCallback;
+
+        public delegate void BidResponseHandler(bool success, Bid bid);
+        private BidResponseHandler bidCallback;
         
         // Constructor
         public ClientCommCtrl()
@@ -87,6 +92,7 @@ namespace Bid501_Client
 
                 case Message.Type.NewBid:
                     NewBidMsg newBidMsg = JsonConvert.DeserializeObject<NewBidMsg>(e.Data);
+                    bidCallback?.Invoke(newBidMsg.Success,newBidMsg.BidInfo);
                     // TODO: add the bid to the item in the product list
                     break;
             }
@@ -132,11 +138,16 @@ namespace Bid501_Client
         /// Gets a bid from BidCtrl "Attemptbid", Sends that bid to the server to verify that bid is good
         /// </summary>
         /// <returns>A bool for if the bid was verified</returns>
-        public bool SendBid(Bid bid, Product product) //Called from BidControl "Attemptbid"
+        public void SendBid(Bid bid, BidResponseHandler callback) //Called from BidControl "Attemptbid"
         {
-            MessageBox.Show($"Sent to Server {bid.Amount}");
+            bidInfo = bid;
 
-            return true;
+            BidRequest bidreq = new BidRequest(bid);
+            string msg = JsonConvert.SerializeObject(bidreq);
+
+            ws.Send(msg);
+
+            this.bidCallback = callback;
         }
 
         #endregion

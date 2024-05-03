@@ -11,7 +11,7 @@ namespace Bid501_Client
 {
     public class BidCtrl
     {
-        public delegate bool MakeBid(Bid bid, Product product);
+        public delegate void MakeBid(Bid bid);
 
         private BidView bidView;
         ClientCommCtrl cCtrl;
@@ -41,20 +41,28 @@ namespace Bid501_Client
         /// Comming from Bid View "UxPlaceBid_Click", Checks to see if the Bid is vaild by checking the Product if so it goes to ClientCommCtrl
         /// </summary>
         /// <param name="bid">The Bid being checked</param>
-        /// <param name="product">The Product being bid on</param>
         /// <returns>a bool whether the bid was valid</returns>
-        public bool Attemptbid(Bid bid, Product product) //Called from delegate in Bid View "UxPlaceBid_Click"
+        public void Attemptbid(Bid bid) //Called from delegate in Bid View "UxPlaceBid_Click"
         {
 
-            if (bid.Amount > product.Price)
+            if (bid.Amount > bid.GetProduct.Price)
             {
-                return cCtrl.SendBid(bid, product); //Send to ClientCommCtrl Send Bid
+                cCtrl.SendBid(bid, HandleBidResponse); //Send to ClientCommCtrl Send Bid
             }
             else
             {
                 MessageBox.Show($"Did not send {bid.Amount}");
             }
-            return false;
+        }
+
+        private void HandleBidResponse(bool isSuccess, Bid bidinfo)
+        {
+            if (isSuccess)
+            {
+                //assuming user no admin perms
+                bidinfo.GetProduct.Bids.Add(bidinfo);
+                bidView.UpdateBids();
+            }
         }
     }
 }
