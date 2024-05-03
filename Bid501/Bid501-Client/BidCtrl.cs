@@ -19,7 +19,7 @@ namespace Bid501_Client
         public BidCtrl(Account account, ClientCommCtrl cCtrl)
         {
             this.cCtrl = cCtrl;
-            bidView = new BidView(account, Attemptbid);
+            bidView = new BidView(account, Attemptbid, null);
             bidView.Show();
         }
       
