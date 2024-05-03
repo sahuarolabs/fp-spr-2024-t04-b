@@ -10,11 +10,10 @@ using Newtonsoft.Json;
 
 namespace Bid501_Server
 {
+    public delegate List<string> GetActiveClientsDel();
+
     public class ServerController
     {
-        public delegate void DelNotifyNewProduct();
-        public DelNotifyNewProduct NotifyNewProduct;
-
         public AccountController acctCtrl;
 
         private string modelFileName;
@@ -33,18 +32,12 @@ namespace Bid501_Server
             observers = new List<RefreshViewDel>();
         }
 
-        public void SetDelegates(DelNotifyNewProduct np)
-        {
-            NotifyNewProduct = np;
-        }
-
-
         public bool AfterLoginAction(bool success)
         {
             if (success)
             {
                 acctCtrl.SaveAccounts();
-                ServerView serverView = new ServerView(model, AddProduct, SaveModel, getClients);
+                ServerView serverView = new ServerView(model, AddProduct, SaveModel, GetActiveClients);
                 AddObserver(serverView.RefreshView);
                 serverView.Show();
             }
@@ -85,21 +78,21 @@ namespace Bid501_Server
 
             // refresh view
             foreach (RefreshViewDel refresh in observers)
-            {
                 refresh();
-                //Roughly like this:
-                //serverComm.Send("notifyNewProducts");
-            }
+
+            // notify clients
+            ServerComm.NotifyNewProduct(product);
         }
 
         public void AddObserver(RefreshViewDel observer)
         {
             observers.Add(observer);
         }
+        
 
-        public void setGetClientsDel(GetClientsDel g)
+        public List<string> GetActiveClients()
         {
-            getClients = g;
+            return new List<string>(acctCtrl.activeAccounts.Keys);
         }
 
         public bool AddBid(Bid bid, Product product)

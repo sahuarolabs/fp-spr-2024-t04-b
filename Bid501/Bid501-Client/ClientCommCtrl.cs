@@ -39,7 +39,7 @@ namespace Bid501_Client
         public ClientCommCtrl()
         {          
             // Build Websocket connection and connect
-            ws = new WebSocket($"ws://10.130.160.109:8001/server");
+            ws = new WebSocket($"ws://10.130.160.108:8001/server");
 
             ws.OnMessage += OnMessageHandler;
             ws.Connect();
@@ -79,6 +79,11 @@ namespace Bid501_Client
                     ProductListMsg prodMsg = JsonConvert.DeserializeObject<ProductListMsg>(e.Data);
                     UpdateBidViewList(prodMsg.Products);
                     break;
+
+                case Message.Type.NewProduct:
+                    NewProductMsg newProdMsg = JsonConvert.DeserializeObject<NewProductMsg>(e.Data);
+                    // TODO: add the product to the client's list
+                    break;
             }
         }
 
@@ -91,6 +96,11 @@ namespace Bid501_Client
         private void UpdateBidViewList(List<Product> products)
         {
             lView.bCtrl.UpdateList(products);
+        }
+
+        private void UpdateBidViewList(Product product)
+        {
+            lView.bCtrl.UpdateList(product);
         }
 
         #region LOGIN {Stuff}

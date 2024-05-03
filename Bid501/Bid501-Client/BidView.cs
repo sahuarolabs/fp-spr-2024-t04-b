@@ -40,13 +40,12 @@ namespace Bid501_Client
             }));
         }
 
+        public void UpdateProductList(Product product)
+        {
+            UxProductListBox.Items.Add(product);
+        }
 
-
-        /// <summary>
         /// Checks to see if the text box has a vaild number and sends it to the delegate makeBid to BidCtrl "AttemptBid"
-        /// </summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">the Event Args</param>
         private void UxPlaceBid_Click(object sender, EventArgs e)
         {
             if (UxNewBidTextBox.Text == "") MessageBox.Show("Please enter a value!");
@@ -63,11 +62,7 @@ namespace Bid501_Client
             }
         }
 
-        /// <summary>
         /// When a different product is selected in the list update everything
-        /// </summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The event args</param>
         private void UxProductListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             int index = UxProductListBox.SelectedIndex;
@@ -87,11 +82,7 @@ namespace Bid501_Client
             }
         }
 
-        /// <summary>
         /// Logs out of the account
-        /// </summary>
-        /// <param name="sender">Sender</param>
-        /// <param name="e">Event Args</param>
         private void UxLogoutButton_Click(object sender, EventArgs e)
         {
             this.Close();

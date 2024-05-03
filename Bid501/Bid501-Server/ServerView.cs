@@ -17,9 +17,9 @@ namespace Bid501_Server
         private Model model;
         private AddProductDel addProduct;
         private SaveModelDel saveModel;
-        private GetClientsDel getClientsDel;
+        private GetActiveClientsDel getClientsDel;
 
-        public ServerView(Model model, AddProductDel addProduct, SaveModelDel saveModel, GetClientsDel getClients)
+        public ServerView(Model model, AddProductDel addProduct, SaveModelDel saveModel, GetActiveClientsDel getClients)
         {
             this.model = model;
             this.addProduct = addProduct;
@@ -52,6 +52,17 @@ namespace Bid501_Server
             AddProductView dialog = new AddProductView(prodsToAdd);
             if (dialog.ShowDialog() == DialogResult.OK)
                 addProduct(dialog.SelectedProd);
+        }
+
+        public void UpdateClients()
+        {
+            List<string> clients = getClientsDel();
+            uxListBoxClients.Items.Clear();
+            foreach (string client in clients)
+            {
+                uxListBoxClients.Items.Add(client);
+            }
+            
         }
 
         public void RefreshView()

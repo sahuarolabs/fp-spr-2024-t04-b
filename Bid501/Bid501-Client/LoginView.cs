@@ -33,7 +33,7 @@ namespace Bid501_Client
         {
             string username = UsernameTextbox.Text;
             string password = PasswordTextbox.Text;
-
+            UxLoginButton.Enabled = false;
             cCtrl.sendLogin(username, password, HandleLoginResponse);
         }
 

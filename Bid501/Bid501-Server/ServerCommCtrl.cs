@@ -18,7 +18,7 @@ namespace Bid501_Server
     public class ServerCommCtrl : WebSocketBehavior
     {
         // Used to disconnect clients who close websocket connection
-        private Dictionary<string, WebSocket> activeWebsockets;
+        private static Dictionary<string, WebSocket> activeWebsockets = new Dictionary<string, WebSocket>();
 
         private AddBidDel AddBid;
         private LoginDel LogIn;
@@ -31,9 +31,6 @@ namespace Bid501_Server
             AddBid = addBidDel;
             accountController = ac;
             serverController = sc;
-            activeWebsockets = new Dictionary<string, WebSocket>();
-            //activeAccounts = new Dictionary<string, Account>();
-            serverController.SetDelegates(NotifyNewProduct);
         }
 
         protected override void OnMessage(MessageEventArgs e)
@@ -69,15 +66,19 @@ namespace Bid501_Server
         // generic imp, needs to be changed
         protected override void OnClose(CloseEventArgs e)
         {
-
+            activeWebsockets.Remove(ID);
             Console.WriteLine($"ClientDisconnected: {ID}");
             base.OnClose(e);
         }
 
-        // empty
-        public void NotifyNewProduct()
+        public void NotifyNewProduct(Product newProd)
         {
+            NewProductMsg prodMsg = new NewProductMsg(newProd);
+            string msg = JsonConvert.SerializeObject(prodMsg);
 
+            // notify each of the connected clients of the new product
+            foreach (var entry in activeWebsockets)
+                entry.Value.Send(msg);
         }
 
         // empty
