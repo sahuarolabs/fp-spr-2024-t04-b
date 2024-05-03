@@ -17,12 +17,14 @@ namespace Bid501_Server
         private Model model;
         private AddProductDel addProduct;
         private SaveModelDel saveModel;
+        private GetClientsDel getClientsDel;
 
-        public ServerView(Model model, AddProductDel addProduct, SaveModelDel saveModel)
+        public ServerView(Model model, AddProductDel addProduct, SaveModelDel saveModel, GetClientsDel getClients)
         {
             this.model = model;
             this.addProduct = addProduct;
             this.saveModel = saveModel;
+            this.getClientsDel = getClients;
 
             InitializeComponent();
             uxListBoxProducts.DataSource = model.Products;
@@ -57,6 +59,8 @@ namespace Bid501_Server
             // reload the products in the list
             uxListBoxProducts.DataSource = null;
             uxListBoxProducts.DataSource = model.Products;
+            uxListBoxClients.DataSource = null;
+            uxListBoxClients.DataSource = getClientsDel();
         }
 
     }

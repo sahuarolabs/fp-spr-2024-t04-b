@@ -33,12 +33,11 @@ namespace Bid501_Client
         
         // Constructor
         public ClientCommCtrl()
-        {
-
-            string clientId = Bid501_Shared.Program.GetLocalIPAddress();
-            
+        {          
             // Build Websocket connection and connect
-            ws = new WebSocket($"ws://10.130.160.99:8001/server?id={clientId}");
+            ws = new WebSocket($"ws://10.130.160.82:8001/server");
+
+            ws.OnMessage += OnMessageHandler;
             ws.Connect();
 
             // Update field to show current websocket connection
@@ -58,10 +57,12 @@ namespace Bid501_Client
         }
 
         // Redirects messages from the server
-        protected override void OnMessage(MessageEventArgs e)
+        public void OnMessageHandler(object sender, MessageEventArgs e)
         {
             base.OnMessage(e);
             string[] parts = e.Data.Split(':');
+            foreach (string s in parts) Console.WriteLine(s);
+
             if (parts[0] == "notifylogin")
             {
                 bool isValid = bool.Parse(parts[1]);

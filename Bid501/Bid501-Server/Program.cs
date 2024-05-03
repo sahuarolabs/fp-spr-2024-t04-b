@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 using Bid501_Shared;
+using System.ComponentModel;
 
 namespace Bid501_Server
 {
@@ -17,7 +18,7 @@ namespace Bid501_Server
     public delegate bool LoginDel(string username, string password, bool client);
     public delegate bool AfterLoginActionDel(bool success);
     public delegate void SaveModelDel();
-    public delegate Dictionary<Account, WebSocket> GetClientsDel();
+    public delegate BindingList<string> GetClientsDel();
 
     public class Program
     {
@@ -37,8 +38,8 @@ namespace Bid501_Server
             loginView.SetLoginDelegates(acctCtrl.Login, serverCtrl.AfterLoginAction);
 
             //WebSocketServer wss = new WebSocketServer($"ws://{Bid501_Shared.Program.GetLocalIPAddress()}:8001");
-            WebSocketServer wss = new WebSocketServer("ws://10.130.160.99:8001");
-            wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl, serverCtrl.AddBid, acctCtrl.Login));
+            WebSocketServer wss = new WebSocketServer("ws://10.130.160.81:8001");
+            wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl, serverCtrl.AddBid, acctCtrl));
 
             wss.ReuseAddress = true;
             wss.Start(); 

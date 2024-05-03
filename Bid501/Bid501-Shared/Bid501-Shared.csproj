@@ -51,9 +51,15 @@
   <ItemGroup>
     <Compile Include="Account.cs" />
     <Compile Include="Bid.cs" />
+    <Compile Include="LoginRequest.cs" />
+    <Compile Include="LoginResponse.cs" />
+    <Compile Include="Message.cs" />
     <Compile Include="Model.cs" />
+    <Compile Include="NewBidMsg.cs" />
+    <Compile Include="NewProductMsg.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Product.cs" />
+    <Compile Include="ProductListMsg.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -9,15 +9,14 @@ using Bid501_Shared;
 using System.IO;
 using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
+using System.ComponentModel;
 
 namespace Bid501_Server
 {
     public class ServerCommCtrl : WebSocketBehavior
     {
         // Used to disconnect clients who close websocket connection
-        private Dictionary<string, WebSocket> activeWebsockets = new Dictionary<string, WebSocket>();
-        // Used to associate accounts with a matching ID in above Dict<>
-        private Dictionary<string, Account> activeAccounts = new Dictionary<string, Account>();
+        private Dictionary<string, WebSocket> activeWebsockets;
 
         private AddBidDel AddBid;
         private LoginDel LogIn;
@@ -25,27 +24,40 @@ namespace Bid501_Server
         private Model model;
 
         private ServerController serverController;
+        private AccountController accountController;
         
-        public ServerCommCtrl(ServerController sc, AddBidDel addBidDel, LoginDel logInDel)
+        public ServerCommCtrl(ServerController sc, AddBidDel addBidDel, AccountController ac)
         {
             AddBid = addBidDel;
-            LogIn = logInDel;
+            accountController = ac;
             serverController = sc;
+            activeWebsockets = new Dictionary<string, WebSocket>();
+            //activeAccounts = new Dictionary<string, Account>();
+            serverController.SetDelegates(NotifyNewProduct);
         }
 
         protected override void OnMessage(MessageEventArgs e)
         {
             string inJSON = e.Data;
             string[] inputs = e.Data.Split(':');
+            string clientID = ID;
+
             foreach (string s in inputs) Console.WriteLine(s);
+
             switch(inputs[0])
             {
                 case "login": //FIX: not adding new account to acnts.json
-                    //FIX: 
-                    if (serverController.acctCtrl.Login(inputs[1], inputs[2], false))
+                    Account account = accountController.ClientLogin(inputs[1], inputs[2], false, clientID);
+                    if (account != null)
                     {
-                        Send("notifylogin:True");
-                    } else Send("notifylogin:False");
+                        accountController.activeAccounts.Add(clientID, account);
+                        activeWebsockets[ID].Send("notifylogin:True");
+                        Console.WriteLine(accountController.activeAccounts[clientID].Username);
+                    }
+                    else
+                    {
+                        activeWebsockets[ID].Send("notifylogin:False"); 
+                    }
                     break;
                 case "IP":
                     Send("notifytest");
@@ -69,7 +81,7 @@ namespace Bid501_Server
 
             activeWebsockets.Add(clientID, socket);
 
-            Console.WriteLine($"Client {clientID} connected with ID: {ID}");
+            Console.WriteLine($"Client Connected: {ID}");
         }
 
         // generic imp, needs to be changed
@@ -96,6 +108,18 @@ namespace Bid501_Server
         public void EndAuction()
         {
 
+        }
+
+        public BindingList<string> GiveConnectedClients()
+        {
+            BindingList<string> connectedClients = new BindingList<string>();
+
+            foreach(KeyValuePair<string, WebSocket> client in activeWebsockets)
+            {
+                connectedClients.Add(client.Key);
+            }
+
+            return connectedClients;
         }
         
     }
