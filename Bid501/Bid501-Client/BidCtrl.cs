@@ -50,7 +50,7 @@ namespace Bid501_Client
         {
             Bid bid = new Bid(LoggedUser, amount);
 
-            if (amount > product.StartingPrice)
+            if (amount > product.Price)
                 cCtrl.SendBid(product.Id, bid);
             else
                 MessageBox.Show($"Did not send {bid.Amount}");

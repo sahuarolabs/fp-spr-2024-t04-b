@@ -33,7 +33,7 @@ namespace Bid501_Client
         {
             // Build Websocket connection and connect
             //ws = new WebSocket($"ws://10.130.160.106:8001/server");
-            ws = new WebSocket($"ws://127.0.0.1:8001/server");
+            ws = new WebSocket($"ws://10.130.160.105:8001/server");
             ws.OnMessage += OnMessageHandler;
             ws.Connect();
 
