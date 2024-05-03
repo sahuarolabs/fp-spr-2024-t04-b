@@ -49,6 +49,10 @@ namespace Bid501_Server
                     ProductListMsg prodMsg = new ProductListMsg(products);
                     activeWebsockets[ID].Send(JsonConvert.SerializeObject(prodMsg));
                     break;
+                case Message.Type.NewBid:
+
+                    break;
+
             }
         }
 
