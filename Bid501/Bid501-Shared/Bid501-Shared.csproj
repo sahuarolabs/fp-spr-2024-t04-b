@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="Account.cs" />
     <Compile Include="Bid.cs" />
-    <Compile Include="BidRequest.cs" />
     <Compile Include="LoginRequest.cs" />
     <Compile Include="LoginResponse.cs" />
     <Compile Include="Message.cs" />

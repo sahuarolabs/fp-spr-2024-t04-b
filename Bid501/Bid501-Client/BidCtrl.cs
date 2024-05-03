@@ -2,65 +2,78 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Bid501_Client.ClientCommCtrl;
 
 namespace Bid501_Client
 {
-    public delegate void MakeBid(Bid bid);
-
     public class BidCtrl
-    { 
+    {
+        private ClientCommCtrl cCtrl;
         private BidView bidView;
-        ClientCommCtrl cCtrl;
-      
+        private List<Product> products;
+        private LoginView loginView;
+
+        public Account LoggedUser { get; set; }
+
         /// <summary>
         /// Constructor for bidcontrol
         /// </summary>
         /// <param name="account">The successfully logged in account</param>
-        public BidCtrl(Account account, ClientCommCtrl cCtrl)
+        public BidCtrl(ClientCommCtrl cCtrl, LoginView loginView)
         {
             this.cCtrl = cCtrl;
-            bidView = new BidView(account, Attemptbid);
-            bidView.Show();
+            this.loginView = loginView;
+            products = new List<Product>();
+        }
+
+        public void HandleLoginResponse(bool success)
+        {
+            loginView.Invoke(new Action(() =>
+            {
+                if (success)
+                {
+                    LoggedUser = new Account(cCtrl.Credentials[0], cCtrl.Credentials[1], false);
+                    bidView = new BidView(PlaceBid);
+                    bidView.Show();
+                }
+                else
+                    MessageBox.Show("Invalid credentials!", "Login Error");
+            }));
+        }
+
+        public void PlaceBid(Product product, double amount)
+        {
+            Bid bid = new Bid(LoggedUser, amount);
+
+            if (amount > product.StartingPrice)
+                cCtrl.SendBid(product.Id, bid);
+            else
+                MessageBox.Show($"Did not send {bid.Amount}");
         }
 
         public void UpdateList(List<Product> products)
         {
-            bidView.UpdateProductList(products);
+            this.products = products;
+            bidView.UpdateProductList(this.products);
         }
 
         public void UpdateList(Product product)
         {
-            bidView.UpdateProductList(product);
+            products.Add(product);
+            bidView.UpdateProductList(products);
         }
 
-        /// <summary>
-        /// Comming from Bid View "UxPlaceBid_Click", Checks to see if the Bid is vaild by checking the Product if so it goes to ClientCommCtrl
-        /// </summary>
-        /// <param name="bid">The Bid being checked</param>
-        /// <returns>a bool whether the bid was valid</returns>
-        public void Attemptbid(Bid bid) //Called from delegate in Bid View "UxPlaceBid_Click"
+        public void AddNewBid(int productId, Bid bid)
         {
-
-            if (bid.Amount > bid.GetProduct.Price)
+            Product product = products.Find(prod => prod.Id == productId);
+            if (product != null)
             {
-                cCtrl.SendBid(bid, HandleBidResponse); //Send to ClientCommCtrl Send Bid
-            }
-            else
-            {
-                MessageBox.Show($"Did not send {bid.Amount}");
-            }
-        }
-
-        private void HandleBidResponse(bool isSuccess, Bid bidinfo)
-        {
-            if (isSuccess)
-            {
-                //assuming user no admin perms
-                bidinfo.GetProduct.Bids.Add(bidinfo);
+                product.Bids.Add(bid);
                 bidView.UpdateBids();
             }
         }

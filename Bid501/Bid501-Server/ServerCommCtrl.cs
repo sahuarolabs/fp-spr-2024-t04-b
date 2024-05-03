@@ -50,11 +50,11 @@ namespace Bid501_Server
                     Send(JsonConvert.SerializeObject(prodMsg));
                     break;
                 case Message.Type.NewBid:
-                    Console.WriteLine("Bid Received");
-                    BidRequest bidreq = JsonConvert.DeserializeObject<BidRequest>(e.Data);
-                    bool bidsuccess = serverController.AddBid(bidreq.NewBid);
-                    NewBidMsg bidMsg = new NewBidMsg(bidsuccess, bidreq.NewBid);
-                    Send(JsonConvert.SerializeObject(bidMsg));
+                    // Console.WriteLine("Bid Received");
+                    NewBidMsg bidReq = JsonConvert.DeserializeObject<NewBidMsg>(e.Data);
+
+                    // if the bid is valid, send it back to all clients
+                    NotifyNewBid(bidReq.ProductId, bidReq.BidInfo);
                     break;
 
             }
@@ -89,17 +89,15 @@ namespace Bid501_Server
                 entry.Value.Send(msg);
         }
 
-        /*
-        public static void NotifyNewBid(Bid bid)
+        public static void NotifyNewBid(int productId, Bid bid)
         {
-            NewBidMsg bidMsg = new NewBidMsg(bid);
+            NewBidMsg bidMsg = new NewBidMsg(productId, bid);
             string msg = JsonConvert.SerializeObject(bidMsg);
 
             // notify each of the connected clients of the new bid
             foreach (var entry in activeWebsockets)
                 entry.Value.Send(msg);
         }
-        */
 
         // empty
         public static void EndAuction()

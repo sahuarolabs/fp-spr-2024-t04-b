@@ -11,7 +11,7 @@ using System.ComponentModel;
 
 namespace Bid501_Server
 {
-    public delegate bool AddBidDel(Bid b);
+    public delegate bool AddBidDel(Product p, Bid b);
     public delegate void RefreshViewDel();
     public delegate void AddProductDel(Product p);
     public delegate void EndAuctionDel(Product p);
@@ -37,7 +37,7 @@ namespace Bid501_Server
             loginView.SetLoginDelegates(acctCtrl.Login, serverCtrl.AfterLoginAction);
 
             //WebSocketServer wss = new WebSocketServer($"ws://{Bid501_Shared.Program.GetLocalIPAddress()}:8001");
-            WebSocketServer wss = new WebSocketServer("ws://10.130.160.107:8001");
+            WebSocketServer wss = new WebSocketServer("ws://127.0.0.1:8001");
             wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl, serverCtrl.AddBid, acctCtrl));
             wss.ReuseAddress = true;
             wss.Start(); 

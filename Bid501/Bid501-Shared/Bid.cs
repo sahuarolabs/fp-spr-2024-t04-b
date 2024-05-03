@@ -8,7 +8,6 @@ namespace Bid501_Shared
 {
     public class Bid
     {
-
         /// <summary>
         /// The person who just placed the bid.
         /// </summary>
@@ -19,18 +18,15 @@ namespace Bid501_Shared
         /// </summary>
         public double Amount { get; private set; }
 
-        public Product GetProduct { get; private set; }
-
         /// <summary>
         /// Constructor for the Bid.
         /// </summary>
         /// <param name="bidder">The person who just placed the bid.</param>
         /// <param name="amount">The ammount the user wants to bid.</param>
-        public Bid(Account bidder, double amount, Product product)
+        public Bid(Account bidder, double amount)
         {
             Bidder = bidder;
             Amount = amount;
-            GetProduct = product;
         }
     }
 }
