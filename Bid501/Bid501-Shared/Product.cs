@@ -16,7 +16,18 @@ namespace Bid501_Shared
 
         public double StartingPrice { get; }
 
-        public double Price { get; }
+        public double Price 
+        {
+            get
+            {
+                double price = StartingPrice;
+                foreach(Bid b in Bids)
+                {
+                    if (StartingPrice < b.Amount) price = b.Amount;
+                }
+                return price;
+            }
+        }
 
         public bool Expired { get; }
 
