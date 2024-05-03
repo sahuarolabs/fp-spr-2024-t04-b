@@ -8,7 +8,6 @@ namespace Bid501_Shared
 {
     public class Bid
     {
-
         /// <summary>
         /// The person who just placed the bid.
         /// </summary>

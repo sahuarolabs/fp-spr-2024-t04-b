@@ -50,7 +50,11 @@ namespace Bid501_Server
                     Send(JsonConvert.SerializeObject(prodMsg));
                     break;
                 case Message.Type.NewBid:
+                    // Console.WriteLine("Bid Received");
+                    NewBidMsg bidReq = JsonConvert.DeserializeObject<NewBidMsg>(e.Data);
 
+                    // if the bid is valid, send it back to all clients
+                    NotifyNewBid(bidReq.ProductId, bidReq.BidInfo);
                     break;
 
             }

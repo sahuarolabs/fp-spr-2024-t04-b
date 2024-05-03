@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,21 +13,15 @@ using static Bid501_Client.BidCtrl;
 
 namespace Bid501_Client
 {
-
     public partial class BidView : Form
     {
-        private MakeBid makeBid;
+        private PlaceBidDel placeBid;
 
-        private Account UserAccount;
-
-
-        public BidView(Account account, MakeBid make)
+        public BidView(PlaceBidDel placeBid)
         {
-            makeBid = make;
-            UserAccount = account;
+            this.placeBid = placeBid;
 
             InitializeComponent();
-
         }
 
         public void UpdateProductList(List<Product> productList)
@@ -41,7 +36,6 @@ namespace Bid501_Client
             }));
         }
 
-
         public void UpdateProductList(Product product)
         {
             UxProductListBox.BeginInvoke(new Action(() =>
@@ -53,17 +47,22 @@ namespace Bid501_Client
         /// Checks to see if the text box has a vaild number and sends it to the delegate makeBid to BidCtrl "AttemptBid"
         private void UxPlaceBid_Click(object sender, EventArgs e)
         {
-            if (UxNewBidTextBox.Text == "") MessageBox.Show("Please enter a value!");
+            if (UxNewBidTextBox.Text == "")
+                MessageBox.Show("Please enter a value!");
             else
             {
                 try
                 {
                     // round to 1/100's
                     double suggested = Math.Round(Convert.ToDouble(UxNewBidTextBox.Text), 2);
-                    // SendBid
-                    makeBid(new Bid(UserAccount, suggested), UxProductListBox.Items[UxProductListBox.SelectedIndex] as Product); //Delegate to BidCtrl AttemptBid
+                    Product selProd = (Product) UxProductListBox.SelectedItem;
+
+                    placeBid(selProd, suggested); //Delegate to BidCtrl AttemptBid
                 }
-                catch { MessageBox.Show("Please enter a valid number (0.00)"); }
+                catch
+                {
+                    MessageBox.Show("Please enter a valid number (0.00)");
+                }
             }
         }
 
@@ -91,6 +90,21 @@ namespace Bid501_Client
         private void UxLogoutButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        //refresh everything that is not UxProductListBox
+        public void UpdateBids()
+        {
+            Invoke(new Action(() =>
+            {
+                Product selectedProduct = UxProductListBox.Items[UxProductListBox.SelectedIndex] as Product;
+                if (selectedProduct.Expired)
+                    UxStatusLabel.Text = "Bid is closed.";
+                else
+                    UxStatusLabel.Text = "Open Bid";
+                UxCurrentPriceTextBox.Text = String.Format("Current Price: {0:C}", selectedProduct.Price);
+                UxBidCount.Text = $"Currently: {selectedProduct.Bids.Count.ToString()} Bids";
+            }));
         }
     }
 }

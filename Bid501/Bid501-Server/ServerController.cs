@@ -83,7 +83,7 @@ namespace Bid501_Server
             observers.Add(observer);
         }
 
-        public bool AddBid(Bid bid, Product product)
+        public bool AddBid(Product product, Bid bid)
         {
             // ignore the bid if the amount is below the starting price
             if (bid.Amount < product.StartingPrice)
