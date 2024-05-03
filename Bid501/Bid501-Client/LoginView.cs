@@ -42,11 +42,14 @@ namespace Bid501_Client
         /// <param name="isSuccess">Bool indicating whether Login was successful</param>
         private void HandleLoginResponse(bool isSuccess, string[] userInfo)
         {
+            Invoke((MethodInvoker)delegate
+            {
                 if (isSuccess)
                 {
                     //assuming user no admin perms
                     bCtrl = new BidCtrl(new Bid501_Shared.Account(userInfo[0], userInfo[1], false), cCtrl, null); //FIX ME: the null needs to be the product list
                 }
+            });
         }
 
         private void UsernameTextbox_TextChanged(object sender, EventArgs e)
