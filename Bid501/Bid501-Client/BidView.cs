@@ -63,13 +63,14 @@ namespace Bid501_Client
                     double suggested = Math.Round(Convert.ToDouble(UxNewBidTextBox.Text), 2);
                     // SendBid
                     Bid newBid = new Bid(UserAccount, suggested, UxProductListBox.Items[UxProductListBox.SelectedIndex] as Product);
+                    Console.WriteLine("" + newBid.GetProduct);
                     makeBid(newBid); //Delegate to BidCtrl AttemptBid
                     
                 }
                 catch { MessageBox.Show("Please enter a valid number (0.00)"); }
             }
+            UpdateBids();
         }
-
 
         /// When a different product is selected in the list update everything
         private void UxProductListBox_SelectedIndexChanged(object sender, EventArgs e)

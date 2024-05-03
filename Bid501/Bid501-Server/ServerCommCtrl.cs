@@ -50,6 +50,7 @@ namespace Bid501_Server
                     Send(JsonConvert.SerializeObject(prodMsg));
                     break;
                 case Message.Type.NewBid:
+                    Console.WriteLine("Bid Received");
                     BidRequest bidreq = JsonConvert.DeserializeObject<BidRequest>(e.Data);
                     bool bidsuccess = serverController.AddBid(bidreq.NewBid);
                     NewBidMsg bidMsg = new NewBidMsg(bidsuccess, bidreq.NewBid);

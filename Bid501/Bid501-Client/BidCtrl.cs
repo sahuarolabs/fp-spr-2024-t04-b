@@ -9,10 +9,10 @@ using static Bid501_Client.ClientCommCtrl;
 
 namespace Bid501_Client
 {
-    public class BidCtrl
-    {
-        public delegate void MakeBid(Bid bid);
+    public delegate void MakeBid(Bid bid);
 
+    public class BidCtrl
+    { 
         private BidView bidView;
         ClientCommCtrl cCtrl;
       

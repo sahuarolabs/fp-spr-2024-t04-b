@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bid501_Shared
 {
+    [Serializable]
     public class BidRequest : Message
     {
         public Bid NewBid { get; set; }
