@@ -33,7 +33,6 @@ namespace Bid501_Server
         {
             if (success)
             {
-                accountController.SaveAccounts();
                 serverView = new ServerView(model, AddProduct, SaveModel, EndAuction, GetClients);
                 AddObserver(serverView.RefreshView);
                 serverView.Show();

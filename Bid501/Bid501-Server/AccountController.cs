@@ -48,21 +48,22 @@ namespace Bid501_Server
             File.WriteAllText(acctFile, serializedAccounts);
         }
 
-        public bool Login(string Accountname, string password, bool admin)
+        public bool Login(string username, string password, bool admin)
         {
             // find the Account by Accountname
-            Account account = acctList.Find(acct => acct.Username == Accountname);
+            Account account = acctList.Find(acct => acct.Username == username);
 
-            // if the Accountname doesn't exist, create a new account
-            if (account == null)
-            {
-                Account newAccount = new Account(Accountname, password, admin);
-                acctList.Add(newAccount);
-                return true;
-            }
             // if the username exists, it has to be either a user trying to log into the client
             // or an admin trying to log in onto the server
-            return (password == account.Password) && (admin == account.IsAdmin);
+            if (account != null)
+                return (password == account.Password) && (admin == account.IsAdmin);
+
+            // if the username doesn't exist, create a new account
+            Account newAccount = new Account(username, password, admin);
+            acctList.Add(newAccount);
+            SaveAccounts();
+
+            return true;
         }
 
         public Account FindAccount(string Accountname)
