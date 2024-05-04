@@ -46,6 +46,7 @@ namespace Bid501_Server
                 case Message.Type.LoginRequest:
                     LoginRequest req = JsonConvert.DeserializeObject<LoginRequest>(e.Data);
 
+                    // verify credentials and send back response
                     bool success = accountController.Login(req.Username, req.Password, false);
                     LoginResponse resp = new LoginResponse(success);
                     Send(JsonConvert.SerializeObject(resp));
@@ -54,13 +55,15 @@ namespace Bid501_Server
                     if (!success)
                         break;
 
-                    serverController.accountController.activeAccounts.Add(ID, serverController.accountController.FindAccount(req.Username));
-                    if (serverController.serverView != null)
-                        serverController.serverView.UpdateClients();
+                    // update client list
+                    accountController.activeAccounts.Add(ID, accountController.FindAccount(req.Username));
+                    serverController.RefreshViews();
 
+                    // send product list to newly connected client
                     List<Product> products = serverController.GetProducts();
                     ProductListMsg prodMsg = new ProductListMsg(products);
                     Send(JsonConvert.SerializeObject(prodMsg));
+
                     break;
 
                 case Message.Type.NewBid:
@@ -88,10 +91,13 @@ namespace Bid501_Server
         // generic imp, needs to be changed
         protected override void OnClose(CloseEventArgs e)
         {
-            serverController.accountController.activeAccounts.Remove(ID);
-            if (serverController.serverView != null) serverController.serverView.RefreshView();
+            accountController.activeAccounts.Remove(ID);
             activeWebsockets.Remove(ID);
+
+            serverController.RefreshViews();
+
             Console.WriteLine($"ClientDisconnected: {ID}");
+
             base.OnClose(e);
         }
 

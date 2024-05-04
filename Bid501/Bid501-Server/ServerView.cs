@@ -56,47 +56,6 @@ namespace Bid501_Server
                 addProduct(dialog.SelectedProd);
         }
 
-        public void UpdateProducts()
-        {
-            // reload the products in the list
-            uxListBoxProducts.DataSource = null;
-            uxListBoxProducts.DataSource = model.Products;
-        }
-
-        public void UpdateClients()
-        {
-            // Get clients from ServerComm
-            uxListBoxClients.BeginInvoke(new Action(() =>
-            {
-
-                Dictionary<string, Account> activeClients = getClientsDel();
-                if (activeClients != null)
-                {
-                    uxListBoxClients.Items.Clear();
-                    foreach (Account client in activeClients.Values)
-                    {
-                        uxListBoxClients.Items.Add(client.Username);
-                    }
-                }
-            }));
-        }
-
-        public void UpdateButtonEnabled()
-        {
-            // disable the end button if auction cannot be ended on the selected product
-            Product selProd = (Product)uxListBoxProducts.SelectedItem;
-            buttonEnd.Enabled = selProd != null && model.CanEndAuctionOn(selProd);
-        }
-
-        public void RefreshView()
-        {
-            Invoke(new Action(() => {
-                UpdateProducts();
-                UpdateClients();
-                UpdateButtonEnabled();
-            }));
-        }
-
         private void buttonEnd_Click(object sender, EventArgs e)
         {
             Product selProd = (Product) uxListBoxProducts.SelectedItem;
@@ -111,6 +70,42 @@ namespace Bid501_Server
         private void uxListBoxProducts_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateButtonEnabled();
+        }
+
+        private void UpdateProducts()
+        {
+            // reload the products in the list
+            uxListBoxProducts.DataSource = null;
+            uxListBoxProducts.DataSource = model.Products;
+        }
+
+        private void UpdateClients()
+        {
+            Dictionary<string, Account> activeClients = getClientsDel();
+            if (activeClients != null)
+            {
+                uxListBoxClients.Items.Clear();
+                foreach (Account client in activeClients.Values)
+                {
+                    uxListBoxClients.Items.Add(client.Username);
+                }
+            }
+        }
+
+        private void UpdateButtonEnabled()
+        {
+            // disable the end button if auction cannot be ended on the selected product
+            Product selProd = (Product)uxListBoxProducts.SelectedItem;
+            buttonEnd.Enabled = selProd != null && model.CanEndAuctionOn(selProd);
+        }
+
+        public void RefreshView()
+        {
+            Invoke(new Action(() => {
+                UpdateProducts();
+                UpdateClients();
+                UpdateButtonEnabled();
+            }));
         }
     }
 }

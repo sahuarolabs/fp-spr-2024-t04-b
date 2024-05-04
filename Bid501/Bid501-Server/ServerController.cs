@@ -14,12 +14,12 @@ namespace Bid501_Server
 
     public class ServerController
     {
-        public AccountController accountController;
-
+        private AccountController accountController;
         private string modelFileName;
+
         private Model model;
         private List<RefreshViewDel> observers;
-        public ServerView serverView;
+        private ServerView serverView;
 
         public ServerController(AccountController acctCtrl, string modelFileName)
         {
@@ -69,13 +69,16 @@ namespace Bid501_Server
             File.WriteAllText(modelFileName, serialized);
         }
 
+        public void RefreshViews()
+        {
+            foreach (RefreshViewDel refresh in observers)
+                refresh();
+        }
+
         public void AddProduct(Product product)
         {
             model.Products.Add(product);
-
-            // refresh view
-            foreach (RefreshViewDel refresh in observers)
-                refresh();
+            RefreshViews();
 
             // notify clients
             ServerCommCtrl.NotifyNewProduct(product);
