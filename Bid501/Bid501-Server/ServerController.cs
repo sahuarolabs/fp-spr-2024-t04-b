@@ -103,6 +103,11 @@ namespace Bid501_Server
                 return false;
 
             product.Bids.Add(bid);
+
+            // refresh view
+            foreach (RefreshViewDel refresh in observers)
+                refresh();
+
             return true;
         }
 

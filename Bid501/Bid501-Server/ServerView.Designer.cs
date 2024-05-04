@@ -46,6 +46,7 @@
             this.uxListBoxProducts.Name = "uxListBoxProducts";
             this.uxListBoxProducts.Size = new System.Drawing.Size(236, 355);
             this.uxListBoxProducts.TabIndex = 0;
+            this.uxListBoxProducts.SelectedIndexChanged += new System.EventHandler(this.uxListBoxProducts_SelectedIndexChanged);
             // 
             // uxListBoxClients
             // 

@@ -81,10 +81,20 @@ namespace Bid501_Server
             }));
         }
 
+        public void UpdateButtonEnabled()
+        {
+            // disable the end button if auction cannot be ended on the selected product
+            Product selProd = (Product)uxListBoxProducts.SelectedItem;
+            buttonEnd.Enabled = selProd != null && model.CanEndAuctionOn(selProd);
+        }
+
         public void RefreshView()
         {
-            UpdateProducts();
-            UpdateClients();
+            Invoke(new Action(() => {
+                UpdateProducts();
+                UpdateClients();
+                UpdateButtonEnabled();
+            }));
         }
 
         private void buttonEnd_Click(object sender, EventArgs e)
@@ -92,7 +102,15 @@ namespace Bid501_Server
             Product selProd = (Product) uxListBoxProducts.SelectedItem;
 
             if (selProd != null)
+            {
                 endAuction(selProd);
+                UpdateButtonEnabled();
+            }
+        }
+
+        private void uxListBoxProducts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateButtonEnabled();
         }
     }
 }
