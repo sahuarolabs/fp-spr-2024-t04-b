@@ -93,8 +93,13 @@ namespace Bid501_Server
             if (product == null)
                 return false;
 
-            // ignore the bid if the amount is below the starting price
-            if (bid.Amount < product.StartingPrice)
+            /*
+            ignore the bid if:
+              - the auction has already ended
+              - the bidder is an admin
+              - the amount is below the current price
+            */
+            if (product.Expired || bid.Bidder.IsAdmin ||  bid.Amount < product.Price)
                 return false;
 
             product.Bids.Add(bid);
