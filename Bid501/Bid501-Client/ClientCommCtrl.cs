@@ -32,9 +32,7 @@ namespace Bid501_Client
         public ClientCommCtrl()
         {
             // Build Websocket connection and connect
-            ws = new WebSocket($"ws://10.130.160.107:8001/server");
-
-
+            ws = new WebSocket($"ws://10.130.160.105:8001/server");
             ws.OnMessage += OnMessageHandler;
             ws.Connect();
 
@@ -75,6 +73,11 @@ namespace Bid501_Client
                 case Message.Type.NewBid:
                     NewBidMsg newBidMsg = JsonConvert.DeserializeObject<NewBidMsg>(e.Data);
                     BidController.AddNewBid(newBidMsg.ProductId, newBidMsg.BidInfo);
+                    break;
+
+                case Message.Type.AuctionEnd:
+                    AuctionEndMsg endMsg = JsonConvert.DeserializeObject<AuctionEndMsg>(e.Data);
+                    BidController.HandleAuctionEnd(endMsg.ProductId, endMsg.Winner, endMsg.FinalPrice);
                     break;
             }
         }

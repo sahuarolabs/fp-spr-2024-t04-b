@@ -17,18 +17,19 @@ namespace Bid501_Server
         private Model model;
         private AddProductDel addProduct;
         private SaveModelDel saveModel;
+        private EndAuctionDel endAuction;
+        private GetClientsDel getClientsDel;
 
-        GetClientsDel getClientsDel;
-
-        public ServerView(Model model, AddProductDel addProduct, SaveModelDel saveModel, GetClientsDel gcDel)
+        public ServerView(Model model, AddProductDel addProduct, SaveModelDel saveModel, EndAuctionDel endAuction, GetClientsDel gcDel)
         {
             this.model = model;
             this.addProduct = addProduct;
             this.saveModel = saveModel;
+            this.endAuction = endAuction;
             this.getClientsDel = gcDel;
 
             InitializeComponent();
-            //RefreshView();
+            UpdateProducts();
         }
 
         private void ServerView_FormClosed(object sender, FormClosedEventArgs e)
@@ -55,6 +56,13 @@ namespace Bid501_Server
                 addProduct(dialog.SelectedProd);
         }
 
+        public void UpdateProducts()
+        {
+            // reload the products in the list
+            uxListBoxProducts.DataSource = null;
+            uxListBoxProducts.DataSource = model.Products;
+        }
+
         public void UpdateClients()
         {
             // Get clients from ServerComm
@@ -71,17 +79,20 @@ namespace Bid501_Server
                     }
                 }
             }));
-            
-            
         }
 
         public void RefreshView()
         {
-            // reload the products in the list
-            uxListBoxProducts.DataSource = null;
-            uxListBoxProducts.DataSource = model.Products;
+            UpdateProducts();
             UpdateClients();
         }
 
+        private void buttonEnd_Click(object sender, EventArgs e)
+        {
+            Product selProd = (Product) uxListBoxProducts.SelectedItem;
+
+            if (selProd != null)
+                endAuction(selProd);
+        }
     }
 }

@@ -31,6 +31,7 @@
             this.uxListBoxProducts = new System.Windows.Forms.ListBox();
             this.uxListBoxClients = new System.Windows.Forms.ListBox();
             this.buttonAdd = new System.Windows.Forms.Button();
+            this.buttonEnd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // uxListBoxProducts
@@ -43,7 +44,7 @@
             "Arduino Microcontroller"});
             this.uxListBoxProducts.Location = new System.Drawing.Point(12, 12);
             this.uxListBoxProducts.Name = "uxListBoxProducts";
-            this.uxListBoxProducts.Size = new System.Drawing.Size(162, 225);
+            this.uxListBoxProducts.Size = new System.Drawing.Size(236, 355);
             this.uxListBoxProducts.TabIndex = 0;
             // 
             // uxListBoxClients
@@ -51,26 +52,37 @@
             this.uxListBoxClients.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.uxListBoxClients.FormattingEnabled = true;
-            this.uxListBoxClients.Location = new System.Drawing.Point(180, 12);
+            this.uxListBoxClients.Location = new System.Drawing.Point(254, 12);
             this.uxListBoxClients.Name = "uxListBoxClients";
-            this.uxListBoxClients.Size = new System.Drawing.Size(162, 225);
+            this.uxListBoxClients.Size = new System.Drawing.Size(238, 355);
             this.uxListBoxClients.TabIndex = 1;
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(140, 243);
+            this.buttonAdd.Location = new System.Drawing.Point(12, 373);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(75, 23);
+            this.buttonAdd.Size = new System.Drawing.Size(113, 33);
             this.buttonAdd.TabIndex = 2;
             this.buttonAdd.Text = "Add product";
             this.buttonAdd.UseVisualStyleBackColor = true;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
+            // buttonEnd
+            // 
+            this.buttonEnd.Location = new System.Drawing.Point(131, 373);
+            this.buttonEnd.Name = "buttonEnd";
+            this.buttonEnd.Size = new System.Drawing.Size(117, 33);
+            this.buttonEnd.TabIndex = 3;
+            this.buttonEnd.Text = "End auction";
+            this.buttonEnd.UseVisualStyleBackColor = true;
+            this.buttonEnd.Click += new System.EventHandler(this.buttonEnd_Click);
+            // 
             // ServerView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(355, 293);
+            this.ClientSize = new System.Drawing.Size(504, 430);
+            this.Controls.Add(this.buttonEnd);
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.uxListBoxClients);
             this.Controls.Add(this.uxListBoxProducts);
@@ -87,6 +99,7 @@
         private System.Windows.Forms.ListBox uxListBoxProducts;
         private System.Windows.Forms.ListBox uxListBoxClients;
         private System.Windows.Forms.Button buttonAdd;
+        private System.Windows.Forms.Button buttonEnd;
     }
 }
 
