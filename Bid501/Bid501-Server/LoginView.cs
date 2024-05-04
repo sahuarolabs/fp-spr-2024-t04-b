@@ -35,6 +35,9 @@ namespace Bid501_Server
             // call the delegates for login and after login logic
             bool success = login(username, password, true);
             bool shouldClose = afterLogin(success);
+
+            if (shouldClose)
+                Hide();
         }
 
 

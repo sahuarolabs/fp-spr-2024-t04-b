@@ -35,6 +35,7 @@ namespace Bid501_Server
         private void ServerView_FormClosed(object sender, FormClosedEventArgs e)
         {
             saveModel();
+            Application.Exit();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
