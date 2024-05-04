@@ -18,27 +18,13 @@ namespace Bid501_Server
         private LoginDel login;
         private AfterLoginActionDel afterLogin;
 
-        AccountController accountController;
-        ServerController serverController;
-
-        public LoginView()
+        public LoginView(LoginDel login, AfterLoginActionDel afterLogin)
         {
+            this.login = login;
+            this.afterLogin = afterLogin;
+
             InitializeComponent();
         }
-
-        public LoginView(AccountController aCtrl, ServerController sCtrl)
-        {
-            accountController = aCtrl;
-            serverController = sCtrl;
-            InitializeComponent();
-        }
-
-        public void SetLoginDelegates(LoginDel lDel, AfterLoginActionDel alDel)
-        {
-            this.login = lDel;
-            this.afterLogin = alDel;
-        }
-
 
         private void UxLoginButton_Click(object sender, EventArgs e)
         {

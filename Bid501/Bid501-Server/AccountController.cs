@@ -17,17 +17,10 @@ namespace Bid501_Server
         public Dictionary<string, Account> activeAccounts = new Dictionary<string, Account>();
         public ActiveClientsDel activeClientsDel;
 
-
         /// <summary>
         /// List of all accounts
         /// </summary>
         private List<Account> acctList;
-        
-
-        /// <summary>
-        /// should only be an admin account as this is server-side.
-        /// </summary>
-        private Account loggedIn;
 
         public AccountController(string acctFile)
         {
@@ -53,12 +46,6 @@ namespace Bid501_Server
             // convert the account list to JSON and overwrite the file
             string serializedAccounts = JsonConvert.SerializeObject(acctList);
             File.WriteAllText(acctFile, serializedAccounts);
-        }
-
-        public Account ClientLogin(string Accountname, string password, bool admin, string clientID)
-        {
-            if (Login(Accountname, password, admin)) { return acctList.Find(acct => acct.Username == Accountname); }
-            else { return null; }
         }
 
         public bool Login(string Accountname, string password, bool admin)

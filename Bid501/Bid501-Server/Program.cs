@@ -11,7 +11,6 @@ using System.ComponentModel;
 
 namespace Bid501_Server
 {
-    public delegate bool AddBidDel(int productId, Bid bid);
     public delegate void RefreshViewDel();
     public delegate void AddProductDel(Product p);
     public delegate void EndAuctionDel(Product p);
@@ -32,19 +31,16 @@ namespace Bid501_Server
 
             AccountController acctCtrl = new AccountController("accounts.json");
             ServerController serverCtrl = new ServerController(acctCtrl, "model.json");
-            LoginView loginView = new LoginView(acctCtrl, serverCtrl);
-            loginView.SetLoginDelegates(acctCtrl.Login, serverCtrl.AfterLoginAction);
+            LoginView loginView = new LoginView(acctCtrl.Login, serverCtrl.AfterLoginAction);
 
             //WebSocketServer wss = new WebSocketServer($"ws://{Bid501_Shared.Program.GetLocalIPAddress()}:8001");
             WebSocketServer wss = new WebSocketServer("ws://10.130.160.105:8001");
-            wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl, serverCtrl.AddBid, acctCtrl));
+            wss.AddWebSocketService<ServerCommCtrl>("/server", () => new ServerCommCtrl(serverCtrl, acctCtrl));
             wss.ReuseAddress = true;
             wss.Start(); 
 
             Application.Run(loginView);
             wss.Stop();
-            
         } 
-
     }
 }

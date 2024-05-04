@@ -46,11 +46,10 @@ namespace Bid501_Server
 
         public static Model LoadModelFromFile(string fileName)
         {
-            Account defCons = new Account("admin", "admin",true);
             List<Product> initProds = new List<Product> {
-                new Product(1, "PS4", 100.0, defCons),
-                new Product(2, "iPhone 7", 50.0, defCons),
-                new Product(3, "Bose SoundSpot", 30.0, defCons)
+                new Product(1, "PS4", 100.0),
+                new Product(2, "iPhone 7", 50.0),
+                new Product(3, "Bose SoundSpot", 30.0)
             };
 
             // if the file dosn't exist, return default 3 products

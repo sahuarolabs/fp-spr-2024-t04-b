@@ -25,14 +25,9 @@ namespace Bid501_Server
         // Controller for lower server
         private ServerController serverController;
         private AccountController accountController;
-
-        // Delegates
-        private AddBidDel AddBid;
-        private LoginDel LogIn;        
         
-        public ServerCommCtrl(ServerController sc, AddBidDel addBidDel, AccountController ac)
+        public ServerCommCtrl(ServerController sc, AccountController ac)
         {
-            AddBid = addBidDel;
             serverController = sc;
             accountController = ac;
         }
@@ -77,7 +72,6 @@ namespace Bid501_Server
             }
         }
 
-        // NEEDS: add clientIP to Dictionary of connected clients
         protected override void OnOpen()
         {
             WebSocket socket = this.Context.WebSocket;
@@ -88,7 +82,6 @@ namespace Bid501_Server
             Console.WriteLine($"Client Connected: {ID}");
         }
 
-        // generic imp, needs to be changed
         protected override void OnClose(CloseEventArgs e)
         {
             accountController.activeAccounts.Remove(ID);

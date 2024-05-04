@@ -41,13 +41,12 @@ namespace Bid501_Server
         {
             // predefined products that can be added
             int id = model.GenId();
-            Account defCons = new Account("Account", "Account",true);
             List<Product> prodsToAdd = new List<Product>
             {
-                new Product(id, "Nintendo Switch", 35.0, defCons),
-                new Product(id + 1, "Renaissance Artwork", 200.0, defCons),
-                new Product(id + 2, "Antique Knife", 50.0, defCons),
-                new Product(id + 3, "Racing Horse", 1000.0, defCons)
+                new Product(id, "Nintendo Switch", 35.0),
+                new Product(id + 1, "Renaissance Artwork", 200.0),
+                new Product(id + 2, "Antique Knife", 50.0),
+                new Product(id + 3, "Racing Horse", 1000.0)
             };
 
             // display a dialog to add one of the products

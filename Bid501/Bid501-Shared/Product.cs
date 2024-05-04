@@ -1,5 +1,4 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,29 +31,20 @@ namespace Bid501_Shared
 
         public bool Expired { get; set; }
 
-        public Account Consigner { get; }
-
         public List<Bid> Bids { get; }
 
-        public Product(int id, string name, double startingPrice, Account consigner)
+        public Product(int id, string name, double startingPrice)
         {
             Id = id;
             Name = name;
             StartingPrice = startingPrice;
             Expired = false;
-            Consigner = consigner;
             Bids = new List<Bid>();
         }
 
         public override string ToString()
         {
             return Name;
-        }
-
-        // serialize the object to JSON (allows special characters in password)
-        public string Serialize()
-        {
-            return JsonConvert.SerializeObject(this);
         }
     }
 }
